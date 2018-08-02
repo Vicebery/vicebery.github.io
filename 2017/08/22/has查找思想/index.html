@@ -1,0 +1,370 @@
+
+
+
+
+
+
+
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="author" content="Vicebery">
+  
+  
+  
+  
+    <meta name="description" content="散列（hash)是一种重要的算法思想，hash函数在计算机领域应用非常广泛，下面主要谈谈其在字符查找方面的一些应用。
+当我们需要在一个域里面查找一些元素时，最简单的思想是遍历整个域，将查询元素与域内元素进行判断是否一致，这项工作相当耗时，我们不妨这样想，将查询元素与查询域建立一个联系，构建一个函数关系hash(X),X为待查元素，hash(X)=0(初始化)为没有X元素,hash(X)=1为...">
+  
+  <title>has查找思想 [ Vicebery ]</title>
+  
+  
+    <link rel="shortcut icon" href="/avatar.jpg">
+  
+  
+  <link rel="stylesheet" href="/css/random.css">
+<link rel="stylesheet" href="/css/vegas.min.css">
+<link rel="stylesheet" href="/css/highlight-railscasts.css">
+<link rel="stylesheet" href="/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/jquery.fancybox-thumbs.css">
+<link rel="stylesheet" href="/css/plyr.css">
+  
+</head>
+
+<body>
+<div class="side-navigate hide-area">
+  
+    <div class="item prev">
+      <a href="/2017/08/23/PAT-A1062/">
+        <div class="item-icon"></div>
+      </a>
+      <div class="item-title">
+        PAT A1062
+      </div>
+    </div>
+  
+  
+    <div class="item next">
+      <a href="/2017/08/09/PAT-A1025/">
+        <div class="item-icon"></div>
+      </a>
+      <div class="item-title">
+        PAT_A1025
+      </div>
+    </div>
+  
+</div>
+<div id="outer-container" class="hide-area">
+<div id="container">
+  <div id="menu-outer" class="slide-down">
+    <div id="menu-inner">
+      <div id="brand">
+        
+        <a onClick="openUserCard()">
+          <img id="avatar" src="/avatar.jpg"/>
+          <div id="homelink">Vicebery</div>
+        </a>
+      </div>
+      <div id="menu-list">
+        <ul>
+        
+        
+          
+            <li>
+          
+            <a href="/index.html">Home</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/archives">Archives</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/tags">Tags</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/categories">Categories</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/about">About</a>
+            
+          </li>
+        
+        </ul>
+      </div>
+      <div id="show-menu">
+        <button>Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="content-outer">
+    <div id="content-inner">
+      
+      
+  <article id="post">
+    <h1>has查找思想</h1>
+    <p class="page-title-sub">
+      <span id = "post-title-date">Created at 2017-08-21</span>
+      
+        <span id = "post-title-updated">Updated at 2018-03-23</span>
+      
+      
+      <span id = "post-title-categories">Category
+      
+      
+        
+        
+        <a href="/categories/算法思想/">算法思想</a>
+      
+      </span>
+      
+      
+      <span id = "post-title-tags">
+      Tag
+      
+      
+        
+        
+        <a href="/tags/hash/">hash</a>
+      
+        
+          /
+        
+        
+        <a href="/tags/字符串查询/">字符串查询</a>
+      
+      </span>
+      
+    </p>
+    
+    <p><strong>散列</strong>（hash)是一种重要的算法思想，hash函数在计算机领域应用非常广泛，下面主要谈谈其在字符查找方面的一些应用。</p>
+<p>当我们需要在一个域里面查找一些元素时，最简单的思想是遍历整个域，将查询元素与域内元素进行判断是否一致，这项工作相当耗时，我们不妨这样想，将查询元素与查询域建立一个联系，构建一个函数关系hash(X),X为待查元素，hash(X)=0(<em>初始化</em>)为没有X元素,hash(X)=1为X元素出现一次，这样我们可以直接得出任意元素n是否出现过(<em>hash(n)是否为0</em>)，但这也出现一个问题，就是我们需要一个非常大的数组来表示这个函数，这也称为“以空间换时间”。</p>
+<p>因此，当查询域很大时，这个方法并不适用。</p>
+<p>那么怎么进行字符串查找呢？</p>
+<p>当我们给出两个字符串，需要查找后者在前者中出现过，依据上面介绍的思想，我们创建一个数组hashTable[max],接下来，我们需要把字符串转换为数字，作为数组的下标，转换后可能出现的情况的总和即为查找域的大小max,因此max可能很大，占据了非常多的空间，但绝大多数是无用的。</p>
+
+  </article>
+  <div class="random-toc-area">
+  <button class="btn-hide-toc btn-hide-toc-show" style="display: none" onclick="TOCToggle()">Show TOC</button>
+  <button class="btn-hide-toc btn-hide-toc-hide" onclick="TOCToggle()">Hide TOC</button>
+  <div class="random-toc">
+    <h2>Table of Content</h2>
+    
+  </div>
+</div>
+
+  
+<nav id="pagination">
+  
+    <a href="/2017/08/23/PAT-A1062/" class="prev">&larr; Prev post PAT A1062</a>
+  
+
+  
+
+  
+    <a href="/2017/08/09/PAT-A1025/" class="next">Next post PAT_A1025 &rarr;</a>
+  
+</nav>
+
+  <!-- JiaThis Button BEGIN -->
+
+<!-- JiaThis Button END -->
+
+
+      
+      
+    </div>
+  </div>
+
+  <div id="bottom-outer">
+    <div id="bottom-inner">
+      Site by Vicebery using
+      <a href="http://hexo.io">Hexo</a> & <a href="https://github.com/stiekel/hexo-theme-random">Random</a>
+      <br>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+<div id="user-card">
+  <div class="center-field">
+    <img class="avatar" src="/avatar.jpg">
+    <p id="description">stay hungry, stay young</p>
+    <ul class="social-icon">
+  
+  
+    <li>
+      <a href="https://github.com/vicebery">
+        
+          <i class="icon iconfont github">&#xe606;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="https://www.zhihu.com/people/vicebery/activities">
+        
+          <i class="icon iconfont zhihu">&#xe60b;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="https://twitter.com/vicebery">
+        
+          <i class="icon iconfont twitter">&#xe600;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="https://www.douban.com/people/vicebery/">
+        
+          <i class="icon iconfont douban">&#xe60f;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="https://plus.google.com/u/0/109399728266375769175">
+        
+          <i class="icon iconfont google-plus">&#xe603;</i>
+        
+      </a>
+    </li>
+  
+</ul>
+  </div>
+</div>
+
+
+<div id="btn-view">Hide</div>
+
+<script>
+// is trigger analytics / tongji script
+var isIgnoreHost = false;
+
+if(window && window.location && window.location.host) {
+  isIgnoreHost = ["localhost","127.0.0.1"].some(function(address){
+    return 0 === window.location.host.indexOf(address);
+  });
+}
+
+var isTriggerAnalytics = !( true && isIgnoreHost );
+
+</script>
+
+
+
+
+  
+  
+    <script src="/js/jquery-2.2.3.min.js"></script>
+  
+    <script src="/js/vegas.min.js"></script>
+  
+    <script src="/js/random.js"></script>
+  
+    <script src="/js/highlight.pack.js"></script>
+  
+    <script src="/js/jquery.mousewheel.pack.js"></script>
+  
+    <script src="/js/jquery.fancybox.pack.js"></script>
+  
+    <script src="/js/jquery.fancybox-thumbs.js"></script>
+  
+    <script src="/js/plyr.js"></script>
+  
+
+<script>
+
+  // fancybox
+  var backgroundImages = [];
+  
+  $('#post').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox') || $(this).parent().hasClass('fancybox-thumb')) return;
+      var alt = this.alt || this.title;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'post' + i);
+    });
+  });
+  $(".fancybox").fancybox();
+
+var vegasConfig = {"preload­Image":true,"transition":["slideLeft2","slideRight2","flash2"],"timer":true,"delay":5000,"shuffle":true,"count":28};
+var unsplashConfig = {"gravity":"north"};
+// is show background images
+var turnoffBackgroundImage = false;
+
+
+
+  turnoffBackgroundImage = true;
+
+
+var backgroundColor = "34495E";
+
+$(".fancybox-thumb").fancybox({
+  prevEffect: 'none',
+  nextEffect: 'none',
+  helpers: {
+    title: {
+      type: 'outside'
+    },
+    thumbs: {
+      width: 50,
+      height: 50
+    }
+  }
+});
+
+// show video with plyr
+$(".video-container iframe").each(function(i){
+  var url = $(this).attr('src');
+  var id = url.split('/').pop();
+  var plyrContainer = document.createElement('div');
+  plyrContainer.className = 'plyr';
+  var plyrElement = document.createElement('div');
+  plyrElement.dataset.videoId = id;
+  switch(true) {
+    case url.search('youtube.com') >= 0:
+      plyrElement.dataset.type = 'youtube';
+      break;
+    case url.search('vimeo.com') >= 0:
+      plyrElement.dataset.type = 'vimeo';
+      break;
+    default:
+      return;
+  };
+  plyrContainer.appendChild(plyrElement);
+  $(this).parent().html(plyrContainer);
+});
+plyr.setup('.plyr', {iconUrl: '/css/sprite.svg'});
+</script>
+</body>
+</html>
+
