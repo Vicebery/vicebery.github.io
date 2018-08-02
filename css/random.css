@@ -588,7 +588,7 @@ figure.highlight td.gutter {
   padding-right: 20px;
 }
 figure.highlight .line {
-  white-space: pre-wrap;
+  height: 22px;
 }
 code {
   font-family: Consolas, Monaco, Courier New, Lucida Console;
@@ -599,6 +599,7 @@ code {
 }
 table .line {
   font-family: Consolas, Monaco, Courier New, Lucida Console;
+  height: 22px;
 }
 blockquote {
   background-color: #eee;

@@ -1,8 +1,6 @@
 
 
 
-  
-
 
 
 
@@ -18,9 +16,10 @@
   
   
   
-    <meta name="description" content="stay hungry, stay young">
+    <meta name="description" content="以下介绍用U盘安装ubuntu与windows共存的一些问题：
+1.确认安装的位置：  想要ubuntu和windows共存，就要为ubuntu单独预留一份空间，如果你本身的系统是windows，可以在磁盘管理下，选定某个盘符，点击右键压缩卷，压缩出来的空间作为ubuntu安装的存储空间，大小按个人需求来定，像我学习fabric等区块连平台，预留了50G。压缩卷后看到有一块变成绿色或者灰色，...">
   
-  <title>Tag: 随笔 [ Vicebery ]</title>
+  <title>ubuntu安装的相关问题 [ Vicebery ]</title>
   
   
     <link rel="shortcut icon" href="/avatar.jpg">
@@ -39,6 +38,15 @@
 <body>
 <div class="side-navigate hide-area">
   
+  
+    <div class="item next">
+      <a href="/2017/09/04/记于九月初/">
+        <div class="item-icon"></div>
+      </a>
+      <div class="item-title">
+        记于九月初
+      </div>
+    </div>
   
 </div>
 <div id="outer-container" class="hide-area">
@@ -71,7 +79,7 @@
           </li>
         
           
-            <li class="active">
+            <li>
           
             <a href="/tags">Tags</a>
             
@@ -103,140 +111,67 @@
     <div id="content-inner">
       
       
-  <div id="tag">
-    <h1>随笔</h1>
-    
+  <article id="post">
+    <h1>ubuntu安装的相关问题</h1>
+    <p class="page-title-sub">
+      <span id = "post-title-date">Created at 2018-08-02</span>
+      
+        <span id = "post-title-updated">Updated at 2018-08-02</span>
+      
+      
+      <span id = "post-title-categories">Category
       
       
         
-      
         
+        <a href="/categories/ubuntu/">ubuntu</a>
+      
+      </span>
       
       
-    
-      
-      
-        
-      
-        
-      
-      
-    
+      <span id = "post-title-tags">
+      Tag
       
       
         
-      
         
+        <a href="/tags/ubuntu/">ubuntu</a>
       
+      </span>
       
+    </p>
     
-      
-      
-        
-          
-        
-      
-      
-      <div class="post-title-item">
-  
-  <a href="/2017/08/29/《局外人》-考研/">
-  
-    关于《局外人》的一些思考
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">8-28</span>
-    
-    <span id = "post-title-categories">Category
-    
-    
-      
-      
-      <a href="/categories/随笔/">随笔</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    Tag
-    
-    
-      
-      
-      <a href="/tags/随笔/">随笔</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-      
-    
-      
-      
-      
-    
-      
-      
-        
-          
-        
-      
-      
-      <div class="post-title-item">
-  
-  <a href="/2017/09/04/记于九月初/">
-  
-    记于九月初
-  
-  </a>
-  <p class="page-title-sub">
-    <span id = "post-title-date">9-3</span>
-    
-    <span id = "post-title-categories">Category
-    
-    
-      
-      
-      <a href="/categories/随笔/">随笔</a>
-    
-    </span>
-    
-    
-    <span id = "post-title-tags">
-    Tag
-    
-    
-      
-      
-      <a href="/tags/随笔/">随笔</a>
-    
-    </span>
-    
-    
-      <br>
-      
-      
-    
-  </p>
-  
-</div>
-      
-    
-      
-      
-        
-      
-      
-    
+    <p>以下介绍用U盘安装ubuntu与windows共存的一些问题：</p>
+<h3 id="1-确认安装的位置："><a href="#1-确认安装的位置：" class="headerlink" title="1.确认安装的位置："></a>1.确认安装的位置：</h3><p>  想要ubuntu和windows共存，就要为ubuntu单独预留一份空间，如果你本身的系统是windows，可以在磁盘管理下，选定某个盘符，点击右键压缩卷，压缩出来的空间作为ubuntu安装的存储空间，大小按个人需求来定，像我学习fabric等区块连平台，预留了50G。压缩卷后看到有一块变成绿色或者灰色，即可用或者未分配空间，该空间就是等会安装ubuntu的位置。</p>
+<h3 id="2-制作U盘启动盘："><a href="#2-制作U盘启动盘：" class="headerlink" title="2.制作U盘启动盘："></a>2.制作U盘启动盘：</h3><p>在此步骤之前，确保安装的系统镜像已经下载好了，去ubuntu中文官方网站即可下载最新的版本18.04，我目前用的就是这个版本。然后还需要一个不小于4G的U盘。<br>制作启动盘的软件我选用的是powerISO，去官网下载，安装选择试用。<br>软件打开后，菜单栏点击“打开”，选择你下载好的系统镜像，然后选择制作U盘启动盘，写入模式建议选择USB-HDD，点击“写入”，一般需要15min，看到刻录完成即成功。</p>
+<h3 id="3-重启系统进入BIOS，选择U盘启动："><a href="#3-重启系统进入BIOS，选择U盘启动：" class="headerlink" title="3.重启系统进入BIOS，选择U盘启动："></a>3.重启系统进入BIOS，选择U盘启动：</h3><p>每种型号的计算机进入BIOS的方式一般不一样，thinkpad的笔记本启动后看到屏幕下方有提示，按Ehter键进入选择菜单，然后可以看到最后一行英文意思是选择一种临时启动方式，正是我们所需要的，这样就不用依照网上有些教程所说的设置启动优先级，安装完了还要修改回来，我们只需要临时一次就可以安装好。选择了U盘启动后，就会启动U盘里的系统，等一会儿，出现一个界面，让你选择是试用ubuntu还是安装ubuntu，选择安装。</p>
+<h3 id="4-安装方式的选择："><a href="#4-安装方式的选择：" class="headerlink" title="4.安装方式的选择："></a>4.安装方式的选择：</h3><p>按照提示设置，安装时提示你联网，选择不联网，选择不要更新软件，这样可以节省很多时间。其中有一个设置界面是选择安装方式，第一个选择是与windows共存，第二个和第三个会覆盖wildows系统–意思是所有磁盘数据会清空，给你安装一个崭新的ubuntu，还有最后一个选项是其他，网上教程一般让你选择其他，如果选择其他，则需要自己分区，提前要想好根目录、/home、/boot、swap分区的大小，如果选择第一种，则会自行分区，并且不需要选择安装位置，它自行寻找一个空的盘符，就是我们在第一步中已经预留好的空间，/root即根目录会和你预留的安装空间差不多大，/home在根目录下.</p>
+
+  </article>
+  <div class="random-toc-area">
+  <button class="btn-hide-toc btn-hide-toc-show" style="display: none" onclick="TOCToggle()">Show TOC</button>
+  <button class="btn-hide-toc btn-hide-toc-hide" onclick="TOCToggle()">Hide TOC</button>
+  <div class="random-toc">
+    <h2>Table of Content</h2>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-确认安装的位置："><span class="toc-text">1.确认安装的位置：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-制作U盘启动盘："><span class="toc-text">2.制作U盘启动盘：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-重启系统进入BIOS，选择U盘启动："><span class="toc-text">3.重启系统进入BIOS，选择U盘启动：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-安装方式的选择："><span class="toc-text">4.安装方式的选择：</span></a></li></ol>
   </div>
+</div>
 
   
+<nav id="pagination">
+  
+
+  
+
+  
+    <a href="/2017/09/04/记于九月初/" class="next">Next post 记于九月初 &rarr;</a>
+  
+</nav>
+
+  <!-- JiaThis Button BEGIN -->
+
+<!-- JiaThis Button END -->
+
 
       
       
@@ -370,6 +305,8 @@ var unsplashConfig = {"gravity":"north"};
 var turnoffBackgroundImage = false;
 
 
+
+  turnoffBackgroundImage = true;
 
 
 var backgroundColor = "34495E";
