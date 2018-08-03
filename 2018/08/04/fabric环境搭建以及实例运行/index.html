@@ -19,9 +19,11 @@
     <meta name="description" content="0. 前言以下操作是在ubuntu 18.04上进行，网络使用SS代理，如不使用网络代理，操作过程中可能会出现各种问题。
 1. 先行步骤具体请查看官方文档介绍，这里主要介绍两点：
 1.1 安装go以及环境变量配置建议直接命令安装：
-1sudo apt-get install golang
+
+sudo apt-get install golang
+
 安装好后设置环境变量，在主目录下新建一个文件夹“go”，作为你的工作空间。
-打开终端，编辑记录环境变量的...">
+打开终端，编辑记录环境变量...">
   
   <title>fabric环境搭建以及实例运行 [ Vicebery ]</title>
   
@@ -154,40 +156,65 @@
     <h3 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h3><p>以下操作是在ubuntu 18.04上进行，网络使用SS代理，如不使用网络代理，操作过程中可能会出现各种问题。</p>
 <h3 id="1-先行步骤"><a href="#1-先行步骤" class="headerlink" title="1. 先行步骤"></a>1. 先行步骤</h3><p>具体请查看<a href="http://hyperledger-fabric.readthedocs.io/en/release-1.0/prereqs.html" target="_blank" rel="noopener">官方文档介绍</a>，这里主要介绍两点：</p>
 <h4 id="1-1-安装go以及环境变量配置"><a href="#1-1-安装go以及环境变量配置" class="headerlink" title="1.1 安装go以及环境变量配置"></a>1.1 安装go以及环境变量配置</h4><p>建议直接命令安装：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install golang</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>sudo apt-get install golang</p>
+</blockquote>
 <p>安装好后设置环境变量，在主目录下新建一个文件夹“go”，作为你的工作空间。</p>
 <p>打开终端，编辑记录环境变量的文件：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/profile</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>sudo vim /etc/profile</p>
+</blockquote>
 <p>在文件最后添加：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> GOPATH=$HOME/go</span><br><span class="line"><span class="keyword">export</span> PATH=$PATH:$GOPATH/bin</span><br></pre></td></tr></table></figure>
 <p>在系统下用命令安装不需要添加GOROOT，因为默认安装位置是/usr/lib，此路径已经被写入环境变量了。</p>
 <p>官方文档写的是编辑~/.bashrc这个文件，关于这个问题，网上也有很多版本，这篇<a href="https://www.cnblogs.com/love-snow/articles/7755660.html" target="_blank" rel="noopener">博客</a>有相关介绍。</p>
 <p>安装好后，检验一下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo go env</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>sudo go env</p>
+</blockquote>
 <p>若显示go的相关环境，则证明安装成功。</p>
 <h4 id="1-2-docker以及docker-compose的安装"><a href="#1-2-docker以及docker-compose的安装" class="headerlink" title="1.2 docker以及docker-compose的安装"></a>1.2 docker以及docker-compose的安装</h4><p>命令直接安装一般不会成功，这里参考<a href="https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/" target="_blank" rel="noopener">清华大学镜像源安装</a>。</p>
 <p>按照以上网址的教程，依然出现问题：<br>在导入信任docker的GPG公钥时，由于国内网络问题，docker官网不能正常访问，出现错误：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl: (<span class="number">7</span>) Failed to receive SOCKS4 connect request ack.</span><br><span class="line">gpg: 找不到有效的 OpenPGP 数据。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>curl: (7) Failed to receive SOCKS4 connect request ack.<br>gpg: 找不到有效的 OpenPGP 数据。</p>
+</blockquote>
 <p>于是在终端下设置临时代理：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export https_proxy=socks5://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1080</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>export https_proxy=socks5://127.0.0.1:1080</p>
+</blockquote>
 <p>显示“ok”，即导入成功。</p>
 <h3 id="2-fabric部署"><a href="#2-fabric部署" class="headerlink" title="2. fabric部署"></a>2. fabric部署</h3><h5 id="1-创建工作目录"><a href="#1-创建工作目录" class="headerlink" title="1. 创建工作目录"></a>1. 创建工作目录</h5><p>在你的go的工作空间中创建文件夹</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~/go/src/github.com/hyperledger/</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>mkdir -p ~/go/src/github.com/hyperledger/</p>
+</blockquote>
 <h5 id="2-下载fabric源码"><a href="#2-下载fabric源码" class="headerlink" title="2. 下载fabric源码"></a>2. 下载fabric源码</h5><p>进入到刚刚创建的hyperledger文件夹，git clone源码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/go/src/github.com/hyperledger</span><br><span class="line">git clone https://github.com/hyperledger/fabric.git</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>cd ~/go/src/github.com/hyperledger<br>git clone <a href="https://github.com/hyperledger/fabric.git" target="_blank" rel="noopener">https://github.com/hyperledger/fabric.git</a></p>
+</blockquote>
 <p>如果git clone很慢，可以设置git的网络代理：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --<span class="keyword">global</span> http.proxy <span class="string">'socks5://127.0.0.1:1080'</span></span><br><span class="line">$ git config --<span class="keyword">global</span> https.proxy <span class="string">'socks5://127.0.0.1:1080'</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>git config –global http.proxy ‘socks5://127.0.0.1:1080’<br>git config –global https.proxy ‘socks5://127.0.0.1:1080’</p>
+</blockquote>
 <h5 id="3-下载镜像文件"><a href="#3-下载镜像文件" class="headerlink" title="3. 下载镜像文件"></a>3. 下载镜像文件</h5><p>上一步会在hyperledger文件夹下创建一个新文件夹fabric，找到fabric文件夹里的scripts文件夹里的bootstrap.sh脚本，这个脚本就是下载相关镜像的，运行这个脚本：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bootstrap.sh</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>./bootstrap.sh</p>
+</blockquote>
 <p>如果由于网络问题下载不成功，建议先在终端设置代理：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export http_proxy=<span class="string">"socks5://127.0.0.1:1080"</span></span><br><span class="line">export https_proxy=<span class="string">"socks5://127.0.0.1:1080"</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>export http_proxy=”socks5://127.0.0.1:1080”<br>export https_proxy=”socks5://127.0.0.1:1080”</p>
+</blockquote>
 <p>由于镜像文件有点多，可能需要花费一些时间。下载完成后会罗列出下载的docker镜像，有好几个竟然显示几个G，很疑惑这些文件在哪儿？去脚本文件查阅也没找出来</p>
 <p>在scripts文件夹下有个fabric-samples文件夹，在上一步完成后会出现一个bin文件夹，将这个文件夹复制到fabric/examples下</p>
 <h5 id="4-运行实例"><a href="#4-运行实例" class="headerlink" title="4. 运行实例"></a>4. 运行实例</h5><p>接下来运行实例：e2e_cli，在该文件夹下打开终端：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./network_setup.sh up</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>./network_setup.sh up</p>
+</blockquote>
 <p>会输出一大堆东西，最后看到字符打印出“END-E2E”。</p>
 <p>关闭实例，按Ctrl+c重回终端输入：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./network_setup.sh down</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>./network_setup.sh down</p>
+</blockquote>
+
   </article>
   <div class="random-toc-area">
   <button class="btn-hide-toc btn-hide-toc-show" style="display: none" onclick="TOCToggle()">Show TOC</button>
