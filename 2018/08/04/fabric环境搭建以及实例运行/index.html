@@ -1,0 +1,396 @@
+
+
+
+
+
+
+
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="author" content="Vicebery">
+  
+  
+  
+  
+    <meta name="description" content="0. 前言以下操作是在ubuntu 18.04上进行，网络使用SS代理，如不使用网络代理，操作过程中可能会出现各种问题。
+1. 先行步骤具体请查看官方文档介绍，这里主要介绍两点：
+1.1 安装go以及环境变量配置建议直接命令安装：
+1sudo apt-get install golang
+安装好后设置环境变量，在主目录下新建一个文件夹“go”，作为你的工作空间。
+打开终端，编辑记录环境变量的...">
+  
+  <title>fabric环境搭建以及实例运行 [ Vicebery ]</title>
+  
+  
+    <link rel="shortcut icon" href="/avatar.jpg">
+  
+  
+  <link rel="stylesheet" href="/css/random.css">
+<link rel="stylesheet" href="/css/vegas.min.css">
+<link rel="stylesheet" href="/css/highlight-railscasts.css">
+<link rel="stylesheet" href="/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/jquery.fancybox-thumbs.css">
+<link rel="stylesheet" href="/css/plyr.css">
+  
+</head>
+
+<body>
+<div class="side-navigate hide-area">
+  
+  
+    <div class="item next">
+      <a href="/2018/08/03/ubuntu安装的相关问题/">
+        <div class="item-icon"></div>
+      </a>
+      <div class="item-title">
+        ubuntu安装的相关问题
+      </div>
+    </div>
+  
+</div>
+<div id="outer-container" class="hide-area">
+<div id="container">
+  <div id="menu-outer" class="slide-down">
+    <div id="menu-inner">
+      <div id="brand">
+        
+        <a onClick="openUserCard()">
+          <img id="avatar" src="/avatar.jpg"/>
+          <div id="homelink">Vicebery</div>
+        </a>
+      </div>
+      <div id="menu-list">
+        <ul>
+        
+        
+          
+            <li>
+          
+            <a href="/index.html">Home</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/archives">Archives</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/tags">Tags</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/categories">Categories</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/about">About</a>
+            
+          </li>
+        
+        </ul>
+      </div>
+      <div id="show-menu">
+        <button>Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="content-outer">
+    <div id="content-inner">
+      
+      
+  <article id="post">
+    <h1>fabric环境搭建以及实例运行</h1>
+    <p class="page-title-sub">
+      <span id = "post-title-date">Created at 2018-08-03</span>
+      
+        <span id = "post-title-updated">Updated at 2018-08-03</span>
+      
+      
+      <span id = "post-title-categories">Category
+      
+      
+        
+        
+        <a href="/categories/fabric/">fabric</a>
+      
+      </span>
+      
+      
+      <span id = "post-title-tags">
+      Tag
+      
+      
+        
+        
+        <a href="/tags/fabric/">fabric</a>
+      
+        
+          /
+        
+        
+        <a href="/tags/ubuntu/">ubuntu</a>
+      
+      </span>
+      
+    </p>
+    
+    <hr>
+<h3 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h3><p>以下操作是在ubuntu 18.04上进行，网络使用SS代理，如不使用网络代理，操作过程中可能会出现各种问题。</p>
+<h3 id="1-先行步骤"><a href="#1-先行步骤" class="headerlink" title="1. 先行步骤"></a>1. 先行步骤</h3><p>具体请查看<a href="http://hyperledger-fabric.readthedocs.io/en/release-1.0/prereqs.html" target="_blank" rel="noopener">官方文档介绍</a>，这里主要介绍两点：</p>
+<h4 id="1-1-安装go以及环境变量配置"><a href="#1-1-安装go以及环境变量配置" class="headerlink" title="1.1 安装go以及环境变量配置"></a>1.1 安装go以及环境变量配置</h4><p>建议直接命令安装：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install golang</span><br></pre></td></tr></table></figure>
+<p>安装好后设置环境变量，在主目录下新建一个文件夹“go”，作为你的工作空间。</p>
+<p>打开终端，编辑记录环境变量的文件：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/profile</span><br></pre></td></tr></table></figure>
+<p>在文件最后添加：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> GOPATH=$HOME/go</span><br><span class="line"><span class="keyword">export</span> PATH=$PATH:$GOPATH/bin</span><br></pre></td></tr></table></figure>
+<p>在系统下用命令安装不需要添加GOROOT，因为默认安装位置是/usr/lib，此路径已经被写入环境变量了。</p>
+<p>官方文档写的是编辑~/.bashrc这个文件，关于这个问题，网上也有很多版本，这篇<a href="https://www.cnblogs.com/love-snow/articles/7755660.html" target="_blank" rel="noopener">博客</a>有相关介绍。</p>
+<p>安装好后，检验一下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo go env</span><br></pre></td></tr></table></figure>
+<p>若显示go的相关环境，则证明安装成功。</p>
+<h4 id="1-2-docker以及docker-compose的安装"><a href="#1-2-docker以及docker-compose的安装" class="headerlink" title="1.2 docker以及docker-compose的安装"></a>1.2 docker以及docker-compose的安装</h4><p>命令直接安装一般不会成功，这里参考<a href="https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/" target="_blank" rel="noopener">清华大学镜像源安装</a>。</p>
+<p>按照以上网址的教程，依然出现问题：<br>在导入信任docker的GPG公钥时，由于国内网络问题，docker官网不能正常访问，出现错误：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl: (<span class="number">7</span>) Failed to receive SOCKS4 connect request ack.</span><br><span class="line">gpg: 找不到有效的 OpenPGP 数据。</span><br></pre></td></tr></table></figure>
+<p>于是在终端下设置临时代理：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export https_proxy=socks5://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">1080</span></span><br></pre></td></tr></table></figure>
+<p>显示“ok”，即导入成功。</p>
+<h3 id="2-fabric部署"><a href="#2-fabric部署" class="headerlink" title="2. fabric部署"></a>2. fabric部署</h3><h5 id="1-创建工作目录"><a href="#1-创建工作目录" class="headerlink" title="1. 创建工作目录"></a>1. 创建工作目录</h5><p>在你的go的工作空间中创建文件夹</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~/go/src/github.com/hyperledger/</span><br></pre></td></tr></table></figure>
+<h5 id="2-下载fabric源码"><a href="#2-下载fabric源码" class="headerlink" title="2. 下载fabric源码"></a>2. 下载fabric源码</h5><p>进入到刚刚创建的hyperledger文件夹，git clone源码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/go/src/github.com/hyperledger</span><br><span class="line">git clone https://github.com/hyperledger/fabric.git</span><br></pre></td></tr></table></figure>
+<p>如果git clone很慢，可以设置git的网络代理：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --<span class="keyword">global</span> http.proxy <span class="string">'socks5://127.0.0.1:1080'</span></span><br><span class="line">$ git config --<span class="keyword">global</span> https.proxy <span class="string">'socks5://127.0.0.1:1080'</span></span><br></pre></td></tr></table></figure>
+<h5 id="3-下载镜像文件"><a href="#3-下载镜像文件" class="headerlink" title="3. 下载镜像文件"></a>3. 下载镜像文件</h5><p>上一步会在hyperledger文件夹下创建一个新文件夹fabric，找到fabric文件夹里的scripts文件夹里的bootstrap.sh脚本，这个脚本就是下载相关镜像的，运行这个脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bootstrap.sh</span><br></pre></td></tr></table></figure>
+<p>如果由于网络问题下载不成功，建议先在终端设置代理：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export http_proxy=<span class="string">"socks5://127.0.0.1:1080"</span></span><br><span class="line">export https_proxy=<span class="string">"socks5://127.0.0.1:1080"</span></span><br></pre></td></tr></table></figure>
+<p>由于镜像文件有点多，可能需要花费一些时间。下载完成后会罗列出下载的docker镜像，有好几个竟然显示几个G，很疑惑这些文件在哪儿？去脚本文件查阅也没找出来</p>
+<p>在scripts文件夹下有个fabric-samples文件夹，在上一步完成后会出现一个bin文件夹，将这个文件夹复制到fabric/examples下</p>
+<h5 id="4-运行实例"><a href="#4-运行实例" class="headerlink" title="4. 运行实例"></a>4. 运行实例</h5><p>接下来运行实例：e2e_cli，在该文件夹下打开终端：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./network_setup.sh up</span><br></pre></td></tr></table></figure>
+<p>会输出一大堆东西，最后看到字符打印出“END-E2E”。</p>
+<p>关闭实例，按Ctrl+c重回终端输入：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./network_setup.sh down</span><br></pre></td></tr></table></figure>
+
+  </article>
+  <div class="random-toc-area">
+  <button class="btn-hide-toc btn-hide-toc-show" style="display: none" onclick="TOCToggle()">Show TOC</button>
+  <button class="btn-hide-toc btn-hide-toc-hide" onclick="TOCToggle()">Hide TOC</button>
+  <div class="random-toc">
+    <h2>Table of Content</h2>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#0-前言"><span class="toc-text">0. 前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-先行步骤"><span class="toc-text">1. 先行步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-安装go以及环境变量配置"><span class="toc-text">1.1 安装go以及环境变量配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-docker以及docker-compose的安装"><span class="toc-text">1.2 docker以及docker-compose的安装</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-fabric部署"><span class="toc-text">2. fabric部署</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-创建工作目录"><span class="toc-text">1. 创建工作目录</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-下载fabric源码"><span class="toc-text">2. 下载fabric源码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-下载镜像文件"><span class="toc-text">3. 下载镜像文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-运行实例"><span class="toc-text">4. 运行实例</span></a></li></ol></li></ol></li></ol>
+  </div>
+</div>
+
+  
+<nav id="pagination">
+  
+
+  
+
+  
+    <a href="/2018/08/03/ubuntu安装的相关问题/" class="next">Next post ubuntu安装的相关问题 &rarr;</a>
+  
+</nav>
+
+  <!-- JiaThis Button BEGIN -->
+
+<!-- JiaThis Button END -->
+
+
+      
+      
+    </div>
+  </div>
+
+  <div id="bottom-outer">
+    <div id="bottom-inner">
+      Site by Vicebery using
+      <a href="http://hexo.io">Hexo</a> & <a href="https://github.com/stiekel/hexo-theme-random">Random</a>
+      <br>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+<div id="user-card">
+  <div class="center-field">
+    <img class="avatar" src="/avatar.jpg">
+    <p id="description">stay hungry, stay young</p>
+    <ul class="social-icon">
+  
+  
+    <li>
+      <a href="https://github.com/vicebery">
+        
+          <i class="icon iconfont github">&#xe606;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="https://www.zhihu.com/people/vicebery/activities">
+        
+          <i class="icon iconfont zhihu">&#xe60b;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="https://twitter.com/vicebery">
+        
+          <i class="icon iconfont twitter">&#xe600;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="https://www.douban.com/people/vicebery/">
+        
+          <i class="icon iconfont douban">&#xe60f;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="https://plus.google.com/u/0/109399728266375769175">
+        
+          <i class="icon iconfont google-plus">&#xe603;</i>
+        
+      </a>
+    </li>
+  
+</ul>
+  </div>
+</div>
+
+
+<div id="btn-view">Hide</div>
+
+<script>
+// is trigger analytics / tongji script
+var isIgnoreHost = false;
+
+if(window && window.location && window.location.host) {
+  isIgnoreHost = ["localhost","127.0.0.1"].some(function(address){
+    return 0 === window.location.host.indexOf(address);
+  });
+}
+
+var isTriggerAnalytics = !( true && isIgnoreHost );
+
+</script>
+
+
+
+
+  
+  
+    <script src="/js/jquery-2.2.3.min.js"></script>
+  
+    <script src="/js/vegas.min.js"></script>
+  
+    <script src="/js/random.js"></script>
+  
+    <script src="/js/highlight.pack.js"></script>
+  
+    <script src="/js/jquery.mousewheel.pack.js"></script>
+  
+    <script src="/js/jquery.fancybox.pack.js"></script>
+  
+    <script src="/js/jquery.fancybox-thumbs.js"></script>
+  
+    <script src="/js/plyr.js"></script>
+  
+
+<script>
+
+  // fancybox
+  var backgroundImages = [];
+  
+  $('#post').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox') || $(this).parent().hasClass('fancybox-thumb')) return;
+      var alt = this.alt || this.title;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'post' + i);
+    });
+  });
+  $(".fancybox").fancybox();
+
+var vegasConfig = {"preload­Image":true,"transition":["slideLeft2","slideRight2","flash2"],"timer":true,"delay":5000,"shuffle":true,"count":28};
+var unsplashConfig = {"gravity":"north"};
+// is show background images
+var turnoffBackgroundImage = false;
+
+
+
+  turnoffBackgroundImage = true;
+
+
+var backgroundColor = "34495E";
+
+$(".fancybox-thumb").fancybox({
+  prevEffect: 'none',
+  nextEffect: 'none',
+  helpers: {
+    title: {
+      type: 'outside'
+    },
+    thumbs: {
+      width: 50,
+      height: 50
+    }
+  }
+});
+
+// show video with plyr
+$(".video-container iframe").each(function(i){
+  var url = $(this).attr('src');
+  var id = url.split('/').pop();
+  var plyrContainer = document.createElement('div');
+  plyrContainer.className = 'plyr';
+  var plyrElement = document.createElement('div');
+  plyrElement.dataset.videoId = id;
+  switch(true) {
+    case url.search('youtube.com') >= 0:
+      plyrElement.dataset.type = 'youtube';
+      break;
+    case url.search('vimeo.com') >= 0:
+      plyrElement.dataset.type = 'vimeo';
+      break;
+    default:
+      return;
+  };
+  plyrContainer.appendChild(plyrElement);
+  $(this).parent().html(plyrContainer);
+});
+plyr.setup('.plyr', {iconUrl: '/css/sprite.svg'});
+</script>
+</body>
+</html>
+
