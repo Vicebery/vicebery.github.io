@@ -1,159 +1,328 @@
+<!DOCTYPE html>
 
 
 
+  
 
 
-
-
-<!doctype html>
-<html lang="zh-Hans">
+<html class="theme-next muse use-motion" lang="zh-CN">
 <head>
-  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <meta name="author" content="Vicebery">
-  
-  
-  
-  
-    <meta name="description" content="0. 前言以下操作是在ubuntu 18.04上进行，网络使用SS代理，如不使用网络代理，操作过程中可能会出现各种问题。
-1. 先行步骤具体请查看官方文档介绍，这里主要介绍两点：
-1.1 安装go以及环境变量配置建议直接命令安装：
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
 
-sudo apt-get install golang
 
-安装好后设置环境变量，在主目录下新建一个文件夹“go”，作为你的工作空间。
-打开终端，编辑记录环境变量...">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
-  <title>fabric环境搭建以及实例运行 [ Vicebery ]</title>
   
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="fabric,ubuntu," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0. 前言以下操作是在ubuntu 18.04上进行，网络使用SS代理，如不使用网络代理，操作过程中可能会出现各种问题。 1. 先行步骤具体请查看官方文档介绍，这里主要介绍两点： 1.1 安装go以及环境变量配置建议直接命令安装：  sudo apt-get install golang  安装好后设置环境变量，在主目录下新建一个文件夹“go”，作为你的工作空间。 打开终端，编辑记录环境变量的文件">
+<meta name="keywords" content="fabric,ubuntu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fabric环境搭建以及实例运行">
+<meta property="og:url" content="https://vicebery.github.io/2018/08/04/fabric环境搭建以及实例运行/index.html">
+<meta property="og:site_name" content="Vicebery">
+<meta property="og:description" content="0. 前言以下操作是在ubuntu 18.04上进行，网络使用SS代理，如不使用网络代理，操作过程中可能会出现各种问题。 1. 先行步骤具体请查看官方文档介绍，这里主要介绍两点： 1.1 安装go以及环境变量配置建议直接命令安装：  sudo apt-get install golang  安装好后设置环境变量，在主目录下新建一个文件夹“go”，作为你的工作空间。 打开终端，编辑记录环境变量的文件">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-03T13:59:22.137Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="fabric环境搭建以及实例运行">
+<meta name="twitter:description" content="0. 前言以下操作是在ubuntu 18.04上进行，网络使用SS代理，如不使用网络代理，操作过程中可能会出现各种问题。 1. 先行步骤具体请查看官方文档介绍，这里主要介绍两点： 1.1 安装go以及环境变量配置建议直接命令安装：  sudo apt-get install golang  安装好后设置环境变量，在主目录下新建一个文件夹“go”，作为你的工作空间。 打开终端，编辑记录环境变量的文件">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://vicebery.github.io/2018/08/04/fabric环境搭建以及实例运行/"/>
+
+
+
+
+
+  <title>fabric环境搭建以及实例运行 | Vicebery</title>
   
-    <link rel="shortcut icon" href="/avatar.jpg">
-  
-  
-  <link rel="stylesheet" href="/css/random.css">
-<link rel="stylesheet" href="/css/vegas.min.css">
-<link rel="stylesheet" href="/css/highlight-railscasts.css">
-<link rel="stylesheet" href="/css/jquery.fancybox.css">
-<link rel="stylesheet" href="/css/iconfont/iconfont.css">
-<link rel="stylesheet" href="/css/jquery.fancybox-thumbs.css">
-<link rel="stylesheet" href="/css/plyr.css">
-  
+
+
+
+
+
+
+
+
 </head>
 
-<body>
-<div class="side-navigate hide-area">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
   
   
-    <div class="item next">
-      <a href="/2018/08/03/ubuntu安装的相关问题/">
-        <div class="item-icon"></div>
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vicebery</span>
+        <span class="logo-line-after"><i></i></span>
       </a>
-      <div class="item-title">
-        ubuntu安装的相关问题
-      </div>
     </div>
-  
-</div>
-<div id="outer-container" class="hide-area">
-<div id="container">
-  <div id="menu-outer" class="slide-down">
-    <div id="menu-inner">
-      <div id="brand">
-        
-        <a onClick="openUserCard()">
-          <img id="avatar" src="/avatar.jpg"/>
-          <div id="homelink">Vicebery</div>
-        </a>
-      </div>
-      <div id="menu-list">
-        <ul>
-        
-        
-          
-            <li>
-          
-            <a href="/index.html">Home</a>
-            
-          </li>
-        
-          
-            <li>
-          
-            <a href="/archives">Archives</a>
-            
-          </li>
-        
-          
-            <li>
-          
-            <a href="/tags">Tags</a>
-            
-          </li>
-        
-          
-            <li>
-          
-            <a href="/categories">Categories</a>
-            
-          </li>
-        
-          
-            <li>
-          
-            <a href="/about">About</a>
-            
-          </li>
-        
-        </ul>
-      </div>
-      <div id="show-menu">
-        <button>Menu</button>
-      </div>
-    </div>
+      
+        <p class="site-subtitle"></p>
+      
   </div>
 
-  <div id="content-outer">
-    <div id="content-inner">
-      
-      
-  <article id="post">
-    <h1>fabric环境搭建以及实例运行</h1>
-    <p class="page-title-sub">
-      <span id = "post-title-date">Created at 2018-08-03</span>
-      
-        <span id = "post-title-updated">Updated at 2018-08-03</span>
-      
-      
-      <span id = "post-title-categories">Category
-      
-      
-        
-        
-        <a href="/categories/fabric/">fabric</a>
-      
-      </span>
-      
-      
-      <span id = "post-title-tags">
-      Tag
-      
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
       
         
-        
-        <a href="/tags/fabric/">fabric</a>
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
       
         
-          /
-        
-        
-        <a href="/tags/ubuntu/">ubuntu</a>
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
       
-      </span>
+
       
-    </p>
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
     
-    <h3 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h3><p>以下操作是在ubuntu 18.04上进行，网络使用SS代理，如不使用网络代理，操作过程中可能会出现各种问题。</p>
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2018/08/04/fabric环境搭建以及实例运行/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vicebery">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vicebery">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">fabric环境搭建以及实例运行</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-04T05:49:07+08:00">
+                2018-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/fabric/" itemprop="url" rel="index">
+                    <span itemprop="name">fabric</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h3><p>以下操作是在ubuntu 18.04上进行，网络使用SS代理，如不使用网络代理，操作过程中可能会出现各种问题。</p>
 <h3 id="1-先行步骤"><a href="#1-先行步骤" class="headerlink" title="1. 先行步骤"></a>1. 先行步骤</h3><p>具体请查看<a href="http://hyperledger-fabric.readthedocs.io/en/release-1.0/prereqs.html" target="_blank" rel="noopener">官方文档介绍</a>，这里主要介绍两点：</p>
 <h4 id="1-1-安装go以及环境变量配置"><a href="#1-1-安装go以及环境变量配置" class="headerlink" title="1.1 安装go以及环境变量配置"></a>1.1 安装go以及环境变量配置</h4><p>建议直接命令安装：</p>
 <blockquote>
@@ -215,207 +384,381 @@ sudo apt-get install golang
 <p>./network_setup.sh down</p>
 </blockquote>
 
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/fabric/" rel="tag"># fabric</a>
+          
+            <a href="/tags/ubuntu/" rel="tag"># ubuntu</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/03/ubuntu安装的相关问题/" rel="next" title="ubuntu安装的相关问题">
+                <i class="fa fa-chevron-left"></i> ubuntu安装的相关问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
   </article>
-  <div class="random-toc-area">
-  <button class="btn-hide-toc btn-hide-toc-show" style="display: none" onclick="TOCToggle()">Show TOC</button>
-  <button class="btn-hide-toc btn-hide-toc-hide" onclick="TOCToggle()">Hide TOC</button>
-  <div class="random-toc">
-    <h2>Table of Content</h2>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#0-前言"><span class="toc-text">0. 前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-先行步骤"><span class="toc-text">1. 先行步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-安装go以及环境变量配置"><span class="toc-text">1.1 安装go以及环境变量配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-docker以及docker-compose的安装"><span class="toc-text">1.2 docker以及docker-compose的安装</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-fabric部署"><span class="toc-text">2. fabric部署</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-创建工作目录"><span class="toc-text">1. 创建工作目录</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-下载fabric源码"><span class="toc-text">2. 下载fabric源码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-下载镜像文件"><span class="toc-text">3. 下载镜像文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-运行实例"><span class="toc-text">4. 运行实例</span></a></li></ol></li></ol></li></ol>
-  </div>
-</div>
-
-  
-<nav id="pagination">
-  
-
-  
-
-  
-    <a href="/2018/08/03/ubuntu安装的相关问题/" class="next">Next post ubuntu安装的相关问题 &rarr;</a>
-  
-</nav>
-
-  <!-- JiaThis Button BEGIN -->
-
-<!-- JiaThis Button END -->
 
 
-      
+
+    <div class="post-spread">
       
     </div>
   </div>
 
-  <div id="bottom-outer">
-    <div id="bottom-inner">
-      Site by Vicebery using
-      <a href="http://hexo.io">Hexo</a> & <a href="https://github.com/stiekel/hexo-theme-random">Random</a>
-      <br>
-      
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Vicebery</p>
+              <p class="site-description motion-element" itemprop="description">stay hungry, stay young</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-前言"><span class="nav-number">1.</span> <span class="nav-text">0. 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-先行步骤"><span class="nav-number">2.</span> <span class="nav-text">1. 先行步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-安装go以及环境变量配置"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 安装go以及环境变量配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-docker以及docker-compose的安装"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 docker以及docker-compose的安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-fabric部署"><span class="nav-number">3.</span> <span class="nav-text">2. fabric部署</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-创建工作目录"><span class="nav-number">3.0.1.</span> <span class="nav-text">1. 创建工作目录</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-下载fabric源码"><span class="nav-number">3.0.2.</span> <span class="nav-text">2. 下载fabric源码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-下载镜像文件"><span class="nav-number">3.0.3.</span> <span class="nav-text">3. 下载镜像文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-运行实例"><span class="nav-number">3.0.4.</span> <span class="nav-text">4. 运行实例</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vicebery</span>
+
+  
 </div>
 
-</div>
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
-<div id="user-card">
-  <div class="center-field">
-    <img class="avatar" src="/avatar.jpg">
-    <p id="description">stay hungry, stay young</p>
-    <ul class="social-icon">
-  
-  
-    <li>
-      <a href="https://github.com/vicebery">
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
         
-          <i class="icon iconfont github">&#xe606;</i>
+
+
+
+
+
+
+
         
-      </a>
-    </li>
-  
-    <li>
-      <a href="https://www.zhihu.com/people/vicebery/activities">
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
         
-          <i class="icon iconfont zhihu">&#xe60b;</i>
-        
-      </a>
-    </li>
-  
-    <li>
-      <a href="https://twitter.com/vicebery">
-        
-          <i class="icon iconfont twitter">&#xe600;</i>
-        
-      </a>
-    </li>
-  
-    <li>
-      <a href="https://www.douban.com/people/vicebery/">
-        
-          <i class="icon iconfont douban">&#xe60f;</i>
-        
-      </a>
-    </li>
-  
-    <li>
-      <a href="https://plus.google.com/u/0/109399728266375769175">
-        
-          <i class="icon iconfont google-plus">&#xe603;</i>
-        
-      </a>
-    </li>
-  
-</ul>
+      </div>
+    
+
+    
+
   </div>
-</div>
-
-
-<div id="btn-view">Hide</div>
-
-<script>
-// is trigger analytics / tongji script
-var isIgnoreHost = false;
-
-if(window && window.location && window.location.host) {
-  isIgnoreHost = ["localhost","127.0.0.1"].some(function(address){
-    return 0 === window.location.host.indexOf(address);
-  });
-}
-
-var isTriggerAnalytics = !( true && isIgnoreHost );
-
-</script>
-
-
-
 
   
-  
-    <script src="/js/jquery-2.2.3.min.js"></script>
-  
-    <script src="/js/vegas.min.js"></script>
-  
-    <script src="/js/random.js"></script>
-  
-    <script src="/js/highlight.pack.js"></script>
-  
-    <script src="/js/jquery.mousewheel.pack.js"></script>
-  
-    <script src="/js/jquery.fancybox.pack.js"></script>
-  
-    <script src="/js/jquery.fancybox-thumbs.js"></script>
-  
-    <script src="/js/plyr.js"></script>
-  
 
-<script>
-
-  // fancybox
-  var backgroundImages = [];
-  
-  $('#post').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox') || $(this).parent().hasClass('fancybox-thumb')) return;
-      var alt = this.alt || this.title;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
-    });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'post' + i);
-    });
-  });
-  $(".fancybox").fancybox();
-
-var vegasConfig = {"preload­Image":true,"transition":["slideLeft2","slideRight2","flash2"],"timer":true,"delay":5000,"shuffle":true,"count":28};
-var unsplashConfig = {"gravity":"north"};
-// is show background images
-var turnoffBackgroundImage = false;
-
-
-
-  turnoffBackgroundImage = true;
-
-
-var backgroundColor = "34495E";
-
-$(".fancybox-thumb").fancybox({
-  prevEffect: 'none',
-  nextEffect: 'none',
-  helpers: {
-    title: {
-      type: 'outside'
-    },
-    thumbs: {
-      width: 50,
-      height: 50
-    }
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
   }
-});
-
-// show video with plyr
-$(".video-container iframe").each(function(i){
-  var url = $(this).attr('src');
-  var id = url.split('/').pop();
-  var plyrContainer = document.createElement('div');
-  plyrContainer.className = 'plyr';
-  var plyrElement = document.createElement('div');
-  plyrElement.dataset.videoId = id;
-  switch(true) {
-    case url.search('youtube.com') >= 0:
-      plyrElement.dataset.type = 'youtube';
-      break;
-    case url.search('vimeo.com') >= 0:
-      plyrElement.dataset.type = 'vimeo';
-      break;
-    default:
-      return;
-  };
-  plyrContainer.appendChild(plyrElement);
-  $(this).parent().html(plyrContainer);
-});
-plyr.setup('.plyr', {iconUrl: '/css/sprite.svg'});
 </script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
 </body>
 </html>
-

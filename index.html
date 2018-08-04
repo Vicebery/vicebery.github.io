@@ -1,276 +1,1739 @@
+<!DOCTYPE html>
 
 
 
+  
 
 
-
-
-<!doctype html>
-<html lang="zh-Hans">
+<html class="theme-next muse use-motion" lang="zh-CN">
 <head>
-  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
-  <meta name="author" content="Vicebery">
   
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="stay hungry, stay young">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vicebery">
+<meta property="og:url" content="https://vicebery.github.io/index.html">
+<meta property="og:site_name" content="Vicebery">
+<meta property="og:description" content="stay hungry, stay young">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vicebery">
+<meta name="twitter:description" content="stay hungry, stay young">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://vicebery.github.io/"/>
+
+
+
+
+
+  <title>Vicebery</title>
   
-  
-  
-    <meta name="description" content="stay hungry, stay young">
-  
-  <title> [ Vicebery ]</title>
-  
-  
-    <link rel="shortcut icon" href="/avatar.jpg">
-  
-  
-  <link rel="stylesheet" href="/css/random.css">
-<link rel="stylesheet" href="/css/vegas.min.css">
-<link rel="stylesheet" href="/css/highlight-railscasts.css">
-<link rel="stylesheet" href="/css/jquery.fancybox.css">
-<link rel="stylesheet" href="/css/iconfont/iconfont.css">
-<link rel="stylesheet" href="/css/jquery.fancybox-thumbs.css">
-<link rel="stylesheet" href="/css/plyr.css">
-  
+
+
+
+
+
+
+
+
 </head>
 
-<div class="random-center hide-area">
-  <div id="random-index">
-    <div class="center-field">
-      <img class="avatar" src="/avatar.jpg" width=120 height=120 onClick="openUserCard()">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vicebery</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
     </div>
-    <div class="center-field">
-      <div class="title" onClick="openUserCard()">Vicebery</div>
-      <div class="sub-title" onClick="openUserCard()"></div>
-    </div>
-    <hr >
-    <div class="center-field">
-      <ul class="index-nav-link">
-        
-        
-          
-            <li><a href="/index.html">Home</a></li>
-          
-        
-          
-            <li><a href="/archives">Archives</a></li>
-          
-        
-          
-            <li><a href="/tags">Tags</a></li>
-          
-        
-          
-            <li><a href="/categories">Categories</a></li>
-          
-        
-          
-            <li><a href="/about">About</a></li>
-          
-        
-      </ul>
-      <ul class="social-icon">
-  
-  
-    <li>
-      <a href="https://github.com/vicebery">
-        
-          <i class="icon iconfont github">&#xe606;</i>
-        
-      </a>
-    </li>
-  
-    <li>
-      <a href="https://www.zhihu.com/people/vicebery/activities">
-        
-          <i class="icon iconfont zhihu">&#xe60b;</i>
-        
-      </a>
-    </li>
-  
-    <li>
-      <a href="https://twitter.com/vicebery">
-        
-          <i class="icon iconfont twitter">&#xe600;</i>
-        
-      </a>
-    </li>
-  
-    <li>
-      <a href="https://www.douban.com/people/vicebery/">
-        
-          <i class="icon iconfont douban">&#xe60f;</i>
-        
-      </a>
-    </li>
-  
-    <li>
-      <a href="https://plus.google.com/u/0/109399728266375769175">
-        
-          <i class="icon iconfont google-plus">&#xe603;</i>
-        
-      </a>
-    </li>
-  
-</ul>
-    </div>
+      
+        <p class="site-subtitle"></p>
+      
   </div>
-</div>
-<div id="user-card">
-  <div class="center-field">
-    <img class="avatar" src="/avatar.jpg">
-    <p id="description">stay hungry, stay young</p>
-    <ul class="social-icon">
-  
-  
-    <li>
-      <a href="https://github.com/vicebery">
-        
-          <i class="icon iconfont github">&#xe606;</i>
-        
-      </a>
-    </li>
-  
-    <li>
-      <a href="https://www.zhihu.com/people/vicebery/activities">
-        
-          <i class="icon iconfont zhihu">&#xe60b;</i>
-        
-      </a>
-    </li>
-  
-    <li>
-      <a href="https://twitter.com/vicebery">
-        
-          <i class="icon iconfont twitter">&#xe600;</i>
-        
-      </a>
-    </li>
-  
-    <li>
-      <a href="https://www.douban.com/people/vicebery/">
-        
-          <i class="icon iconfont douban">&#xe60f;</i>
-        
-      </a>
-    </li>
-  
-    <li>
-      <a href="https://plus.google.com/u/0/109399728266375769175">
-        
-          <i class="icon iconfont google-plus">&#xe603;</i>
-        
-      </a>
-    </li>
-  
-</ul>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
   </div>
 </div>
 
+<nav class="site-nav">
+  
 
-<div id="btn-view">Hide</div>
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
 
-<script>
-// is trigger analytics / tongji script
-var isIgnoreHost = false;
+      
+    </ul>
+  
 
-if(window && window.location && window.location.host) {
-  isIgnoreHost = ["localhost","127.0.0.1"].some(function(address){
-    return 0 === window.location.host.indexOf(address);
-  });
-}
-
-var isTriggerAnalytics = !( true && isIgnoreHost );
-
-</script>
+  
+</nav>
 
 
 
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
 
   
   
-    <script src="/js/jquery-2.2.3.min.js"></script>
-  
-    <script src="/js/vegas.min.js"></script>
-  
-    <script src="/js/random.js"></script>
-  
-    <script src="/js/highlight.pack.js"></script>
-  
-    <script src="/js/jquery.mousewheel.pack.js"></script>
-  
-    <script src="/js/jquery.fancybox.pack.js"></script>
-  
-    <script src="/js/jquery.fancybox-thumbs.js"></script>
-  
-    <script src="/js/plyr.js"></script>
   
 
-<script>
-
-  // fancybox
-  var backgroundImages = [];
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
-  $('#post').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox') || $(this).parent().hasClass('fancybox-thumb')) return;
-      var alt = this.alt || this.title;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
-    });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'post' + i);
-    });
-  });
-  $(".fancybox").fancybox();
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2018/08/04/fabric环境搭建以及实例运行/">
 
-var vegasConfig = {"preload­Image":true,"transition":["slideLeft2","slideRight2","flash2"],"timer":true,"delay":5000,"shuffle":true,"count":28};
-var unsplashConfig = {"gravity":"north"};
-// is show background images
-var turnoffBackgroundImage = false;
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vicebery">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vicebery">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/04/fabric环境搭建以及实例运行/" itemprop="url">fabric环境搭建以及实例运行</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-03T21:49:07Z">
+                2018-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/fabric/" itemprop="url" rel="index">
+                    <span itemprop="name">fabric</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h3><p>以下操作是在ubuntu 18.04上进行，网络使用SS代理，如不使用网络代理，操作过程中可能会出现各种问题。</p>
+<h3 id="1-先行步骤"><a href="#1-先行步骤" class="headerlink" title="1. 先行步骤"></a>1. 先行步骤</h3><p>具体请查看<a href="http://hyperledger-fabric.readthedocs.io/en/release-1.0/prereqs.html" target="_blank" rel="noopener">官方文档介绍</a>，这里主要介绍两点：</p>
+<h4 id="1-1-安装go以及环境变量配置"><a href="#1-1-安装go以及环境变量配置" class="headerlink" title="1.1 安装go以及环境变量配置"></a>1.1 安装go以及环境变量配置</h4><p>建议直接命令安装：</p>
+<blockquote>
+<p>sudo apt-get install golang</p>
+</blockquote>
+<p>安装好后设置环境变量，在主目录下新建一个文件夹“go”，作为你的工作空间。</p>
+<p>打开终端，编辑记录环境变量的文件：</p>
+<blockquote>
+<p>sudo vim /etc/profile</p>
+</blockquote>
+<p>在文件最后添加：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> GOPATH=$HOME/go</span><br><span class="line"><span class="keyword">export</span> PATH=$PATH:$GOPATH/bin</span><br></pre></td></tr></table></figure>
+<p>在系统下用命令安装不需要添加GOROOT，因为默认安装位置是/usr/lib，此路径已经被写入环境变量了。</p>
+<p>官方文档写的是编辑~/.bashrc这个文件，关于这个问题，网上也有很多版本，这篇<a href="https://www.cnblogs.com/love-snow/articles/7755660.html" target="_blank" rel="noopener">博客</a>有相关介绍。</p>
+<p>安装好后，检验一下：</p>
+<blockquote>
+<p>sudo go env</p>
+</blockquote>
+<p>若显示go的相关环境，则证明安装成功。</p>
+<h4 id="1-2-docker以及docker-compose的安装"><a href="#1-2-docker以及docker-compose的安装" class="headerlink" title="1.2 docker以及docker-compose的安装"></a>1.2 docker以及docker-compose的安装</h4><p>命令直接安装一般不会成功，这里参考<a href="https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/" target="_blank" rel="noopener">清华大学镜像源安装</a>。</p>
+<p>按照以上网址的教程，依然出现问题：<br>在导入信任docker的GPG公钥时，由于国内网络问题，docker官网不能正常访问，出现错误：</p>
+<blockquote>
+<p>curl: (7) Failed to receive SOCKS4 connect request ack.<br>gpg: 找不到有效的 OpenPGP 数据。</p>
+</blockquote>
+<p>于是在终端下设置临时代理：</p>
+<blockquote>
+<p>export https_proxy=socks5://127.0.0.1:1080</p>
+</blockquote>
+<p>显示“ok”，即导入成功。</p>
+<h3 id="2-fabric部署"><a href="#2-fabric部署" class="headerlink" title="2. fabric部署"></a>2. fabric部署</h3><h5 id="1-创建工作目录"><a href="#1-创建工作目录" class="headerlink" title="1. 创建工作目录"></a>1. 创建工作目录</h5><p>在你的go的工作空间中创建文件夹</p>
+<blockquote>
+<p>mkdir -p ~/go/src/github.com/hyperledger/</p>
+</blockquote>
+<h5 id="2-下载fabric源码"><a href="#2-下载fabric源码" class="headerlink" title="2. 下载fabric源码"></a>2. 下载fabric源码</h5><p>进入到刚刚创建的hyperledger文件夹，git clone源码</p>
+<blockquote>
+<p>cd ~/go/src/github.com/hyperledger<br>git clone <a href="https://github.com/hyperledger/fabric.git" target="_blank" rel="noopener">https://github.com/hyperledger/fabric.git</a></p>
+</blockquote>
+<p>如果git clone很慢，可以设置git的网络代理：</p>
+<blockquote>
+<p>git config –global http.proxy ‘socks5://127.0.0.1:1080’<br>git config –global https.proxy ‘socks5://127.0.0.1:1080’</p>
+</blockquote>
+<h5 id="3-下载镜像文件"><a href="#3-下载镜像文件" class="headerlink" title="3. 下载镜像文件"></a>3. 下载镜像文件</h5><p>上一步会在hyperledger文件夹下创建一个新文件夹fabric，找到fabric文件夹里的scripts文件夹里的bootstrap.sh脚本，这个脚本就是下载相关镜像的，运行这个脚本：</p>
+<blockquote>
+<p>./bootstrap.sh</p>
+</blockquote>
+<p>如果由于网络问题下载不成功，建议先在终端设置代理：</p>
+<blockquote>
+<p>export http_proxy=”socks5://127.0.0.1:1080”<br>export https_proxy=”socks5://127.0.0.1:1080”</p>
+</blockquote>
+<p>由于镜像文件有点多，可能需要花费一些时间。下载完成后会罗列出下载的docker镜像，有好几个竟然显示几个G，很疑惑这些文件在哪儿？去脚本文件查阅也没找出来</p>
+<p>在scripts文件夹下有个fabric-samples文件夹，在上一步完成后会出现一个bin文件夹，将这个文件夹复制到fabric/examples下</p>
+<h5 id="4-运行实例"><a href="#4-运行实例" class="headerlink" title="4. 运行实例"></a>4. 运行实例</h5><p>接下来运行实例：e2e_cli，在该文件夹下打开终端：</p>
+<blockquote>
+<p>./network_setup.sh up</p>
+</blockquote>
+<p>会输出一大堆东西，最后看到字符打印出“END-E2E”。</p>
+<p>关闭实例，按Ctrl+c重回终端输入：</p>
+<blockquote>
+<p>./network_setup.sh down</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2018/08/03/ubuntu安装的相关问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vicebery">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vicebery">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/03/ubuntu安装的相关问题/" itemprop="url">ubuntu安装的相关问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-02T16:19:52Z">
+                2018-08-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ubuntu/" itemprop="url" rel="index">
+                    <span itemprop="name">ubuntu</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>以下介绍用U盘安装ubuntu与windows共存的一些问题：</p>
+<h3 id="1-确认安装的位置："><a href="#1-确认安装的位置：" class="headerlink" title="1.确认安装的位置："></a>1.确认安装的位置：</h3><p>  想要ubuntu和windows共存，就要为ubuntu单独预留一份空间，如果你本身的系统是windows，可以在磁盘管理下，选定某个盘符，点击右键压缩卷，压缩出来的空间作为ubuntu安装的存储空间，大小按个人需求来定，像我学习fabric等区块连平台，预留了50G。压缩卷后看到有一块变成绿色或者灰色，即可用或者未分配空间，该空间就是等会安装ubuntu的位置。</p>
+<h3 id="2-制作U盘启动盘："><a href="#2-制作U盘启动盘：" class="headerlink" title="2.制作U盘启动盘："></a>2.制作U盘启动盘：</h3><p>在此步骤之前，确保安装的系统镜像已经下载好了，去ubuntu中文官方网站即可下载最新的版本18.04，我目前用的就是这个版本。然后还需要一个不小于4G的U盘。<br>制作启动盘的软件我选用的是powerISO，去官网下载，安装选择试用。<br>软件打开后，菜单栏点击“打开”，选择你下载好的系统镜像，然后选择制作U盘启动盘，写入模式建议选择USB-HDD，点击“写入”，一般需要15min，看到刻录完成即成功。</p>
+<h3 id="3-重启系统进入BIOS，选择U盘启动："><a href="#3-重启系统进入BIOS，选择U盘启动：" class="headerlink" title="3.重启系统进入BIOS，选择U盘启动："></a>3.重启系统进入BIOS，选择U盘启动：</h3><p>每种型号的计算机进入BIOS的方式一般不一样，thinkpad的笔记本启动后看到屏幕下方有提示，按Ehter键进入选择菜单，然后可以看到最后一行英文意思是选择一种临时启动方式，正是我们所需要的，这样就不用依照网上有些教程所说的设置启动优先级，安装完了还要修改回来，我们只需要临时一次就可以安装好。选择了U盘启动后，就会启动U盘里的系统，等一会儿，出现一个界面，让你选择是试用ubuntu还是安装ubuntu，选择安装。</p>
+<h3 id="4-安装方式的选择："><a href="#4-安装方式的选择：" class="headerlink" title="4.安装方式的选择："></a>4.安装方式的选择：</h3><p>按照提示设置，安装时提示你联网，选择不联网，选择不要更新软件，这样可以节省很多时间。其中有一个设置界面是选择安装方式，第一个选择是与windows共存，第二个和第三个会覆盖wildows系统–意思是所有磁盘数据会清空，给你安装一个崭新的ubuntu，还有最后一个选项是其他，网上教程一般让你选择其他，如果选择其他，则需要自己分区，提前要想好根目录、/home、/boot、swap分区的大小，如果选择第一种，则会自行分区，并且不需要选择安装位置，它自行寻找一个空的盘符，就是我们在第一步中已经预留好的空间，/root即根目录会和你预留的安装空间差不多大，/home在根目录下.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2017/09/04/记于九月初/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vicebery">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vicebery">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/04/记于九月初/" itemprop="url">记于九月初</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-03T19:57:01Z">
+                2017-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/随笔/" itemprop="url" rel="index">
+                    <span itemprop="name">随笔</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>永远不要高估自己的自律能力</p>
+</blockquote>
+<p>这段时间情绪低落，主要原因是没能完成自己暑期任务，这让我再度开始怀疑自己的能力，一直以来都很钦佩那些给自己定下目标后就能按时完成的人，就像写程序一样，本来是不可控的东西，但总有人能突破极限，在极短的时间写出效率极高的代码，然而这样的人凤毛菱角，显然我不属于这类人。</p>
+<p>我回顾自己的有意识的人生，发现自己有几个极大的缺陷，做事效率不高，经常自视过高，这可能是梦想家的通病吧，只不过我病的更深一点。不久前，曾与身边一位“做事效率极高”的朋友谈到这个，他说这可能是习惯问题，起初我不太赞同，我觉得这可能和智商一样，很难改变，反思自己的暑期备考经历，我开始对他的这种说法感到赞同。</p>
+<p>同样的在自习室，同样的一个小时，有的人可以读完2篇千字以上的外刊，有的人却一篇都读不完，抛开对单词语法的熟练程度不算，这很大程度上是由习惯决定的，有些人习惯不停地思考问题，而有些人思想总开小差，我对那些能三四个小时注意力高度集中在一件事情上的人感到震惊，因为我可能半小时都做不到，当我发现自己像个多动症儿童一样，我感到羞愧，我知道习惯很难改变，但越是困难的事，完成后的成就感越大。</p>
+<p>很多事情我明白了，但我不喜欢说于他人听，因为实际的行动比其他任何事情都重要，人生一途，“过程”是自己的，“结果”是他人的，关于考研，过程、结果，我都要。与诸君共勉！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2017/08/29/关于《局外人》的一些思考/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vicebery">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vicebery">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/29/关于《局外人》的一些思考/" itemprop="url">关于《局外人》的一些思考</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-28T23:47:06Z">
+                2017-08-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/随笔/" itemprop="url" rel="index">
+                    <span itemprop="name">随笔</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>  初中时，我就开始想一个问题——我活着的意义，在不断寻找这个问题的过程中，我发现，这个问题的复杂远超我的认知水平，我不断学习，然而这个问题似乎随着我的学习提高变的愈发复杂，我同时也发现，就像数学题一样，问题并不一定存在解。</p>
+<p>  很久没更新了，上次记录这篇日记时我还在考研，如今我已顺利来到浙大读研，回想这一切，似乎有点像是一场梦，也许醒来，才发现自己只是累的睡着了……</p>
+<p>  存在主义告诫我们要面对接受最直接的“现实刺激”，不要让过往的经历来影响现在的情感发泄，但一个人存在的意义不正是他留在世界上的痕迹所体现出来的吗？</p>
+<p>未完待续……</p>
+<p>Seven times have I despised my soul:                    </p>
+<ul>
+<li>The first time when I saw her being meek that she might attain height.</li>
+<li>The second time when I saw her limping before the crippled.</li>
+<li>The third time when she was given to choose between the hard and the easy, and she chose the easy.</li>
+<li>The fourth time when she committed a wrong, and comforted herself that others also commit wrong.</li>
+<li>The fifth time when she forbore for weakness, and attributed her patience to strength.</li>
+<li>The sixth time when she despised the ugliness of a face, and knew not that it was one of her own masks.</li>
+<li>And the seventh time when she sang a song of praise, and deemed it a virtue.<pre><code>--Kahlil Gibran
+</code></pre></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2017/08/23/PAT-A1062/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vicebery">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vicebery">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/23/PAT-A1062/" itemprop="url">PAT A1062</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-22T23:55:02Z">
+                2017-08-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>#PAT A1025</p>
+<p>题目描述：<a href="https://www.patest.cn/contests/pat-a-practise/1062" target="_blank" rel="noopener">PAT A1062</a></p>
+<p>分析：本题主要考查排序函数的使用;</p>
+<p>AC代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span>&#123;</span></span><br><span class="line">	<span class="keyword">char</span> id[<span class="number">10</span>];</span><br><span class="line">	<span class="keyword">int</span> de,cai,sum;</span><br><span class="line">	<span class="keyword">int</span> flag;</span><br><span class="line">&#125;stu[<span class="number">100010</span>];</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(Student a, Student b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(a.flag!=b.flag)</span><br><span class="line">		<span class="keyword">return</span> a.flag&lt;b.flag;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(a.sum!=b.sum)</span><br><span class="line">		<span class="keyword">return</span> a.sum&gt;b.sum;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(a.de!=b.de)</span><br><span class="line">		<span class="keyword">return</span> a.de&gt;b.de;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">strcmp</span>(a.id,b.id) &lt; <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> N,L,H;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>,&amp;N,&amp;L,&amp;H);</span><br><span class="line">	<span class="keyword">int</span> passNum=N;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;N;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%s%d%d"</span>,&amp;stu[i].id,&amp;stu[i].de,&amp;stu[i].cai);</span><br><span class="line">		stu[i].sum = stu[i].de+stu[i].cai;</span><br><span class="line">		<span class="keyword">if</span>(stu[i].de&lt;L||stu[i].cai&lt;L)&#123;</span><br><span class="line">			stu[i].flag=<span class="number">5</span>;</span><br><span class="line">			passNum--;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(stu[i].de&gt;=H&amp;&amp;stu[i].cai&gt;=H)</span><br><span class="line">				stu[i].flag=<span class="number">1</span>;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(stu[i].de&gt;=H&amp;&amp;stu[i].cai&lt;H)</span><br><span class="line">					stu[i].flag=<span class="number">2</span>;</span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span>(stu[i].de&lt;H&amp;&amp;stu[i].cai&lt;H&amp;&amp;stu[i].de&gt;=stu[i].cai)</span><br><span class="line">						stu[i].flag=<span class="number">3</span>;</span><br><span class="line">					<span class="keyword">else</span> stu[i].flag=<span class="number">4</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	sort(stu,stu+N,cmp);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,passNum);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;passNum;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%s %d %d\n"</span>,stu[i].id,stu[i].de,stu[i].cai);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2017/08/22/has查找思想/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vicebery">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vicebery">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/22/has查找思想/" itemprop="url">has查找思想</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-21T23:23:18Z">
+                2017-08-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法思想/" itemprop="url" rel="index">
+                    <span itemprop="name">算法思想</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>散列</strong>（hash)是一种重要的算法思想，hash函数在计算机领域应用非常广泛，下面主要谈谈其在字符查找方面的一些应用。</p>
+<p>当我们需要在一个域里面查找一些元素时，最简单的思想是遍历整个域，将查询元素与域内元素进行判断是否一致，这项工作相当耗时，我们不妨这样想，将查询元素与查询域建立一个联系，构建一个函数关系hash(X),X为待查元素，hash(X)=0(<em>初始化</em>)为没有X元素,hash(X)=1为X元素出现一次，这样我们可以直接得出任意元素n是否出现过(<em>hash(n)是否为0</em>)，但这也出现一个问题，就是我们需要一个非常大的数组来表示这个函数，这也称为“以空间换时间”。</p>
+<p>因此，当查询域很大时，这个方法并不适用。</p>
+<p>那么怎么进行字符串查找呢？</p>
+<p>当我们给出两个字符串，需要查找后者在前者中出现过，依据上面介绍的思想，我们创建一个数组hashTable[max],接下来，我们需要把字符串转换为数字，作为数组的下标，转换后可能出现的情况的总和即为查找域的大小max,因此max可能很大，占据了非常多的空间，但绝大多数是无用的。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2017/08/09/PAT-A1025/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vicebery">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vicebery">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/09/PAT-A1025/" itemprop="url">PAT_A1025</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-08T23:15:01Z">
+                2017-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/刷题/" itemprop="url" rel="index">
+                    <span itemprop="name">刷题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>#PAT A1025</p>
+<p>题目描述：<a href="https://www.patest.cn/contests/pat-a-practise/1025" target="_blank" rel="noopener">PAT A1025</a></p>
+<p>分析：本题主要考查数据的输入输出处理以及排序函数的使用</p>
+<p>AC代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//@Vicebery</span></span><br><span class="line"><span class="comment">//@2017-8-8</span></span><br><span class="line"><span class="comment">//PAT A1025</span></span><br><span class="line"><span class="comment">//about: PAT Ranking</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> id[<span class="number">15</span>];</span><br><span class="line">	<span class="keyword">int</span> score;</span><br><span class="line">	<span class="keyword">int</span> location_number;</span><br><span class="line">	<span class="keyword">int</span> local_rank;</span><br><span class="line">&#125;stu[<span class="number">30000</span>];</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(Student a, Student b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(a.score!=b.score) <span class="keyword">return</span> a.score &gt; b.score; <span class="comment">//分数由高到低排序 </span></span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">strcmp</span>(a.id,b.id) &lt; <span class="number">0</span>;         <span class="comment">//分数相同则按考号由小到大排序 </span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,k,num=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;k); <span class="comment">//该考场人数 </span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;k;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%s %d"</span>,&amp;stu[num].id,&amp;stu[num].score);</span><br><span class="line">			stu[num].location_number = i;</span><br><span class="line">			num++; </span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//对当前考场考生排名 </span></span><br><span class="line">		sort(stu+num-k,stu+num,cmp);</span><br><span class="line">		stu[num-k].local_rank = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> m=num-k+<span class="number">1</span>;m&lt;num;m++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(stu[m].score==stu[m<span class="number">-1</span>].score)&#123;</span><br><span class="line">				stu[m].local_rank = stu[m<span class="number">-1</span>].local_rank;			</span><br><span class="line">			&#125;	</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				stu[m].local_rank = m+<span class="number">1</span>-(num-k);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,num);</span><br><span class="line">	sort(stu,stu+num,cmp);</span><br><span class="line">	<span class="keyword">int</span> r=<span class="number">1</span>; <span class="comment">//记录总排名 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;num;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(i&gt;<span class="number">0</span>&amp;&amp;stu[i].score!=stu[i<span class="number">-1</span>].score)&#123;</span><br><span class="line">			r=i+<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%s "</span>,stu[i].id);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d %d %d\n"</span>,r,stu[i].location_number,stu[i].local_rank);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2017/07/31/开启新篇章/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vicebery">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vicebery">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/31/开启新篇章/" itemprop="url">开启新篇章</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-30T22:36:02Z">
+                2017-07-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/随笔/" itemprop="url" rel="index">
+                    <span itemprop="name">随笔</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>接下来的一个月要好好准备PAT了，加油！<br>考研的复习也不能落下，加油！坚持！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Vicebery</p>
+              <p class="site-description motion-element" itemprop="description">stay hungry, stay young</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vicebery</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
 
 
 
 
-var backgroundColor = "34495E";
+        
 
-$(".fancybox-thumb").fancybox({
-  prevEffect: 'none',
-  nextEffect: 'none',
-  helpers: {
-    title: {
-      type: 'outside'
-    },
-    thumbs: {
-      width: 50,
-      height: 50
-    }
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
   }
-});
-
-// show video with plyr
-$(".video-container iframe").each(function(i){
-  var url = $(this).attr('src');
-  var id = url.split('/').pop();
-  var plyrContainer = document.createElement('div');
-  plyrContainer.className = 'plyr';
-  var plyrElement = document.createElement('div');
-  plyrElement.dataset.videoId = id;
-  switch(true) {
-    case url.search('youtube.com') >= 0:
-      plyrElement.dataset.type = 'youtube';
-      break;
-    case url.search('vimeo.com') >= 0:
-      plyrElement.dataset.type = 'vimeo';
-      break;
-    default:
-      return;
-  };
-  plyrContainer.appendChild(plyrElement);
-  $(this).parent().html(plyrContainer);
-});
-plyr.setup('.plyr', {iconUrl: '/css/sprite.svg'});
 </script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
 </body>
 </html>
-
