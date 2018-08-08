@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/avatar.jpg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ubuntu," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="以下介绍用U盘安装ubuntu与windows共存的一些问题： 1.确认安装的位置：  想要ubuntu和windows共存，就要为ubuntu单独预留一份空间，如果你本身的系统是windows，可以在磁盘管理下，选定某个盘符，点击右键压缩卷，压缩出来的空间作为ubuntu安装的存储空间，大小按个人需求来定，像我学习fabric等区块连平台，预留了50G。压缩卷后看到有一块变成绿色或者灰色，即可用">
+<meta name="keywords" content="ubuntu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu安装的相关问题">
+<meta property="og:url" content="https://vicebery.github.io/2018-08-03-ubuntu-install/index.html">
+<meta property="og:site_name" content="Vicebery&#39;blog">
+<meta property="og:description" content="以下介绍用U盘安装ubuntu与windows共存的一些问题： 1.确认安装的位置：  想要ubuntu和windows共存，就要为ubuntu单独预留一份空间，如果你本身的系统是windows，可以在磁盘管理下，选定某个盘符，点击右键压缩卷，压缩出来的空间作为ubuntu安装的存储空间，大小按个人需求来定，像我学习fabric等区块连平台，预留了50G。压缩卷后看到有一块变成绿色或者灰色，即可用">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-08T13:43:19.475Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ubuntu安装的相关问题">
+<meta name="twitter:description" content="以下介绍用U盘安装ubuntu与windows共存的一些问题： 1.确认安装的位置：  想要ubuntu和windows共存，就要为ubuntu单独预留一份空间，如果你本身的系统是windows，可以在磁盘管理下，选定某个盘符，点击右键压缩卷，压缩出来的空间作为ubuntu安装的存储空间，大小按个人需求来定，像我学习fabric等区块连平台，预留了50G。压缩卷后看到有一块变成绿色或者灰色，即可用">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://vicebery.github.io/2018-08-03-ubuntu-install/"/>
+
+
+
+
+
+  <title>ubuntu安装的相关问题 | Vicebery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vicebery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">thinking && coding && dreaming</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2018-08-03-ubuntu-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vicebery">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vicebery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ubuntu安装的相关问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-03T00:19:52+08:00">
+                2018-08-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                    <span itemprop="name">学习记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  732
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>以下介绍用U盘安装ubuntu与windows共存的一些问题：</p>
+<h3 id="1-确认安装的位置："><a href="#1-确认安装的位置：" class="headerlink" title="1.确认安装的位置："></a>1.确认安装的位置：</h3><p>  想要ubuntu和windows共存，就要为ubuntu单独预留一份空间，如果你本身的系统是windows，可以在磁盘管理下，选定某个盘符，点击右键压缩卷，压缩出来的空间作为ubuntu安装的存储空间，大小按个人需求来定，像我学习fabric等区块连平台，预留了50G。压缩卷后看到有一块变成绿色或者灰色，即可用或者未分配空间，该空间就是等会安装ubuntu的位置。</p>
+<h3 id="2-制作U盘启动盘："><a href="#2-制作U盘启动盘：" class="headerlink" title="2.制作U盘启动盘："></a>2.制作U盘启动盘：</h3><p>在此步骤之前，确保安装的系统镜像已经下载好了，去ubuntu中文官方网站即可下载最新的版本18.04，我目前用的就是这个版本。然后还需要一个不小于4G的U盘。<br>制作启动盘的软件我选用的是powerISO，去官网下载，安装选择试用。<br>软件打开后，菜单栏点击“打开”，选择你下载好的系统镜像，然后选择制作U盘启动盘，写入模式建议选择USB-HDD，点击“写入”，一般需要15min，看到刻录完成即成功。</p>
+<h3 id="3-重启系统进入BIOS，选择U盘启动："><a href="#3-重启系统进入BIOS，选择U盘启动：" class="headerlink" title="3.重启系统进入BIOS，选择U盘启动："></a>3.重启系统进入BIOS，选择U盘启动：</h3><p>每种型号的计算机进入BIOS的方式一般不一样，thinkpad的笔记本启动后看到屏幕下方有提示，按Ehter键进入选择菜单，然后可以看到最后一行英文意思是选择一种临时启动方式，正是我们所需要的，这样就不用依照网上有些教程所说的设置启动优先级，安装完了还要修改回来，我们只需要临时一次就可以安装好。选择了U盘启动后，就会启动U盘里的系统，等一会儿，出现一个界面，让你选择是试用ubuntu还是安装ubuntu，选择安装。</p>
+<h3 id="4-安装方式的选择："><a href="#4-安装方式的选择：" class="headerlink" title="4.安装方式的选择："></a>4.安装方式的选择：</h3><p>按照提示设置，安装时提示你联网，选择不联网，选择不要更新软件，这样可以节省很多时间。其中有一个设置界面是选择安装方式，第一个选择是与windows共存，第二个和第三个会覆盖wildows系统–意思是所有磁盘数据会清空，给你安装一个崭新的ubuntu，还有最后一个选项是其他，网上教程一般让你选择其他，如果选择其他，则需要自己分区，提前要想好根目录、/home、/boot、swap分区的大小，如果选择第一种，则会自行分区，并且不需要选择安装位置，它自行寻找一个空的盘符，就是我们在第一步中已经预留好的空间，/root即根目录会和你预留的安装空间差不多大，/home在根目录下.</p>
+
+      
+    </div>
+    
+    
+    
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #555;font-size:14px;">-------------The End-------------</div>
+    
+</div>
+
+  
+</div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ubuntu/" rel="tag"><i class="fa fa-tag"></i> ubuntu</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017-09-04-thinking-myself/" rel="next" title="记于九月初">
+                <i class="fa fa-chevron-left"></i> 记于九月初
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-08-04-fabric-env-exam/" rel="prev" title="fabric环境搭建以及实例运行">
+                fabric环境搭建以及实例运行 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Vicebery" />
+            
+              <p class="site-author-name" itemprop="name">Vicebery</p>
+              <p class="site-description motion-element" itemprop="description">stay hungry, stay young</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/vicebery" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/vicebery/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-gittip"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://douban.com/people/vicebery" target="_blank" title="豆瓣">
+                      
+                        <i class="fa fa-fw fa-heart-o"></i>豆瓣</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:vicebery@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/vicebery" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/vicebery" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-确认安装的位置："><span class="nav-number">1.</span> <span class="nav-text">1.确认安装的位置：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-制作U盘启动盘："><span class="nav-number">2.</span> <span class="nav-text">2.制作U盘启动盘：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-重启系统进入BIOS，选择U盘启动："><span class="nav-number">3.</span> <span class="nav-text">3.重启系统进入BIOS，选择U盘启动：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-安装方式的选择："><span class="nav-number">4.</span> <span class="nav-text">4.安装方式的选择：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vicebery</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://github.com/vicebery">Github</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
