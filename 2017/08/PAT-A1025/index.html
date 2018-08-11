@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Linux," />
+  <meta name="keywords" content="PAT,排序,刷题,算法," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="用户与用户组任何一个文件都具有“User、Group、Others”三种身份的个别权限。/etc/passwd  &amp;emsp;记录所有的系统上的账号与一般身份用户，以及root的相关信息;/etc/shadow  &amp;emsp;记录个人密码;/etc/group  &amp;emsp;记录所有的组名; 改变文件属性与权限chgrp: &amp;emsp; 改变文件所属用户组chown: &amp;emsp; 改变文件所有者">
-<meta name="keywords" content="Linux">
+<meta name="description" content="#PAT A1025 题目描述：PAT A1025 分析：本题主要考查数据的输入输出处理以及排序函数的使用 AC代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859//@Vicebery//@2017-8-8//PAT A10">
+<meta name="keywords" content="PAT,排序,刷题,算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux用户与文件基础">
-<meta property="og:url" content="https://vicebery.github.io/2018/08/linux-user-file">
+<meta property="og:title" content="PAT_A1025">
+<meta property="og:url" content="https://vicebery.github.io/2017/08/PAT-A1025/index.html">
 <meta property="og:site_name" content="Vicebery&#39;blog">
-<meta property="og:description" content="用户与用户组任何一个文件都具有“User、Group、Others”三种身份的个别权限。/etc/passwd  &amp;emsp;记录所有的系统上的账号与一般身份用户，以及root的相关信息;/etc/shadow  &amp;emsp;记录个人密码;/etc/group  &amp;emsp;记录所有的组名; 改变文件属性与权限chgrp: &amp;emsp; 改变文件所属用户组chown: &amp;emsp; 改变文件所有者">
+<meta property="og:description" content="#PAT A1025 题目描述：PAT A1025 分析：本题主要考查数据的输入输出处理以及排序函数的使用 AC代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859//@Vicebery//@2017-8-8//PAT A10">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-09T03:05:49.423Z">
+<meta property="og:updated_time" content="2018-08-08T13:41:46.479Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux用户与文件基础">
-<meta name="twitter:description" content="用户与用户组任何一个文件都具有“User、Group、Others”三种身份的个别权限。/etc/passwd  &amp;emsp;记录所有的系统上的账号与一般身份用户，以及root的相关信息;/etc/shadow  &amp;emsp;记录个人密码;/etc/group  &amp;emsp;记录所有的组名; 改变文件属性与权限chgrp: &amp;emsp; 改变文件所属用户组chown: &amp;emsp; 改变文件所有者">
+<meta name="twitter:title" content="PAT_A1025">
+<meta name="twitter:description" content="#PAT A1025 题目描述：PAT A1025 分析：本题主要考查数据的输入输出处理以及排序函数的使用 AC代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859//@Vicebery//@2017-8-8//PAT A10">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://vicebery.github.io/2018/08/linux-user-file"/>
+  <link rel="canonical" href="https://vicebery.github.io/2017/08/PAT-A1025/"/>
 
 
 
 
 
-  <title>Linux用户与文件基础 | Vicebery'blog</title>
+  <title>PAT_A1025 | Vicebery'blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2018/08/linux-user-file">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2017/08/PAT-A1025/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Vicebery">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Linux用户与文件基础</h1>
+          <h1 class="post-title" itemprop="name headline">PAT_A1025</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-09T05:25:52+08:00">
-                2018-08-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-09T07:15:01+08:00">
+                2017-08-08
               </time>
             
 
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,019
+                  328
                 </span>
               
 
@@ -362,7 +362,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  2
                 </span>
               
             </div>
@@ -383,27 +383,11 @@
       
 
       
-        <h2 id="用户与用户组"><a href="#用户与用户组" class="headerlink" title="用户与用户组"></a>用户与用户组</h2><p>任何一个文件都具有“User、Group、Others”三种身份的个别权限。<br><em>/etc/passwd</em>  &emsp;记录所有的系统上的账号与一般身份用户，以及root的相关信息;<br><em>/etc/shadow</em>  &emsp;记录个人密码;<br><em>/etc/group</em>  &emsp;记录所有的组名;</p>
-<h2 id="改变文件属性与权限"><a href="#改变文件属性与权限" class="headerlink" title="改变文件属性与权限"></a>改变文件属性与权限</h2><p><code>chgrp</code>: &emsp; 改变文件所属用户组<br><code>chown</code>: &emsp; 改变文件所有者<br><code>chmod</code>: &emsp; 改变文件的权限</p>
-<p><strong>数字类型改变文件权限</strong></p>
-<p>r:4<br>w:2  &emsp;//让用户删除、更新、新建文件或目录<br>x:1  &emsp;//在目录当中是与“能否进入该目录”</p>
-<p>eg: chmod [-R] xyz 文件或目录   &emsp;//xyz为rwx属性数值的相加，-R为进行递归的持续更改，即连同子目录下的所有文件都会更改</p>
-<h2 id="目录配置"><a href="#目录配置" class="headerlink" title="目录配置"></a>目录配置</h2><p><strong>/根目录</strong> &emsp;与开机系统有关</p>
-<p><em>/bin</em>  &emsp;放置在单用户维护模式下还能够被操作的命令，重要执行文件<br><em>/boot</em>  &emsp;开机与内核文件,放置grub引导装载程序<br><em>/etc</em>  &emsp;配置文件<br><em>/lib</em>  &emsp;开机时会用到的函数库，以及在/bin或/sbin下面的命令会调用的函数库<br><em>/sbin</em>  &emsp;重要的系统执行文件，开机过程中需要的，包括开机、修复、还原系统所需要的命令。某些服务器软件程序则一般放置在/usr/sbin中，而本机自行安装的软件所产生的系统执行文件，则放置在/usr/local/sbin中</p>
-<p><strong>/usr </strong> &emsp;软件放置处，与软件安装/执行有关<br><em>/usr/bin/</em>  &emsp;绝大部分的用户可使用命令都放在这.(与/bin不同之处在于是否与开机过程相关)<br><em>/usr/include/</em>  &emsp;程序头文件与包含文件放置处<br><em>/usr/lib/</em>  &emsp;包含各应用软件的函数库、目标文件，以及不被一般用户惯用的执行文件或脚本。<br><em>/usr/local/</em>  &emsp;自行下载安装的软件建议安装的目录。<br><em>/usr/sbin/</em>  &emsp;非系统正常运行所需要的系统命令。<br><em>/usr/share/</em>  &emsp;放置共享文件<br><em>/usr/src/</em>  &emsp;放置源码</p>
-<p><strong>/var</strong>  &emsp;主要针对常态性变动的文件，包括缓存、登陆文件以及某些软件运行所产生的文件。  </p>
-<p><strong>/opt</strong>  &emsp;第三方软件  </p>
-<h2 id="目录与路径"><a href="#目录与路径" class="headerlink" title="目录与路径"></a>目录与路径</h2><h3 id="目录创建与切换"><a href="#目录创建与切换" class="headerlink" title="目录创建与切换"></a>目录创建与切换</h3><p>绝对路径：路径的写法由根目录/写起<br><code>cd /usr/bin</code>   </p>
-<p>相对路径：从当前目录开始写起<br><code>cd usr/bin</code><br><code>cd ./usr/bin</code></p>
-<p><code>.</code>  代表当前的目录，也可以使用<code>./</code>来表示<br><code>..</code>代表上一层目录，也可以用<code>../</code>来表示<br><code>-</code> 代表前一个工作目录<br><code>~</code> 代表“目前用户身份”所在的主文件夹  </p>
-<p>处理目录的相关命令：<br><code>cd</code>: 切换目录<br><code>pwd</code>: 显示当前目录<br><code>mkdir</code>: 新建一个新的目录<br><code>rmdir</code>: 删除一个空的目录  </p>
-<p>一些常见用法：<br><code>mkdir -p github.com/hyperledger/fabric</code><br>加上<code>-p</code>这个参数，可以自行创建多层目录<br><code>mkdir -m 711 test</code><br>新建权限为rwx–x–x的目录<br><code>rm -r test</code><br>删除test目录下所有的文件  </p>
-<h3 id="文件的复制、移动与删除"><a href="#文件的复制、移动与删除" class="headerlink" title="文件的复制、移动与删除"></a>文件的复制、移动与删除</h3><h4 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h4><p><code>cp [-adfilprsu] 源文件 目标文件</code><br>常用参数：<br>-i  :  若目标文件已经存在，在覆盖时会先询问操作的进行<br>-r  :  递归持续复制，用户目录的复制  </p>
-<p>一些常见用法：<br>复制/etc/目录下的所有内容到/tmp下<br><code>cp /etc/ /tmp</code><br>或<code>cp -r /etc/ /tmp</code><br>一般源文件为目录时，需要用到<code>-r</code></p>
-<h4 id="移动"><a href="#移动" class="headerlink" title="移动"></a>移动</h4><p><code>mv [-fiu] source destination</code><br>参数：<br>-f  :  force强制的意思，若目标文件已存在，则直接覆盖<br>-i  :  若目标文件已存在，就会询问是否覆盖<br>-u  :  若目标文件已存在，且source比较新，才会更新  </p>
-<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><p><code>rm [-fir] 文件或目录</code><br>参数：<br>-f  :  强制删除，忽略不存在的文件，不出现警告信息<br>-i  :  删除前询问<br>-r  :  递归删除，删除目录文件夹，文件夹里的所有东西都会删除  </p>
-<h3 id="文件权限以及属性"><a href="#文件权限以及属性" class="headerlink" title="文件权限以及属性"></a>文件权限以及属性</h3><p>查看文件默认权限：<br><code>umask -S</code><br>新建文件：<br><code>touch newfilename</code><br>查看文件类型：<br><code>file /etc/profile</code>  </p>
-
+        <p>#PAT A1025</p>
+<p>题目描述：<a href="https://www.patest.cn/contests/pat-a-practise/1025" target="_blank" rel="noopener">PAT A1025</a></p>
+<p>分析：本题主要考查数据的输入输出处理以及排序函数的使用</p>
+<p>AC代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//@Vicebery</span></span><br><span class="line"><span class="comment">//@2017-8-8</span></span><br><span class="line"><span class="comment">//PAT A1025</span></span><br><span class="line"><span class="comment">//about: PAT Ranking</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> id[<span class="number">15</span>];</span><br><span class="line">	<span class="keyword">int</span> score;</span><br><span class="line">	<span class="keyword">int</span> location_number;</span><br><span class="line">	<span class="keyword">int</span> local_rank;</span><br><span class="line">&#125;stu[<span class="number">30000</span>];</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(Student a, Student b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(a.score!=b.score) <span class="keyword">return</span> a.score &gt; b.score; <span class="comment">//分数由高到低排序 </span></span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">strcmp</span>(a.id,b.id) &lt; <span class="number">0</span>;         <span class="comment">//分数相同则按考号由小到大排序 </span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,k,num=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;k); <span class="comment">//该考场人数 </span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;k;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%s %d"</span>,&amp;stu[num].id,&amp;stu[num].score);</span><br><span class="line">			stu[num].location_number = i;</span><br><span class="line">			num++; </span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//对当前考场考生排名 </span></span><br><span class="line">		sort(stu+num-k,stu+num,cmp);</span><br><span class="line">		stu[num-k].local_rank = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> m=num-k+<span class="number">1</span>;m&lt;num;m++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(stu[m].score==stu[m<span class="number">-1</span>].score)&#123;</span><br><span class="line">				stu[m].local_rank = stu[m<span class="number">-1</span>].local_rank;			</span><br><span class="line">			&#125;	</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				stu[m].local_rank = m+<span class="number">1</span>-(num-k);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,num);</span><br><span class="line">	sort(stu,stu+num,cmp);</span><br><span class="line">	<span class="keyword">int</span> r=<span class="number">1</span>; <span class="comment">//记录总排名 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;num;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(i&gt;<span class="number">0</span>&amp;&amp;stu[i].score!=stu[i<span class="number">-1</span>].score)&#123;</span><br><span class="line">			r=i+<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%s "</span>,stu[i].id);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d %d %d\n"</span>,r,stu[i].location_number,stu[i].local_rank);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -431,7 +415,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+            <a href="/tags/PAT/" rel="tag"><i class="fa fa-tag"></i> PAT</a>
+          
+            <a href="/tags/排序/" rel="tag"><i class="fa fa-tag"></i> 排序</a>
+          
+            <a href="/tags/刷题/" rel="tag"><i class="fa fa-tag"></i> 刷题</a>
+          
+            <a href="/tags/算法/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
           
         </div>
       
@@ -444,8 +434,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/fabric-env-exam" rel="next" title="fabric环境搭建以及实例运行">
-                <i class="fa fa-chevron-left"></i> fabric环境搭建以及实例运行
+              <a href="/2017/07/start/" rel="next" title="开启新篇章">
+                <i class="fa fa-chevron-left"></i> 开启新篇章
               </a>
             
           </div>
@@ -454,8 +444,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/08/Markdown-grammar" rel="prev" title="Markdown语法笔记">
-                Markdown语法笔记 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08/hash-findchain/" rel="prev" title="hash查找思想">
+                hash查找思想 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -508,17 +498,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -622,22 +603,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#用户与用户组"><span class="nav-number">1.</span> <span class="nav-text">用户与用户组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改变文件属性与权限"><span class="nav-number">2.</span> <span class="nav-text">改变文件属性与权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录配置"><span class="nav-number">3.</span> <span class="nav-text">目录配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录与路径"><span class="nav-number">4.</span> <span class="nav-text">目录与路径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#目录创建与切换"><span class="nav-number">4.1.</span> <span class="nav-text">目录创建与切换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件的复制、移动与删除"><span class="nav-number">4.2.</span> <span class="nav-text">文件的复制、移动与删除</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#复制"><span class="nav-number">4.2.1.</span> <span class="nav-text">复制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#移动"><span class="nav-number">4.2.2.</span> <span class="nav-text">移动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除"><span class="nav-number">4.2.3.</span> <span class="nav-text">删除</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件权限以及属性"><span class="nav-number">4.3.</span> <span class="nav-text">文件权限以及属性</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
