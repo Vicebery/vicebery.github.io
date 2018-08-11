@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="PAT,排序,刷题,算法," />
+  <meta name="keywords" content="Markdown," />
 
 
 
@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="#PAT A1025 题目描述：PAT A1025 分析：本题主要考查数据的输入输出处理以及排序函数的使用 AC代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859//@Vicebery//@2017-8-8//PAT A10">
-<meta name="keywords" content="PAT,排序,刷题,算法">
+<meta name="description" content="插入图片题图上图片插入格式如下：1![top](https://b-ssl.duitang.com/uploads/item/201504/23/20150423H1407_32LxZ.jpeg) 行内缩进和换行缩进&amp;emsp;&amp;emsp;不管是在段首还是在文章中间，都可以用以下几种方式实现word写作中的“空格”，也就算缩进。&amp;ensp;&amp;ensp;半方大的空白&amp;amp;ensp;或&amp;amp;">
+<meta name="keywords" content="Markdown">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PAT_A1025">
-<meta property="og:url" content="https://vicebery.github.io/2017/08/09-PAT-A1025/index.html">
+<meta property="og:title" content="Markdown语法笔记">
+<meta property="og:url" content="https://vicebery.github.io/2018/08/Markdown-grammar">
 <meta property="og:site_name" content="Vicebery&#39;blog">
-<meta property="og:description" content="#PAT A1025 题目描述：PAT A1025 分析：本题主要考查数据的输入输出处理以及排序函数的使用 AC代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859//@Vicebery//@2017-8-8//PAT A10">
+<meta property="og:description" content="插入图片题图上图片插入格式如下：1![top](https://b-ssl.duitang.com/uploads/item/201504/23/20150423H1407_32LxZ.jpeg) 行内缩进和换行缩进&amp;emsp;&amp;emsp;不管是在段首还是在文章中间，都可以用以下几种方式实现word写作中的“空格”，也就算缩进。&amp;ensp;&amp;ensp;半方大的空白&amp;amp;ensp;或&amp;amp;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-08T13:41:46.479Z">
+<meta property="og:image" content="https://b-ssl.duitang.com/uploads/item/201504/23/20150423H1407_32LxZ.jpeg">
+<meta property="og:updated_time" content="2018-08-09T13:49:30.201Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PAT_A1025">
-<meta name="twitter:description" content="#PAT A1025 题目描述：PAT A1025 分析：本题主要考查数据的输入输出处理以及排序函数的使用 AC代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859//@Vicebery//@2017-8-8//PAT A10">
+<meta name="twitter:title" content="Markdown语法笔记">
+<meta name="twitter:description" content="插入图片题图上图片插入格式如下：1![top](https://b-ssl.duitang.com/uploads/item/201504/23/20150423H1407_32LxZ.jpeg) 行内缩进和换行缩进&amp;emsp;&amp;emsp;不管是在段首还是在文章中间，都可以用以下几种方式实现word写作中的“空格”，也就算缩进。&amp;ensp;&amp;ensp;半方大的空白&amp;amp;ensp;或&amp;amp;">
+<meta name="twitter:image" content="https://b-ssl.duitang.com/uploads/item/201504/23/20150423H1407_32LxZ.jpeg">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://vicebery.github.io/2017/08/09-PAT-A1025/"/>
+  <link rel="canonical" href="https://vicebery.github.io/2018/08/Markdown-grammar"/>
 
 
 
 
 
-  <title>PAT_A1025 | Vicebery'blog</title>
+  <title>Markdown语法笔记 | Vicebery'blog</title>
   
 
 
@@ -263,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2017/08/09-PAT-A1025/">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2018/08/Markdown-grammar">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Vicebery">
@@ -280,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">PAT_A1025</h1>
+          <h1 class="post-title" itemprop="name headline">Markdown语法笔记</h1>
         
 
         <div class="post-meta">
@@ -292,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-09T07:15:01+08:00">
-                2017-08-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-10T05:46:49+08:00">
+                2018-08-09
               </time>
             
 
@@ -346,7 +348,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  328
+                  629
                 </span>
               
 
@@ -383,11 +385,39 @@
       
 
       
-        <p>#PAT A1025</p>
-<p>题目描述：<a href="https://www.patest.cn/contests/pat-a-practise/1025" target="_blank" rel="noopener">PAT A1025</a></p>
-<p>分析：本题主要考查数据的输入输出处理以及排序函数的使用</p>
-<p>AC代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//@Vicebery</span></span><br><span class="line"><span class="comment">//@2017-8-8</span></span><br><span class="line"><span class="comment">//PAT A1025</span></span><br><span class="line"><span class="comment">//about: PAT Ranking</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> id[<span class="number">15</span>];</span><br><span class="line">	<span class="keyword">int</span> score;</span><br><span class="line">	<span class="keyword">int</span> location_number;</span><br><span class="line">	<span class="keyword">int</span> local_rank;</span><br><span class="line">&#125;stu[<span class="number">30000</span>];</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(Student a, Student b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(a.score!=b.score) <span class="keyword">return</span> a.score &gt; b.score; <span class="comment">//分数由高到低排序 </span></span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">strcmp</span>(a.id,b.id) &lt; <span class="number">0</span>;         <span class="comment">//分数相同则按考号由小到大排序 </span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,k,num=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;k); <span class="comment">//该考场人数 </span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;k;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%s %d"</span>,&amp;stu[num].id,&amp;stu[num].score);</span><br><span class="line">			stu[num].location_number = i;</span><br><span class="line">			num++; </span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//对当前考场考生排名 </span></span><br><span class="line">		sort(stu+num-k,stu+num,cmp);</span><br><span class="line">		stu[num-k].local_rank = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> m=num-k+<span class="number">1</span>;m&lt;num;m++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(stu[m].score==stu[m<span class="number">-1</span>].score)&#123;</span><br><span class="line">				stu[m].local_rank = stu[m<span class="number">-1</span>].local_rank;			</span><br><span class="line">			&#125;	</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				stu[m].local_rank = m+<span class="number">1</span>-(num-k);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,num);</span><br><span class="line">	sort(stu,stu+num,cmp);</span><br><span class="line">	<span class="keyword">int</span> r=<span class="number">1</span>; <span class="comment">//记录总排名 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;num;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(i&gt;<span class="number">0</span>&amp;&amp;stu[i].score!=stu[i<span class="number">-1</span>].score)&#123;</span><br><span class="line">			r=i+<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%s "</span>,stu[i].id);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d %d %d\n"</span>,r,stu[i].location_number,stu[i].local_rank);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p><img src="https://b-ssl.duitang.com/uploads/item/201504/23/20150423H1407_32LxZ.jpeg" alt="top"></p>
+<h2 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h2><p>题图上图片插入格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![top](https://b-ssl.duitang.com/uploads/item/201504/23/20150423H1407_32LxZ.jpeg)</span><br></pre></td></tr></table></figure></p>
+<h2 id="行内缩进和换行"><a href="#行内缩进和换行" class="headerlink" title="行内缩进和换行"></a>行内缩进和换行</h2><h3 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h3><p>&emsp;&emsp;不管是在段首还是在文章中间，都可以用以下几种方式实现word写作中的“空格”，也就算缩进。<br>&ensp;&ensp;半方大的空白<code>&amp;ensp;</code>或<code>&amp;#8194</code>;<br>&emsp;&emsp;全方大的空白<code>&amp;emsp;</code>或<code>&amp;#8195</code>;<br>&nbsp;&nbsp;不断行的空白格<code>&amp;nbsp;</code>或<code>&amp;#160</code>;  </p>
+<h3 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h3><p>markdown语法中，在编辑时，文字中间空了一行，显示在网页上就是这两段文字被一行隔开<br>但有时，我们不需要两段文字有那么大的空隙，仅仅只是需要重起一行，有几种方法可以实现：<br></p>
+<ol>
+<li>当想要重起一行时，按下两个空格，再按<em>Enter</em>  </li>
+<li>使用 &#60;br&#62;标签<br><em>注：我这里的br标签使用了转义符<code>&amp;#60;</code>和<code>&amp;#62;</code>，分别显示小于号和大于号</em></li>
+</ol>
+<h2 id="关于文字"><a href="#关于文字" class="headerlink" title="关于文字"></a>关于文字</h2><h3 id="字体颜色以及大小"><a href="#字体颜色以及大小" class="headerlink" title="字体颜色以及大小"></a><font color="#0099ff" size="face="黑体"">字体颜色以及大小</font></h3><p>在文档中的进行如下编辑<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">font</span> <span class="attr">color</span>=<span class="string">#0ff9ff</span> <span class="attr">size</span>=<span class="string">2</span> <span class="attr">face</span>=<span class="string">"黑体"</span>&gt;</span>调整字体颜色可以内嵌html语法<span class="tag">&lt;/<span class="name">font</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">font</span> <span class="attr">color</span>=<span class="string">#055900</span> <span class="attr">size</span>=<span class="string">4</span> <span class="attr">face</span>=<span class="string">"微软雅黑"</span>&gt;</span>调整字体颜色可以内嵌html语法<span class="tag">&lt;/<span class="name">font</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">font</span> <span class="attr">color</span>=<span class="string">#0ff90f</span> <span class="attr">size</span>=<span class="string">5</span> <span class="attr">face</span>=<span class="string">"STCAIYUN"</span>&gt;</span>调整字体颜色可以内嵌html语法<span class="tag">&lt;/<span class="name">font</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>网页实际显示如下</p>
+<font color="#0ff9ff" size="2" face="黑体">调整字体颜色可以内嵌html语法</font><br><font color="#055900" size="4" face="微软雅黑">调整字体颜色可以内嵌html语法</font><br><font color="#0ff90f" size="5" face="STCAIYUN">调整字体颜色可以内嵌html语法</font>
+
+<h3 id="黑体与斜体"><a href="#黑体与斜体" class="headerlink" title="黑体与斜体"></a>黑体与斜体</h3><p>对个别字进行强调时需要用到<strong>黑体</strong>或者<em>斜体</em><br><code>**黑体**</code> : 想要某部分字显示黑体效果，用两个<code>*</code>把那部分字体包裹起来<br><code>*斜体*</code> : 同样地，斜体效果是用一个<code>*</code>将需要施加斜体效果的字包裹起来</p>
+<h2 id="代码注释"><a href="#代码注释" class="headerlink" title="代码注释"></a>代码注释</h2><h4 id="单行注释"><a href="#单行注释" class="headerlink" title="单行注释"></a>单行注释</h4><p><code>单行代码注释用</code>     &#180;这个字符不知道怎么转义，因此无法显示出来，就在键盘数字键‘1’左边，<em>Tab</em>键上面。  </p>
+<h4 id="多行注释"><a href="#多行注释" class="headerlink" title="多行注释"></a>多行注释</h4><p>多行代码注释也用单行注释的那个键，敲三次，紧接着写下编程语言类别，比如<em>C、python</em>，然后换行，写代码段，代码写完后，再敲三次，把整个代码段包裹起来。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"hello workd!"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p><a href="https://vicebery.cc" target="_blank" rel="noopener">我的博客</a>主要包含以下几方面内容：</p>
+<blockquote>
+<ul>
+<li>学习记录</li>
+<li>读书札记</li>
+<li>人生体悟</li>
+<li>随笔</li>
+</ul>
+</blockquote>
+<h3 id="制作Todo-列表"><a href="#制作Todo-列表" class="headerlink" title="制作Todo 列表"></a>制作<code>Todo 列表</code></h3><ul>
+<li style="list-style: none"><input type="checkbox"> 学习记录</li>
+<li style="list-style: none"><input type="checkbox"> 读书札记</li>
+<li style="list-style: none"><input type="checkbox" checked> 人生体悟</li>
+<li style="list-style: none"><input type="checkbox" checked> 随笔</li>
+</ul>
+<hr>
+<p>作者 <a href="https://vicebery.cc" target="_blank" rel="noopener">@Vicebery</a><br>2018 年 8 月   </p>
+
       
     </div>
     
@@ -415,13 +445,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/PAT/" rel="tag"><i class="fa fa-tag"></i> PAT</a>
-          
-            <a href="/tags/排序/" rel="tag"><i class="fa fa-tag"></i> 排序</a>
-          
-            <a href="/tags/刷题/" rel="tag"><i class="fa fa-tag"></i> 刷题</a>
-          
-            <a href="/tags/算法/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
+            <a href="/tags/Markdown/" rel="tag"><i class="fa fa-tag"></i> Markdown</a>
           
         </div>
       
@@ -434,8 +458,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/31-start/" rel="next" title="开启新篇章">
-                <i class="fa fa-chevron-left"></i> 开启新篇章
+              <a href="/2018/08/linux-user-file" rel="next" title="Linux用户与文件基础">
+                <i class="fa fa-chevron-left"></i> Linux用户与文件基础
               </a>
             
           </div>
@@ -443,10 +467,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/22-hash-findchain/" rel="prev" title="hash查找思想">
-                hash查找思想 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -498,8 +518,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -603,6 +632,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#插入图片"><span class="nav-number">1.</span> <span class="nav-text">插入图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行内缩进和换行"><span class="nav-number">2.</span> <span class="nav-text">行内缩进和换行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#缩进"><span class="nav-number">2.1.</span> <span class="nav-text">缩进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#换行"><span class="nav-number">2.2.</span> <span class="nav-text">换行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于文字"><span class="nav-number">3.</span> <span class="nav-text">关于文字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字体颜色以及大小"><span class="nav-number">3.1.</span> <span class="nav-text">字体颜色以及大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#黑体与斜体"><span class="nav-number">3.2.</span> <span class="nav-text">黑体与斜体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码注释"><span class="nav-number">4.</span> <span class="nav-text">代码注释</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单行注释"><span class="nav-number">4.0.1.</span> <span class="nav-text">单行注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多行注释"><span class="nav-number">4.0.2.</span> <span class="nav-text">多行注释</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表"><span class="nav-number">5.</span> <span class="nav-text">列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#制作Todo-列表"><span class="nav-number">5.1.</span> <span class="nav-text">制作Todo 列表</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

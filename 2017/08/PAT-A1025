@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="hash,字符串查询,算法思想," />
+  <meta name="keywords" content="PAT,排序,刷题,算法," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="散列（hash)是一种重要的算法思想，hash函数在计算机领域应用非常广泛，下面主要谈谈其在字符查找方面的一些应用。 当我们需要在一个域里面查找一些元素时，最简单的思想是遍历整个域，将查询元素与域内元素进行判断是否一致，这项工作相当耗时，我们不妨这样想，将查询元素与查询域建立一个联系，构建一个函数关系hash(X),X为待查元素，hash(X)=0(初始化)为没有X元素,hash(X)=1为X元素">
-<meta name="keywords" content="hash,字符串查询,算法思想">
+<meta name="description" content="#PAT A1025 题目描述：PAT A1025 分析：本题主要考查数据的输入输出处理以及排序函数的使用 AC代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859//@Vicebery//@2017-8-8//PAT A10">
+<meta name="keywords" content="PAT,排序,刷题,算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hash查找思想">
-<meta property="og:url" content="https://vicebery.github.io/2017/08/22-hash-findchain/index.html">
+<meta property="og:title" content="PAT_A1025">
+<meta property="og:url" content="https://vicebery.github.io/2017/08/PAT-A1025">
 <meta property="og:site_name" content="Vicebery&#39;blog">
-<meta property="og:description" content="散列（hash)是一种重要的算法思想，hash函数在计算机领域应用非常广泛，下面主要谈谈其在字符查找方面的一些应用。 当我们需要在一个域里面查找一些元素时，最简单的思想是遍历整个域，将查询元素与域内元素进行判断是否一致，这项工作相当耗时，我们不妨这样想，将查询元素与查询域建立一个联系，构建一个函数关系hash(X),X为待查元素，hash(X)=0(初始化)为没有X元素,hash(X)=1为X元素">
+<meta property="og:description" content="#PAT A1025 题目描述：PAT A1025 分析：本题主要考查数据的输入输出处理以及排序函数的使用 AC代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859//@Vicebery//@2017-8-8//PAT A10">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-08T13:40:29.383Z">
+<meta property="og:updated_time" content="2018-08-08T13:41:46.479Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hash查找思想">
-<meta name="twitter:description" content="散列（hash)是一种重要的算法思想，hash函数在计算机领域应用非常广泛，下面主要谈谈其在字符查找方面的一些应用。 当我们需要在一个域里面查找一些元素时，最简单的思想是遍历整个域，将查询元素与域内元素进行判断是否一致，这项工作相当耗时，我们不妨这样想，将查询元素与查询域建立一个联系，构建一个函数关系hash(X),X为待查元素，hash(X)=0(初始化)为没有X元素,hash(X)=1为X元素">
+<meta name="twitter:title" content="PAT_A1025">
+<meta name="twitter:description" content="#PAT A1025 题目描述：PAT A1025 分析：本题主要考查数据的输入输出处理以及排序函数的使用 AC代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859//@Vicebery//@2017-8-8//PAT A10">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://vicebery.github.io/2017/08/22-hash-findchain/"/>
+  <link rel="canonical" href="https://vicebery.github.io/2017/08/PAT-A1025"/>
 
 
 
 
 
-  <title>hash查找思想 | Vicebery'blog</title>
+  <title>PAT_A1025 | Vicebery'blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2017/08/22-hash-findchain/">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2017/08/PAT-A1025">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Vicebery">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">hash查找思想</h1>
+          <h1 class="post-title" itemprop="name headline">PAT_A1025</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-22T07:23:18+08:00">
-                2017-08-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-09T07:15:01+08:00">
+                2017-08-08
               </time>
             
 
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  370
+                  328
                 </span>
               
 
@@ -362,7 +362,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -383,12 +383,11 @@
       
 
       
-        <p><strong>散列</strong>（hash)是一种重要的算法思想，hash函数在计算机领域应用非常广泛，下面主要谈谈其在字符查找方面的一些应用。</p>
-<p>当我们需要在一个域里面查找一些元素时，最简单的思想是遍历整个域，将查询元素与域内元素进行判断是否一致，这项工作相当耗时，我们不妨这样想，将查询元素与查询域建立一个联系，构建一个函数关系hash(X),X为待查元素，hash(X)=0(<em>初始化</em>)为没有X元素,hash(X)=1为X元素出现一次，这样我们可以直接得出任意元素n是否出现过(<em>hash(n)是否为0</em>)，但这也出现一个问题，就是我们需要一个非常大的数组来表示这个函数，这也称为“以空间换时间”。</p>
-<p>因此，当查询域很大时，这个方法并不适用。</p>
-<p>那么怎么进行字符串查找呢？</p>
-<p>当我们给出两个字符串，需要查找后者在前者中出现过，依据上面介绍的思想，我们创建一个数组hashTable[max],接下来，我们需要把字符串转换为数字，作为数组的下标，转换后可能出现的情况的总和即为查找域的大小max,因此max可能很大，占据了非常多的空间，但绝大多数是无用的。</p>
-
+        <p>#PAT A1025</p>
+<p>题目描述：<a href="https://www.patest.cn/contests/pat-a-practise/1025" target="_blank" rel="noopener">PAT A1025</a></p>
+<p>分析：本题主要考查数据的输入输出处理以及排序函数的使用</p>
+<p>AC代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//@Vicebery</span></span><br><span class="line"><span class="comment">//@2017-8-8</span></span><br><span class="line"><span class="comment">//PAT A1025</span></span><br><span class="line"><span class="comment">//about: PAT Ranking</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> id[<span class="number">15</span>];</span><br><span class="line">	<span class="keyword">int</span> score;</span><br><span class="line">	<span class="keyword">int</span> location_number;</span><br><span class="line">	<span class="keyword">int</span> local_rank;</span><br><span class="line">&#125;stu[<span class="number">30000</span>];</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(Student a, Student b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(a.score!=b.score) <span class="keyword">return</span> a.score &gt; b.score; <span class="comment">//分数由高到低排序 </span></span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">strcmp</span>(a.id,b.id) &lt; <span class="number">0</span>;         <span class="comment">//分数相同则按考号由小到大排序 </span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n,k,num=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;k); <span class="comment">//该考场人数 </span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;k;j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%s %d"</span>,&amp;stu[num].id,&amp;stu[num].score);</span><br><span class="line">			stu[num].location_number = i;</span><br><span class="line">			num++; </span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//对当前考场考生排名 </span></span><br><span class="line">		sort(stu+num-k,stu+num,cmp);</span><br><span class="line">		stu[num-k].local_rank = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> m=num-k+<span class="number">1</span>;m&lt;num;m++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(stu[m].score==stu[m<span class="number">-1</span>].score)&#123;</span><br><span class="line">				stu[m].local_rank = stu[m<span class="number">-1</span>].local_rank;			</span><br><span class="line">			&#125;	</span><br><span class="line">			<span class="keyword">else</span>&#123;</span><br><span class="line">				stu[m].local_rank = m+<span class="number">1</span>-(num-k);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,num);</span><br><span class="line">	sort(stu,stu+num,cmp);</span><br><span class="line">	<span class="keyword">int</span> r=<span class="number">1</span>; <span class="comment">//记录总排名 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;num;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(i&gt;<span class="number">0</span>&amp;&amp;stu[i].score!=stu[i<span class="number">-1</span>].score)&#123;</span><br><span class="line">			r=i+<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%s "</span>,stu[i].id);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d %d %d\n"</span>,r,stu[i].location_number,stu[i].local_rank);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -416,11 +415,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/hash/" rel="tag"><i class="fa fa-tag"></i> hash</a>
+            <a href="/tags/PAT/" rel="tag"><i class="fa fa-tag"></i> PAT</a>
           
-            <a href="/tags/字符串查询/" rel="tag"><i class="fa fa-tag"></i> 字符串查询</a>
+            <a href="/tags/排序/" rel="tag"><i class="fa fa-tag"></i> 排序</a>
           
-            <a href="/tags/算法思想/" rel="tag"><i class="fa fa-tag"></i> 算法思想</a>
+            <a href="/tags/刷题/" rel="tag"><i class="fa fa-tag"></i> 刷题</a>
+          
+            <a href="/tags/算法/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
           
         </div>
       
@@ -433,8 +434,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/09-PAT-A1025/" rel="next" title="PAT_A1025">
-                <i class="fa fa-chevron-left"></i> PAT_A1025
+              <a href="/2017/07/start" rel="next" title="开启新篇章">
+                <i class="fa fa-chevron-left"></i> 开启新篇章
               </a>
             
           </div>
@@ -443,8 +444,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/08/23-PAT-A1062/" rel="prev" title="PAT A1062">
-                PAT A1062 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/08/hash-findchain" rel="prev" title="hash查找思想">
+                hash查找思想 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
