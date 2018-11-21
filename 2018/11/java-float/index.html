@@ -87,10 +87,13 @@
 <meta property="og:site_name" content="Vicebery&#39;blog">
 <meta property="og:description" content="浮点数在内存中是如何存储的？我们知道，任何数据在计算机内存中都是用‘0\1’来存储的，浮点数亦是如此。因此十进制浮点数在存储时必定会转换为二进制的浮点数。  浮点数的进制转换主要看看十进制转二进制，整数部分和小数部分分开处理  整数部分：整数除以2，得到一个商和余数，得到的商继续除以2并得到一个商和一个余数，继续除以2操作直至商为0，上述操作得到一系列余数，从最后一个余数开始直至第一个余数，这一系">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-21T12:19:19.578Z">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203737830-2101089911.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203756447-955115338.png">
+<meta property="og:updated_time" content="2018-11-21T12:39:35.476Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于Java中的浮点数">
 <meta name="twitter:description" content="浮点数在内存中是如何存储的？我们知道，任何数据在计算机内存中都是用‘0\1’来存储的，浮点数亦是如此。因此十进制浮点数在存储时必定会转换为二进制的浮点数。  浮点数的进制转换主要看看十进制转二进制，整数部分和小数部分分开处理  整数部分：整数除以2，得到一个商和余数，得到的商继续除以2并得到一个商和一个余数，继续除以2操作直至商为0，上述操作得到一系列余数，从最后一个余数开始直至第一个余数，这一系">
+<meta name="twitter:image" content="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203737830-2101089911.png">
 
 
 
@@ -292,7 +295,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-21T20:15:25Z">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-22T04:15:25+08:00">
                 2018-11-21
               </time>
             
@@ -346,7 +349,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  975
+                  945
                 </span>
               
 
@@ -362,7 +365,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  3
                 </span>
               
             </div>
@@ -393,7 +396,7 @@
 </li>
 </ul>
 <p>从以上转换过程可以看出，并不是任何一个十进制小数都可以用二进制精确表示出来。一个在0到1之间的小数P可用如下形式表示：</p>
-<p>$$P=x_1<em>\frac{1}{2^1}+x_2</em>\frac{1}{2^2}+…+x_n*\frac{1}{2^n}(x_1,x_2..x_n=0,1)$$</p>
+<p><img src="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203737830-2101089911.png" alt=""></p>
 <p>从这个式子中我们也可看出二进制表示出的小数是分段的，这也是为什么在Java中浮点数很多时候并不是十分精确的表示十进制小数的根本原因。</p>
 <hr>
 <h2 id="float在内存中的表示"><a href="#float在内存中的表示" class="headerlink" title="float在内存中的表示"></a>float在内存中的表示</h2><p>float在Java中是4字节（32位），取值范围大约-3.4E+38F~3.4E<br>+38F。</p>
@@ -410,8 +413,7 @@
 <p>我觉得应该是为了平衡精度与范围，并且让表示的范围尽可能大。</p>
 <p>阶码用移码表示后，8位二进制从1~254以此表示为-126~127。不仅去除了全0和全1的情况，还能让人一眼看出两个阶码的大小。</p>
 <p>知道阶码和底数的范围后，就可以得出float的取值范围：</p>
-<p>$$-2<em>2^{127}–1</em>2^{-126}$$与</p>
-<p>$$1<em>2^{-126}–2</em>2^{127}$$</p>
+<p><img src="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203756447-955115338.png" alt=""></p>
 <p>转化为十进制为<br><code>-3.4*10^38~-1.2*10^(-38)</code>与<code>1.2*10^(-38)~3.4*10^38</code></p>
 
       
