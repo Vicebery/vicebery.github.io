@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/avatar.jpg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Docker,Kubernetes," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="云计算原理和PaaS原理云计算的基本原理是，通过使计算分布在大量的分布式计算机上，而非本地计算机或远程服务器中，企业数据中心的运行将更与互联网相似。这使得企业能够将资源切换到需要的应用上，根据需求访问计算机和存储系统。 云计算是一种资源的服务模式，该模式可以实现随时随地，便捷按需地从可配置计算资源共享池中获取所需的资源，资源能够快速供应并释放，大大减少了资源管理工作开销，你甚至可以再也不用理会那些">
+<meta name="keywords" content="Docker,Kubernetes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="云计算基础知识整理">
+<meta property="og:url" content="https://vicebery.github.io/2019/01/docker-kubernetes-begin/index.html">
+<meta property="og:site_name" content="Vicebery&#39;blog">
+<meta property="og:description" content="云计算原理和PaaS原理云计算的基本原理是，通过使计算分布在大量的分布式计算机上，而非本地计算机或远程服务器中，企业数据中心的运行将更与互联网相似。这使得企业能够将资源切换到需要的应用上，根据需求访问计算机和存储系统。 云计算是一种资源的服务模式，该模式可以实现随时随地，便捷按需地从可配置计算资源共享池中获取所需的资源，资源能够快速供应并释放，大大减少了资源管理工作开销，你甚至可以再也不用理会那些">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-15T14:13:29.627Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="云计算基础知识整理">
+<meta name="twitter:description" content="云计算原理和PaaS原理云计算的基本原理是，通过使计算分布在大量的分布式计算机上，而非本地计算机或远程服务器中，企业数据中心的运行将更与互联网相似。这使得企业能够将资源切换到需要的应用上，根据需求访问计算机和存储系统。 云计算是一种资源的服务模式，该模式可以实现随时随地，便捷按需地从可配置计算资源共享池中获取所需的资源，资源能够快速供应并释放，大大减少了资源管理工作开销，你甚至可以再也不用理会那些">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://vicebery.github.io/2019/01/docker-kubernetes-begin/"/>
+
+
+
+
+
+  <title>云计算基础知识整理 | Vicebery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vicebery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">thinking && coding && dreaming</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2019/01/docker-kubernetes-begin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vicebery">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vicebery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">云计算基础知识整理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-16T06:08:08+08:00">
+                2019-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                    <span itemprop="name">学习记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  6,406
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  23
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="云计算原理和PaaS原理"><a href="#云计算原理和PaaS原理" class="headerlink" title="云计算原理和PaaS原理"></a>云计算原理和PaaS原理</h2><p><strong>云计算的基本原理是</strong>，通过使计算分布在大量的分布式计算机上，而非本地计算机或远程服务器中，企业数据中心的运行将更与互联网相似。这使得企业能够将资源切换到需要的应用上，根据需求访问计算机和存储系统。</p>
+<p>云计算是一种资源的服务模式，该模式可以实现随时随地，便捷按需地从可配置计算资源共享池中获取所需的资源，资源能够快速供应并释放，大大减少了资源管理工作开销，你甚至可以再也不用理会那些令人头痛的传统服务供应商了。</p>
+<p>经典云计算架构包括三层服务：</p>
+<ul>
+<li>IaaS，基础设施即服务，为基础设施运维人员服务，提供计算、存储、网络及其他基础资源，云平台使用者可以在上面部署和运行包括操作系统和应用程序在内的任意软件，无需再为基础设施的管理而分心。</li>
+<li><strong>PaaS</strong>，平台即服务，为应用开发人员服务，提供支撑应用运行所需的软件运行时环境、相关工具与服务，如数据库服务、日志服务、监控服务等，让应用开发者可以专注于核心业务的开发。</li>
+<li>SaaS，软件即服务，为一般用户服务，提供了一套完整可用的软件系统，让一般用户无需关注技术细节，只需通过浏览器、应用客户端等方式就能使用部署在云上的应用服务。</li>
+</ul>
+<h2 id="Docker基本原理"><a href="#Docker基本原理" class="headerlink" title="Docker基本原理"></a>Docker基本原理</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>Docker是以Docker容器为资源分割和调度的基本单位，封装整个软件运行时环境，为开发者和系统管理员设计的，用于构建、发布和运行分布式应用的平台。它是一个跨平台、可移植并且简单易用的容器解决方案。</p>
+<p>Docker属于Linux容器的一种封装，提供简单易用的容器使用接口。</p>
+<h3 id="带来的优势"><a href="#带来的优势" class="headerlink" title="带来的优势"></a>带来的优势</h3><ul>
+<li style="list-style: none"><input type="checkbox" checked> 持续部署与测试</li>
+<li style="list-style: none"><input type="checkbox" checked> 跨平台支持</li>
+<li style="list-style: none"><input type="checkbox" checked> 环境标准化和版本控制</li>
+<li style="list-style: none"><input type="checkbox" checked> 高资源利用率与隔离</li>
+<li style="list-style: none"><input type="checkbox" checked> 容器跨平台性与镜像</li>
+<li style="list-style: none"><input type="checkbox" checked> 易于理解且易用</li>
+<li style="list-style: none"><input type="checkbox" checked> 应用镜像仓库</li>
+</ul>
+<h3 id="Docker与虚拟机"><a href="#Docker与虚拟机" class="headerlink" title="Docker与虚拟机"></a>Docker与虚拟机</h3><ul>
+<li>更低的资源损耗</li>
+<li>更快的启动速度</li>
+<li>更好的应用耦合</li>
+<li>更强的弹性伸缩</li>
+</ul>
+<ol>
+<li>不需要硬件虚拟化，效率高</li>
+<li>使用主机kernal，不需要重新加载os启动快</li>
+</ol>
+<p>（1）docker比虚拟机更少的抽象层。docker不需要实现硬件资源虚拟化，运行在docker容器上的程序直接使用的都是物理机的硬件资源。CPU、内存利用率上docker将会在效率上有优势。在IO设备虚拟化上，docker的镜像管理有多种方案<br>（2）docker利用的是宿主机的内核，不需要重新加载OS内核。引导、加载内核费时费资源，当新建一个虚拟机时，虚拟机软件需要加载GuestOS，这个新建过程是分钟级别的。而docker由于直接利用宿主机的操作系统，则省略了这个过程，因此新建一个docker容器只需要几秒钟。docker对比虚拟机在资源消耗上也占有比较大的优势。</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>虚拟机</th>
+<th>容器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>操作系统支持</td>
+<td>广泛</td>
+<td>Linux为主</td>
+</tr>
+<tr>
+<td>隔离策略</td>
+<td>Hypervisor</td>
+<td>Linux内核自带隔离技术</td>
+</tr>
+<tr>
+<td>隔离度</td>
+<td>完全隔离</td>
+<td>操作系统隔离</td>
+</tr>
+<tr>
+<td>启动时间</td>
+<td>分钟级</td>
+<td>毫秒级</td>
+</tr>
+<tr>
+<td>移植性</td>
+<td>笨重，与虚拟化技术耦合度高</td>
+<td>轻便、灵活，适用于Linux</td>
+</tr>
+<tr>
+<td>弹性伸缩</td>
+<td>依赖手工</td>
+<td>自动化调度</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Docker的三个基本元素"><a href="#Docker的三个基本元素" class="headerlink" title="Docker的三个基本元素"></a>Docker的三个基本元素</h3><p>Docker Container负责应用程序的运行，包括操作系统、用户添加的文件以及元数据</p>
+<p>Docker Images 是一个只读模板，用来运行Docker容器</p>
+<p>DockerFile是文件指令集，用来说明如何自动创建Docker镜像</p>
+<p>Docker的三个基本元素，解决了PaaS平台最根本的两个问题，一是封装，二是标准</p>
+<h2 id="Docker架构"><a href="#Docker架构" class="headerlink" title="Docker架构"></a>Docker架构</h2><p>Docker使用C/S客户机-服务器体系结构，Docker客户端与Docker daemon（守护进程）通信，Docker daemon负责构建、运行和分发Docker容器。Docker客户端和守护进程使用REST API通过UNIX套接字或网络接口进行通信。</p>
+<h3 id="主要模块"><a href="#主要模块" class="headerlink" title="主要模块"></a>主要模块</h3><h4 id="Docker-client"><a href="#Docker-client" class="headerlink" title="Docker client"></a>Docker client</h4><p>Docker客户端，遵循Docker API，向Docker daemon发起请求的客户端，种类丰富</p>
+<h4 id="Docker-daemon"><a href="#Docker-daemon" class="headerlink" title="Docker daemon"></a>Docker daemon</h4><p>守护进程，最核心后台进程，负责响应来自Docker client的请求，然后翻译成系统调用完成容器管理操作。后台启动API Server，负责接收请求，分发调度给相关函数执行。</p>
+<ul>
+<li>execdriver，对Linux操作系统的namespace、cgroups、apparmor、SELinux等的二次封装，类似LXC，默认实现是Docker官方的libcontainer</li>
+<li>volumedrive是volume数据卷存储操作的最终执行者，负责volume增删操作，屏蔽不同实现的差异，为上层提供统一接口。默认实现为local，其他通过外部插件实现</li>
+<li>graphdriver是所有容器镜像相关操作的最终执行者，维护与镜像层对应的目录，以及镜像层间的关系和相关元数据</li>
+</ul>
+<h4 id="graph"><a href="#graph" class="headerlink" title="graph"></a>graph</h4><p>graph组件负责维护已下载的镜像信息及它们之间的关系，所以大部分Docker镜像相关的操作都会由graph组件来完成。</p>
+<h4 id="GraphDB"><a href="#GraphDB" class="headerlink" title="GraphDB"></a>GraphDB</h4><p>Docker daemon通过GraphDB记录它所维护的所有容器以及它们之间的link关系（边）</p>
+<h4 id="driver"><a href="#driver" class="headerlink" title="driver"></a>driver</h4><p>容器管理驱动execdriver、网络管理驱动networkdriver、文件存储驱动graphdriver</p>
+<h3 id="namespace资源隔离"><a href="#namespace资源隔离" class="headerlink" title="namespace资源隔离"></a>namespace资源隔离</h3><p>namespace的6种隔离：  </p>
+<table>
+<thead>
+<tr>
+<th>namespace</th>
+<th>parameter</th>
+<th>isolation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UTS</td>
+<td>CLONE_NEWUTS</td>
+<td>host&amp;domain</td>
+</tr>
+<tr>
+<td>IPC</td>
+<td>CLONE_NEWIPC</td>
+<td>Message queue&amp;shared memory</td>
+</tr>
+<tr>
+<td>PID</td>
+<td>CLONE_NEWPID</td>
+<td>Process id</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>CLONE_NEWNET</td>
+<td>Network</td>
+</tr>
+<tr>
+<td>Mount</td>
+<td>CLONE_NEWNS</td>
+<td>FS</td>
+</tr>
+<tr>
+<td>User</td>
+<td>CLONE_NEWUSER</td>
+<td>USER</td>
+</tr>
+</tbody>
+</table>
+<p>namespace的目标是实现轻量级虚拟化服务</p>
+<p><strong>API操作方式</strong>：clone（）、setns（）、unshare（）及/proc的部分文件，通过参数指定要操作的namespace类型</p>
+<p><strong>调用方式：</strong><br>int clone（）；创建新的独立namespace的进程<br>int setns（int fd，int nstype）；将进程加入到已经存在的namespace<br>int unshare（int flags）；在原有进程基础上进行隔离，Docker未采用</p>
+<h4 id="UTS-namespace"><a href="#UTS-namespace" class="headerlink" title="UTS namespace"></a>UTS namespace</h4><p>提供了主机名和域名的隔离，这样每个Docker容器就可以拥有独立的主机名和域名了，在网络上可以被视作一个独立的节点，而非宿主机上的一个进程。 Docker中，每个镜像基本都以自身所提供的服务名称来命名镜像的hostname，且不会对宿主机产生任何影响，其原理就是利用了UTS namespace</p>
+<h4 id="IPC-namespace"><a href="#IPC-namespace" class="headerlink" title="IPC namespace"></a>IPC namespace</h4><p>进程间通信IPC涉及的IPC资源包括常见的信号量、消息队列和共享内存。在同一个IPC namespace下的进程彼此可见。</p>
+<p>Docker主要适用IPC namespace实现容器与宿主机、容器与容器之间的IPC隔离</p>
+<h4 id="PID-namespace"><a href="#PID-namespace" class="headerlink" title="PID namespace"></a>PID namespace</h4><p>init进程负责收养“孤儿”进程并最终回收资源</p>
+<p>内核为init进程赋予特权–信号屏蔽，同一个PID namespace发给init进程的信号会被屏蔽，避免init被误杀</p>
+<p>父节点的SIGKILL或SIGSTOP信号，子节点init会强制执行，实现父节点终止子节点进程</p>
+<h4 id="mount-namespace"><a href="#mount-namespace" class="headerlink" title="mount namespace"></a>mount namespace</h4><p>通过隔离文件系统挂载点实现对文件系统的隔离，标识位CLONE_NEWNS。</p>
+<p>挂载对象在各挂载事件间的传播：  </p>
+<ul>
+<li>共享方法，双向传播</li>
+<li>从属关系，单向传播</li>
+</ul>
+<p>可能的挂载状态：  </p>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> 共享挂载，传播事件的挂载对象</li>
+<li style="list-style: none"><input type="checkbox" checked> 从属挂载，接受传播事件的挂载对象</li>
+<li style="list-style: none"><input type="checkbox" checked> 私有挂载，既不传播也不接受传播事件的挂载对象</li>
+<li style="list-style: none"><input type="checkbox" checked> 不可绑定挂载</li>
+</ul>
+<h4 id="network-namespace"><a href="#network-namespace" class="headerlink" title="network namespace"></a>network namespace</h4><p>实现网络资源隔离，包括网络设备、IPv4/IPv6协议栈、IP路由表、防火墙、/proc/net目录、/sys/class/net目录、套接字等</p>
+<p>一个网络设备最多存在一个network namespace中，通过veth pair创建通道</p>
+<h4 id="user-namespace"><a href="#user-namespace" class="headerlink" title="user namespace"></a>user namespace</h4><p>主要隔离安全相关的标识符和属性，包括用户ID、用户组ID、root目录、key及特殊权限</p>
+<p>user namespace创建后，第一个进程被赋予全部权限，以完成必要的初始化工作</p>
+<h3 id="cgroups资源限制"><a href="#cgroups资源限制" class="headerlink" title="cgroups资源限制"></a>cgroups资源限制</h3><h4 id="cgroups定义"><a href="#cgroups定义" class="headerlink" title="cgroups定义"></a>cgroups定义</h4><p>cgroups是Linux内核提供的一种机制，这种机制可以根据需求把一系列系统任务及其子任务整合（或分隔）到按资源划分等级的不同组内，从而为系统资源管理提供一个统一的框架。</p>
+<p>通俗来说，cgroups可以限制、记录任务组所使用的物理资源（包括CPU、memory、IO等），为容器实现虚拟化提供了基本保证，是构建Docker等一系列虚拟化管理工具的基石。</p>
+<h4 id="主要作用："><a href="#主要作用：" class="headerlink" title="主要作用："></a>主要作用：</h4><ul>
+<li>资源限制： 限制任务使用的资源总额</li>
+<li>优先级分配：通过CPU时间片与磁盘<br>IO大小，控制任务执行优先级</li>
+<li>资源统计：统计资源使用量</li>
+<li>任务控制：对任务执行挂起、恢复等操作</li>
+</ul>
+<p>cgroups不仅可以限制被namespace隔离起来的资源，还可以为资源设置权重、计算使用量、操控任务（进程或线程）启停等。</p>
+<h4 id="cgroups术语表"><a href="#cgroups术语表" class="headerlink" title="cgroups术语表"></a>cgroups术语表</h4><ul>
+<li>task：任务，表示系统的一个进程或线程</li>
+<li>cgroup：控制组，以cgroup为单位，按某种资源控制标准划分而成的任务组，包括一个或多个子系统</li>
+<li>subsystem：子系统，是一个资源调度控制器，比如CPU子系统限制CPU时间分配，内存子系统限制cgroup内存使用量</li>
+<li>hierarchy：层级，cgroup以树状结构排列，每个层级绑定对应子系统进行资源控制。</li>
+</ul>
+<h4 id="cgroups组织结构与基本原则"><a href="#cgroups组织结构与基本原则" class="headerlink" title="cgroups组织结构与基本原则"></a>cgroups组织结构与基本原则</h4><ul>
+<li>规则1：同一个层级可以附加一个或多个子系统</li>
+<li>规则2：一个系统可以附加到多个层级，当且仅当目标层级只有唯一一个子系统时。</li>
+<li>规则3：新建一个层级时，默认加入这个新建层级的初始化cgroup。任务只能存在于同一个层级的一个cgroup，但可以存在不同层级的多个cgroup</li>
+<li>规则4：fork/clone自身时创建的子任务默认与原任务在同一个cgroup，但子任务允许被移动到不同的cgroup中。</li>
+</ul>
+<h4 id="cgroup子系统"><a href="#cgroup子系统" class="headerlink" title="cgroup子系统"></a>cgroup子系统</h4><p>cgroups的资源控制系统，每种子系统控制一种资源，Docker包含9个子系统：</p>
+<ul>
+<li>blkio：块设备输入/输出限制</li>
+<li>cpu：调度cpu的使用</li>
+<li>cpuacct：自动生成cgroup中任务对CPU资源使用情况的报告</li>
+<li>cpuset：可以为cgroup中的任务分配独立的CPU和内存</li>
+<li>devices：可以开启或关闭cgroup中任务对设备的访问</li>
+<li>freezer：可以挂起或恢复cgroup中的任务</li>
+<li>memory：可以设定cgroup中任务对内存使用量的限定，并自动生成这些任务对内存资源使用情况的报告</li>
+<li>perf_event：使cgroup中的任务进行统一的性能测试</li>
+<li>net_cls：Docker未直接使用，允许从Linux流量控制程序中识别具体cgroup中生成的数据包</li>
+</ul>
+<h4 id="cgroup工作原理"><a href="#cgroup工作原理" class="headerlink" title="cgroup工作原理"></a>cgroup工作原理</h4><ul>
+<li>cgroup本质是给任务挂上钩子hook，当任务运行时涉及某种资源时，会触发钩子所带的子系统进行检测</li>
+<li>任务超过资源上限之后，新申请资源如内存，会被拒绝甚至将任务挂起</li>
+<li>cgroup通过中间结构task_struct与任务关联</li>
+</ul>
+<h2 id="Docker核心原理"><a href="#Docker核心原理" class="headerlink" title="Docker核心原理"></a>Docker核心原理</h2><p>Docker容器本质上是宿主机上的进程。<br>Docker通过namespace实现了资源隔离，通过cgroups实现了资源限制，通过写时复制机制（copy-on-write）实现了高效的文件操作。</p>
+<h2 id="Docker镜像"><a href="#Docker镜像" class="headerlink" title="Docker镜像"></a>Docker镜像</h2><p>主要特点：</p>
+<ul>
+<li>layer分层</li>
+<li>copy-on-write写时复制，容器启动时，在镜像层上挂载一个可读写层，文件系统变化，将其写入到可读写层</li>
+<li>内容寻址content-addressable storage，根据文件内容来索引镜像与镜像层，提高了安全性</li>
+<li>联合挂载Union mount，Union filesystem</li>
+</ul>
+<h2 id="Docker数据管理"><a href="#Docker数据管理" class="headerlink" title="Docker数据管理"></a>Docker数据管理</h2><p>使用数据卷和数据卷容器在Docker内部以及容器之间管理数据。</p>
+<p>实现多个镜像共享同一组数据，可以把数据存储到docker卷并挂载到相应容器</p>
+<p>挂载一个主机目录作为数据卷</p>
+<h2 id="Docker网络"><a href="#Docker网络" class="headerlink" title="Docker网络"></a>Docker网络</h2><p>docker网络库：libnetwork 使用CNM标准（container network model）。CNM定义了构建容器虚拟网络的模型，同时提供了可以用于多种网络驱动的标准化接口和组件。</p>
+<p>sandbox：一个sandbox包含网络栈的信息。sandbox可以对容器的接口，路由和DNS设置等进行管理，一个sandbox可以有多个endpoint和network</p>
+<p>endpoint：一个网络可以加入一个sandbox和一个network。</p>
+<p>bridge：Docker默认的容器网络驱动。</p>
+<h2 id="Docker常用命令"><a href="#Docker常用命令" class="headerlink" title="Docker常用命令"></a>Docker常用命令</h2><ul>
+<li>docker info：打印docker相关信息</li>
+<li>docker build：构建一个镜像从Dockerfile</li>
+<li>docker tag： 标记本地镜像，将其归入某一仓库</li>
+<li>docker pull/push：拉取镜像/上传镜像</li>
+<li>docker run：</li>
+<li>docker save/load：将指定镜像保存成tar归档文件/从tar归档文件读取镜像</li>
+<li>docker commit：从容器创建一个新的镜像</li>
+<li>docker images：列出所有镜像</li>
+<li>docker image ls -f dangling=true：列出所有的虚悬镜像</li>
+<li>docker ps：列出所有的容器</li>
+<li>docker rmi/rm：删除镜像/容器</li>
+<li>docker inspect：获取容器/镜像的元数据</li>
+<li>docker logs：获取容器的日志</li>
+<li>docker exec：在运行的容器中执行命令</li>
+<li>docker cp：用于容器与主机之间的数据拷贝</li>
+</ul>
+<h3 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h3><ul>
+<li>Dockerfile FROM</li>
+<li>Dockerfile LABEL</li>
+<li>Dockerfile ENV</li>
+<li>Dockerfile RUN</li>
+<li>Dockerfile COPY and ADD</li>
+</ul>
+<h2 id="Kubernetes"><a href="#Kubernetes" class="headerlink" title="Kubernetes"></a>Kubernetes</h2><p>Kubernetes是Google开源的容器集群管理系统，其提供应用部署、维护、扩展机制等功能，利用Kubernetes能方便地管理跨及其运行容器化的应用。</p>
+<p>Kubernetes，基于容器技术的分布式架构领先方案</p>
+<h3 id="Kubernetes的节点"><a href="#Kubernetes的节点" class="headerlink" title="Kubernetes的节点"></a>Kubernetes的节点</h3><p>Kubernetes由两种节点组成：master节点和node节点（minion），前者是管理节点，后者是容器运行的工作节点。</p>
+<h4 id="Master节点"><a href="#Master节点" class="headerlink" title="Master节点"></a>Master节点</h4><p>集群控制节点，负责集群管理与控制，通常运行在独立物理节点或虚拟机</p>
+<p>运行各类关键进程  </p>
+<ul>
+<li>API Server： 提供REST接口的关键服务进程</li>
+<li>Controller Manager：所有资源的自动化控制中心</li>
+<li>Scheduler：负责Pod资源调度</li>
+<li>Etcd Server：所有资源对象的数据全部保存在etcd中</li>
+</ul>
+<h4 id="Node节点"><a href="#Node节点" class="headerlink" title="Node节点"></a>Node节点</h4><p>Kubernetes集群中除Master外的节点，又叫Minion，同样可以是物理主机或者虚拟机。</p>
+<ul>
+<li>作为集群中的工作负载节点，承担Master分配的工作负载</li>
+<li>Node可以动态增删，新增node会自动到master节点注册</li>
+</ul>
+<p>Node运行的进程：  </p>
+<ul>
+<li>kubelet：pod启停及与master节点协作</li>
+<li>kube-proxy：实现Kubernetes Service通信与负载均衡机制</li>
+<li>Docker Engine： 负责本机容器的创建和管理工作</li>
+</ul>
+<h3 id="Pod"><a href="#Pod" class="headerlink" title="Pod"></a>Pod</h3><p>在Kubernetes中，能够被创建、调度和管理的最小部署单元是pod，而非单个容器。Pod是一组紧耦合的容器组合。</p>
+<p>一个Pod内部的容器享有共同的生命周期：共同产生、调度和消亡。共享存储系统，共享命名空间：同一个IP地址和localhost，共享IPC。</p>
+<ul>
+<li>为Service提供服务的容器进程被封装到Pod中，Pod中运行一个或者多个容器</li>
+<li>Kubernetes中采用Label来建立Serv与Pod之间的关系</li>
+<li>Pod运行在节点Node上，Node可以是物理机或者虚拟机</li>
+<li>每个Pod中运行一个Pause容器和多个业务容器，这些业务容器共享Pause容器的网络栈和存储卷，数据交换效率更高。</li>
+</ul>
+<h4 id="为啥要引入Pod？"><a href="#为啥要引入Pod？" class="headerlink" title="为啥要引入Pod？"></a>为啥要引入Pod？</h4><ul>
+<li>Pause容器作为根容器，代表整个容器组的状态，避免个别容器导致Pod失效的情况</li>
+<li>业务容器共享Pause容器的IP和Volume，解决业务容器之间的文件共享问题</li>
+<li>Kubernetes中的所有资源对象都可以采用vaml或者json格式的文件来定义或描述</li>
+</ul>
+<h4 id="Label"><a href="#Label" class="headerlink" title="Label"></a>Label</h4><p>如何有效地分类和组织这些Pod？<br>采用labels，每个Pod都有一个标签–一组键值对，用于对Pod进行选择和分类</p>
+<p>键值对形式，附加各类资源对象，Node、Port、Service、RC<br>等  </p>
+<h4 id="Pod资源限制"><a href="#Pod资源限制" class="headerlink" title="Pod资源限制"></a>Pod资源限制</h4><p>资源限制方式：  </p>
+<ul>
+<li>Requests：最小申请量，分配时必须保证</li>
+<li>Limits：最大允许使用量，试图超过时，可能会被k8s kill并重启</li>
+</ul>
+<h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><ul>
+<li>唯一标识</li>
+<li>负载均衡</li>
+</ul>
+<p>Service用作代理Pod的IP地址，同时，为Pod做负载均衡</p>
+<p>service主要有一个IP地址和一个label selector组成。</p>
+<ul>
+<li>是Kubernetes中最核心的资源对象之一</li>
+<li>Pod、RC等其实都是Service</li>
+</ul>
+<h4 id="如何访问服务"><a href="#如何访问服务" class="headerlink" title="如何访问服务"></a>如何访问服务</h4><ul>
+<li>前端对服务的访问，由后端的Pod集群来提供</li>
+<li>每个Pod都提供独立的EndPoint（Pod IP + Container Port）</li>
+</ul>
+<p>访问请求如何映射到具体的Pod？  </p>
+<ul>
+<li>开启负载均衡器kube-proxy，客户端通过负载均衡器调度到相应的pod</li>
+<li>每个Service分配一个全局唯一的虚拟IP地址（Cluster IP）</li>
+<li>用Service name和cluster IP作为DNS域名，就可以解决访问问题</li>
+</ul>
+<p>外部系统访问Service？<br>NodePort </p>
+<p><strong>Kube-proxy</strong>是一个简单的网络代理和负载均衡器，它的作用主要是负责Service的实现，具体来说，就是实现了内部从Pod到Service和外部的从NodePort向Service的访问。</p>
+<h4 id="service的自发现机制"><a href="#service的自发现机制" class="headerlink" title="service的自发现机制"></a>service的自发现机制</h4><p>Kubernetes中有一个很重要的服务自发现特性。一旦一个service被创建，该service的portal信息都会被注入到已经在运行的pod中供它们使用。</p>
+<p>Kubernetes主要支持两种服务发现机制：<strong>容器环境变量和DNS</strong>。</p>
+<h3 id="volume"><a href="#volume" class="headerlink" title="volume"></a>volume</h3><p>volume是Pod中多个容器共享的存储目录，与docker中的volume类似。</p>
+<ul>
+<li>定义在Pod上，可以被一个Pod的多个容器挂载到具体的目录下</li>
+<li>与Pod生命周期相同，但与容器不同，容器终止或重启时，数据不会丢失</li>
+<li>支持多种类型的volume，如glusterfs，ceph等</li>
+</ul>
+<p>由于容器的文件系统与容器的生命周期一致，当容器退出后其文件系统也随之被销毁，因此需要额外的持久化存储介质，为了实现持久化存储，需要声明一个磁盘卷（volume）作为Pod的一部分并将其挂载到容器中。</p>
+<h4 id="Kubernetes的volume类型"><a href="#Kubernetes的volume类型" class="headerlink" title="Kubernetes的volume类型"></a>Kubernetes的volume类型</h4><p>EmptyDir，pod分配到node时创建，无需指定宿主机目录文件，主要作用：</p>
+<ul>
+<li>临时空间</li>
+<li>checkpoint临时保存目录</li>
+<li>多容器共享目录</li>
+</ul>
+<p>hostPath，挂载宿主机上的文件或目录</p>
+<ul>
+<li>需要永久保存的文件，如日志文件</li>
+<li>直接访问Docker引擎内部的文件系统</li>
+</ul>
+<p>gcePersisentDisk<br>awsElasticBlockStore<br>NFS  </p>
+<h3 id="HPA"><a href="#HPA" class="headerlink" title="HPA"></a>HPA</h3><p>Horizontal Pod Autoscaler，Pod横向自动扩容，是一种Kubernetes资源对象，实现原理—-通过追踪分析RC控制的所有目标Pod的负载变化情况，来确定是否需要针对性的调整目标Pod的副本数。</p>
+<h3 id="Scheduler"><a href="#Scheduler" class="headerlink" title="Scheduler"></a>Scheduler</h3><p>Schedule是根据特定的调度算法把Pod调度到指定的minion上，schedule调度器的输入时待调度的Pod以及可用的工作节点列表，输出则是应用调度算法从列表中选择的一个最优的用于绑定待调度Pod的节点。</p>
+<h4 id="定向调度"><a href="#定向调度" class="headerlink" title="定向调度"></a>定向调度</h4><p>NodeSelector。通过一系列负责调度算法，选定目标节点，可以通过定向调度迁移Pod</p>
+<h4 id="亲和性调度"><a href="#亲和性调度" class="headerlink" title="亲和性调度"></a>亲和性调度</h4><p>NodeAffinity，通过一系列逻辑运算，如Exists，in，Gt，lt等，更加灵活选取node</p>
+<h4 id="特定场景调度–Deamon-Set"><a href="#特定场景调度–Deamon-Set" class="headerlink" title="特定场景调度–Deamon Set"></a>特定场景调度–Deamon Set</h4><h4 id="批处理调度"><a href="#批处理调度" class="headerlink" title="批处理调度"></a>批处理调度</h4><p>通过Job资源支持批处理任务</p>
+<h3 id="kubelet"><a href="#kubelet" class="headerlink" title="kubelet"></a>kubelet</h3><p>kubelet组件是Kubernetes集群工作节点上最重要的组件进程，它管理和维护在这台主机上运行着的所有容器。本质上，它的工作可以归结为使得pod的运行状态status与它的期望值spec一致。</p>
+<p>负责Pod对应的容器创建、启停等任务，同时与master节点密切协作，实现集群管理的基本功能。</p>
+<p>kubelet的主要场景：  </p>
+<ul>
+<li>节点管理：监控和汇报当前节点健康状态</li>
+<li>容器管理：管理容器的生命周期，容器的增删改查以及其他行为</li>
+<li>健康检查：利用容器探针进行应用业务层面的健康检查和故障恢复</li>
+<li>资源监控：集成cAdviser搜集主机和容器的资源使用信息</li>
+</ul>
+<h3 id="CRI–Container-Runtime-Interface"><a href="#CRI–Container-Runtime-Interface" class="headerlink" title="CRI–Container Runtime Interface"></a>CRI–Container Runtime Interface</h3><p>CRI是k8s设计的容器运行时接口，只要符合这个接口的容器运行时都可以和Kubernetes进行集成</p>
+<p>Kubernetes节点的底层有一个叫做“容器运行时”的软件进行支撑，它负责比如启停容器这样的事情。</p>
+<p>CRI—一个能让Kubelet无需编译就可以支持多种容器运行时的插件接口</p>
+<h3 id="网络模型"><a href="#网络模型" class="headerlink" title="网络模型"></a>网络模型</h3><h4 id="CNM—-Container-Network-Model"><a href="#CNM—-Container-Network-Model" class="headerlink" title="CNM—-Container Network Model"></a>CNM—-Container Network Model</h4><p>CNM网络模型，是docker公司提出的容器网络模型，主要有network sandbox、endpoint、network三个组件进行实现，network sandbox容器内部的网络栈，包括网络接口、路由表、DNS等配置的管理endpoint用于将容器内的sandbox与外部网络相连的网络接口。</p>
+<h4 id="CNI—-Container-Network-Interface"><a href="#CNI—-Container-Network-Interface" class="headerlink" title="CNI—-Container Network Interface"></a>CNI—-Container Network Interface</h4><p>容器网络接口，是一种操作容器网络规范，包含方法规范，参数规范等。CNI只关心容器的网络连接，在容器创建时分配网络资源，并在删除容器时删除分配的资源。因为这个焦点，CNI有广泛的支持，规格易于实现。CNI接口只需要实现两个方法，一个创建容器时调用，一个删除容器时调用。</p>
+<h4 id="Flannel"><a href="#Flannel" class="headerlink" title="Flannel"></a>Flannel</h4><p>Flannel（overlay network 覆盖网络）的设计目的就是为集群中的所有节点重新规划IP地址的使用规则，从而使得不同节点上的容器能够获得“同属一个内网”且“不重复的”IP地址，并让属于不同节点上的容器能够直接通过内网IP通信</p>
+<h4 id="Calico"><a href="#Calico" class="headerlink" title="Calico"></a>Calico</h4><ul>
+<li>纯三层协议，为OpenStack和容器提供多主机通信，不适用overlay</li>
+<li>使用虚拟路由代替虚拟交换机，通过BGP协议实现传输</li>
+</ul>
+<h3 id="Kubernetes的设计原则"><a href="#Kubernetes的设计原则" class="headerlink" title="Kubernetes的设计原则"></a>Kubernetes的设计原则</h3><ul>
+<li>声明式 状态驱动，用户通过声明式的配置文件（如YAML文件）向Kubernetes告白自己希望达到的希望状态</li>
+<li>行动React，Kubernetes的控制组件负责具体执行这些指令，使得用户声明的系统状态得以实现，在此过程中不需要任何人工的参与。</li>
+<li>观测Observe，k8s会观测到新的用户声明，并自动分析出需要执行的操作以达到用户声明的系统状态。</li>
+</ul>
+<h3 id="常见的存储模式"><a href="#常见的存储模式" class="headerlink" title="常见的存储模式"></a>常见的存储模式</h3><p>enptyDir<br>hostPath<br>nfs<br>flocker<br>glusterfs<br>rbd<br>cephfs<br>gitRepo  </p>
+<h3 id="常见的监控工具"><a href="#常见的监控工具" class="headerlink" title="常见的监控工具"></a>常见的监控工具</h3><ul>
+<li>cAdvisor：分析正在运行的容器的资源使用情况和性能特点</li>
+<li>heapster：计算容器集群的资源使用分析和监控</li>
+<li>influxdb：指标，事件和实时分析的可扩展数据存储</li>
+<li>grafana：为Graphite，InfluxDB、Prometheus等提供漂亮的监视和度量分析和仪表板的工具</li>
+</ul>
+<p>docker监控工具：  </p>
+<ul>
+<li>cAdvisor  </li>
+<li>datadog</li>
+<li>Prometheus</li>
+</ul>
+<h3 id="全链路监控原理"><a href="#全链路监控原理" class="headerlink" title="全链路监控原理"></a>全链路监控原理</h3><p>TraneID：识别用户一次请求，所有全链路上的节点共用一个TraceID<br>生成机制：调用链的第一个节点生成TraceID，每次调用判断此次调用的请求中是否含有TraceID，未含有TraceID即为调用链路的第一个节点，如果含有TraceID，则肯定不为第一个节点，继续使用上个节点传递过来的TraceID</p>
+<p>SpanID：正在处理用户请求的节点<br>生成机制：SpanID使用UUID随机数生成机制即可，保证唯一性，每次请求都有唯一的spanID</p>
+<p>ParentSpanID：正在处理用户请求节点的上一个节点<br>生成机制：使用上一个节点传递过来SpanID替代</p>
+<p>三者的传递机制：  </p>
+<ul>
+<li>Restful接口、webservice等服务调用，实际底层走的协议是HTTP协议，所以只需要在HTTP Request请求中添加TraceID、SpanID、ParentSpanID</li>
+<li>Dubbo等RPC调用框架，需要在扩展域添加TraceID、SpanID、ParentSpanID</li>
+<li>MQ等消息中间件，需要在消息中间件支持的扩展域添加TraceID、SpanID、ParentSpanID</li>
+</ul>
+<h3 id="Prometheus特点"><a href="#Prometheus特点" class="headerlink" title="Prometheus特点"></a>Prometheus特点</h3><p>Prometheus是一种开源监控报警系统和时序列数据库。它能够按照给定的时间间隔收集所配置目标的指标、执行规则表达式、展现结果，如果某些条件判断结果为真的话，将会触发告警。</p>
+<p><strong>特点</strong>：  </p>
+<ul>
+<li>单机缺点，单机下存储量有限，根据你的监控量局限你的存储时间</li>
+<li>内存占用率大，Prometheus集成了leveldb，一个能高效插入数据的数据库，在ssd盘下io占用比较高。同时可能会有大量数据堆积内存。</li>
+</ul>
+<h2 id="Devops"><a href="#Devops" class="headerlink" title="Devops"></a>Devops</h2><p>DevOps(Development和Operations的组合词)，强调的是高效组织团队之间如何通过自动化的工具协作和沟通来完成软件的生命周期管理，从而更快的、更频繁的交付更加稳定的软件。</p>
+<h2 id="微服务"><a href="#微服务" class="headerlink" title="微服务"></a>微服务</h2><ul>
+<li>一种架构风格，架构模式</li>
+<li>高内聚低耦合、单一职责、基于限界上下文的一种SOA落地方式</li>
+<li>服务能够独立构建，独立部署，独立扩展</li>
+<li>基于Devops，面向运维的架构</li>
+<li>需要团队组织，文化的调整以及完善的自动化工具</li>
+<li>实施中体现为，受业务驱动，不断迭代</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #555;font-size:14px;">-------------The End-------------</div>
+    
+</div>
+
+  
+</div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag"></i> Docker</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"><i class="fa fa-tag"></i> Kubernetes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/java-float/" rel="next" title="关于Java中的浮点数">
+                <i class="fa fa-chevron-left"></i> 关于Java中的浮点数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Vicebery" />
+            
+              <p class="site-author-name" itemprop="name">Vicebery</p>
+              <p class="site-description motion-element" itemprop="description">stay hungry, stay young</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/vicebery" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/vicebery/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-gittip"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://douban.com/people/vicebery" target="_blank" title="豆瓣">
+                      
+                        <i class="fa fa-fw fa-heart-o"></i>豆瓣</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:vicebery@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/u/0/109399728266375769175" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/vicebery" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#云计算原理和PaaS原理"><span class="nav-number">1.</span> <span class="nav-text">云计算原理和PaaS原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker基本原理"><span class="nav-number">2.</span> <span class="nav-text">Docker基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-number">2.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#带来的优势"><span class="nav-number">2.2.</span> <span class="nav-text">带来的优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker与虚拟机"><span class="nav-number">2.3.</span> <span class="nav-text">Docker与虚拟机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker的三个基本元素"><span class="nav-number">2.4.</span> <span class="nav-text">Docker的三个基本元素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker架构"><span class="nav-number">3.</span> <span class="nav-text">Docker架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要模块"><span class="nav-number">3.1.</span> <span class="nav-text">主要模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker-client"><span class="nav-number">3.1.1.</span> <span class="nav-text">Docker client</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker-daemon"><span class="nav-number">3.1.2.</span> <span class="nav-text">Docker daemon</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#graph"><span class="nav-number">3.1.3.</span> <span class="nav-text">graph</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GraphDB"><span class="nav-number">3.1.4.</span> <span class="nav-text">GraphDB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#driver"><span class="nav-number">3.1.5.</span> <span class="nav-text">driver</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#namespace资源隔离"><span class="nav-number">3.2.</span> <span class="nav-text">namespace资源隔离</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UTS-namespace"><span class="nav-number">3.2.1.</span> <span class="nav-text">UTS namespace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IPC-namespace"><span class="nav-number">3.2.2.</span> <span class="nav-text">IPC namespace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PID-namespace"><span class="nav-number">3.2.3.</span> <span class="nav-text">PID namespace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mount-namespace"><span class="nav-number">3.2.4.</span> <span class="nav-text">mount namespace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#network-namespace"><span class="nav-number">3.2.5.</span> <span class="nav-text">network namespace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#user-namespace"><span class="nav-number">3.2.6.</span> <span class="nav-text">user namespace</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cgroups资源限制"><span class="nav-number">3.3.</span> <span class="nav-text">cgroups资源限制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cgroups定义"><span class="nav-number">3.3.1.</span> <span class="nav-text">cgroups定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主要作用："><span class="nav-number">3.3.2.</span> <span class="nav-text">主要作用：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cgroups术语表"><span class="nav-number">3.3.3.</span> <span class="nav-text">cgroups术语表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cgroups组织结构与基本原则"><span class="nav-number">3.3.4.</span> <span class="nav-text">cgroups组织结构与基本原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cgroup子系统"><span class="nav-number">3.3.5.</span> <span class="nav-text">cgroup子系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cgroup工作原理"><span class="nav-number">3.3.6.</span> <span class="nav-text">cgroup工作原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker核心原理"><span class="nav-number">4.</span> <span class="nav-text">Docker核心原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker镜像"><span class="nav-number">5.</span> <span class="nav-text">Docker镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker数据管理"><span class="nav-number">6.</span> <span class="nav-text">Docker数据管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker网络"><span class="nav-number">7.</span> <span class="nav-text">Docker网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker常用命令"><span class="nav-number">8.</span> <span class="nav-text">Docker常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dockerfile"><span class="nav-number">8.1.</span> <span class="nav-text">Dockerfile</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubernetes"><span class="nav-number">9.</span> <span class="nav-text">Kubernetes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kubernetes的节点"><span class="nav-number">9.1.</span> <span class="nav-text">Kubernetes的节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Master节点"><span class="nav-number">9.1.1.</span> <span class="nav-text">Master节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node节点"><span class="nav-number">9.1.2.</span> <span class="nav-text">Node节点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pod"><span class="nav-number">9.2.</span> <span class="nav-text">Pod</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为啥要引入Pod？"><span class="nav-number">9.2.1.</span> <span class="nav-text">为啥要引入Pod？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Label"><span class="nav-number">9.2.2.</span> <span class="nav-text">Label</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Pod资源限制"><span class="nav-number">9.2.3.</span> <span class="nav-text">Pod资源限制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service"><span class="nav-number">9.3.</span> <span class="nav-text">Service</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何访问服务"><span class="nav-number">9.3.1.</span> <span class="nav-text">如何访问服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#service的自发现机制"><span class="nav-number">9.3.2.</span> <span class="nav-text">service的自发现机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#volume"><span class="nav-number">9.4.</span> <span class="nav-text">volume</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Kubernetes的volume类型"><span class="nav-number">9.4.1.</span> <span class="nav-text">Kubernetes的volume类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HPA"><span class="nav-number">9.5.</span> <span class="nav-text">HPA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scheduler"><span class="nav-number">9.6.</span> <span class="nav-text">Scheduler</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定向调度"><span class="nav-number">9.6.1.</span> <span class="nav-text">定向调度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#亲和性调度"><span class="nav-number">9.6.2.</span> <span class="nav-text">亲和性调度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特定场景调度–Deamon-Set"><span class="nav-number">9.6.3.</span> <span class="nav-text">特定场景调度–Deamon Set</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#批处理调度"><span class="nav-number">9.6.4.</span> <span class="nav-text">批处理调度</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kubelet"><span class="nav-number">9.7.</span> <span class="nav-text">kubelet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CRI–Container-Runtime-Interface"><span class="nav-number">9.8.</span> <span class="nav-text">CRI–Container Runtime Interface</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络模型"><span class="nav-number">9.9.</span> <span class="nav-text">网络模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CNM—-Container-Network-Model"><span class="nav-number">9.9.1.</span> <span class="nav-text">CNM—-Container Network Model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CNI—-Container-Network-Interface"><span class="nav-number">9.9.2.</span> <span class="nav-text">CNI—-Container Network Interface</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Flannel"><span class="nav-number">9.9.3.</span> <span class="nav-text">Flannel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Calico"><span class="nav-number">9.9.4.</span> <span class="nav-text">Calico</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kubernetes的设计原则"><span class="nav-number">9.10.</span> <span class="nav-text">Kubernetes的设计原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的存储模式"><span class="nav-number">9.11.</span> <span class="nav-text">常见的存储模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的监控工具"><span class="nav-number">9.12.</span> <span class="nav-text">常见的监控工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全链路监控原理"><span class="nav-number">9.13.</span> <span class="nav-text">全链路监控原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prometheus特点"><span class="nav-number">9.14.</span> <span class="nav-text">Prometheus特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Devops"><span class="nav-number">10.</span> <span class="nav-text">Devops</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微服务"><span class="nav-number">11.</span> <span class="nav-text">微服务</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vicebery</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://github.com/vicebery">Github</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
