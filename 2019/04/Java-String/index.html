@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Java,容器," />
+  <meta name="keywords" content="Java,String," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="总体框架Java容器是Java提供的工具包，包含了常用的数据结构：集合、链表、队列、栈、数组、映射等。Java容器工具包位置是java.util.* Java集合主要可以划分为4个部分：   List列表  Set集合  Map映射  工具类（Iterator迭代器、Enumeration枚举类、Arrays和Collections）  主要有三大接口Collection、Map、Iterator">
-<meta name="keywords" content="Java,容器">
+<meta name="description" content="String类Java中没有内置的字符串类型，而在标准Java类库中提供了一个预定义类String。每个用双引号括起来的字符串都是String类的一个实例。String类中没有提供用于修改字符串的方法。故String类对象称为不可变字符串。空串””是长度为0的字符串，是一个Java对象，有自己的串长度（0）和内容（空） String、StringBuilder和StringBuffer执行速度：S">
+<meta name="keywords" content="Java,String">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java容器">
-<meta property="og:url" content="https://vicebery.github.io/2019/03/Java-Collections/index.html">
+<meta property="og:title" content="Java中的String">
+<meta property="og:url" content="https://vicebery.github.io/2019/04/Java-String/index.html">
 <meta property="og:site_name" content="Vicebery&#39;blog">
-<meta property="og:description" content="总体框架Java容器是Java提供的工具包，包含了常用的数据结构：集合、链表、队列、栈、数组、映射等。Java容器工具包位置是java.util.* Java集合主要可以划分为4个部分：   List列表  Set集合  Map映射  工具类（Iterator迭代器、Enumeration枚举类、Arrays和Collections）  主要有三大接口Collection、Map、Iterator">
+<meta property="og:description" content="String类Java中没有内置的字符串类型，而在标准Java类库中提供了一个预定义类String。每个用双引号括起来的字符串都是String类的一个实例。String类中没有提供用于修改字符串的方法。故String类对象称为不可变字符串。空串””是长度为0的字符串，是一个Java对象，有自己的串长度（0）和内容（空） String、StringBuilder和StringBuffer执行速度：S">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-27T01:22:22.655Z">
+<meta property="og:updated_time" content="2019-04-09T14:36:36.256Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java容器">
-<meta name="twitter:description" content="总体框架Java容器是Java提供的工具包，包含了常用的数据结构：集合、链表、队列、栈、数组、映射等。Java容器工具包位置是java.util.* Java集合主要可以划分为4个部分：   List列表  Set集合  Map映射  工具类（Iterator迭代器、Enumeration枚举类、Arrays和Collections）  主要有三大接口Collection、Map、Iterator">
+<meta name="twitter:title" content="Java中的String">
+<meta name="twitter:description" content="String类Java中没有内置的字符串类型，而在标准Java类库中提供了一个预定义类String。每个用双引号括起来的字符串都是String类的一个实例。String类中没有提供用于修改字符串的方法。故String类对象称为不可变字符串。空串””是长度为0的字符串，是一个Java对象，有自己的串长度（0）和内容（空） String、StringBuilder和StringBuffer执行速度：S">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://vicebery.github.io/2019/03/Java-Collections/"/>
+  <link rel="canonical" href="https://vicebery.github.io/2019/04/Java-String/"/>
 
 
 
 
 
-  <title>Java容器 | Vicebery'blog</title>
+  <title>Java中的String | Vicebery'blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2019/03/Java-Collections/">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2019/04/Java-String/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Vicebery">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Java容器</h1>
+          <h1 class="post-title" itemprop="name headline">Java中的String</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-27T17:19:16+08:00">
-                2019-03-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-09T22:32:19Z">
+                2019-04-09
               </time>
             
 
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  985
+                  1,767
                 </span>
               
 
@@ -362,7 +362,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  6
                 </span>
               
             </div>
@@ -383,108 +383,54 @@
       
 
       
-        <h2 id="总体框架"><a href="#总体框架" class="headerlink" title="总体框架"></a>总体框架</h2><p>Java容器是Java提供的工具包，包含了常用的数据结构：集合、链表、队列、栈、数组、映射等。Java容器工具包位置是java.util.*</p>
-<p>Java集合主要可以划分为4个部分：</p>
+        <h1 id="String类"><a href="#String类" class="headerlink" title="String类"></a>String类</h1><p>Java中没有内置的字符串类型，而在标准Java类库中提供了一个预定义类String。每个用双引号括起来的字符串都是String类的一个实例。String类中没有提供用于修改字符串的方法。故String类对象称为不可变字符串。<br>空串””是长度为0的字符串，是一个Java对象，有自己的串长度（0）和内容（空）</p>
+<p>String、StringBuilder和StringBuffer<br>执行速度：StringBuilder&gt;StringBuffer&gt;String<br>StringBuilder 和 StringBuffer均为字符串变量，两者的对象是变量，是可以更改的。<br>StringBuilder线程不安全，适用于单线程下在字符缓冲区进行大量操作的情况<br>StringBuffer线程安全，适用于多线程下在字符缓冲区进行大量操作的情况 </p>
+<h2 id="String的特性"><a href="#String的特性" class="headerlink" title="String的特性"></a>String的特性</h2><p>1、String类是final的，不可被继承。</p>
+<p>2、String类是的本质是字符数组char[], 并且其值不可改变。</p>
+<p>3、String类对象有个特殊的创建的方式，就是直接指定比如String x = “abc”，”abc”就表示一个字符串对象。而x是”abc”对象的地址，也叫做”abc”对象的引用。</p>
+<p>4、String对象可以通过“+”串联。串联后会生成新的字符串。</p>
+<p>5、Java运行时会维护一个String Pool（String池），JavaDoc翻译很模糊“字符串缓冲区”。String池用来存放运行时中产生的各种字符串，并且池中的字符串的内容不重复。而一般对象不存在这个缓冲池，并且创建的对象仅仅存在于方法的堆栈区。</p>
+<p>6、创建字符串的方式很多，归纳起来有三类：</p>
+<p>其一，使用new关键字创建字符串，比如String s1 = new String(“abc”);</p>
+<p>其二，直接指定。比如String s2 = “abc”;</p>
+<p>其三，使用串联生成新的字符串。比如String s3 = “ab” + “c”; </p>
+<h2 id="String对象创建"><a href="#String对象创建" class="headerlink" title="String对象创建"></a>String对象创建</h2><p>String对象创建的原理：</p>
+<p>原理1：当使用任何方式来创建一个字符串对象s=X时，Java运行时（运行中JVM）会拿着这个X在String池中找是否存在内容相同的字符串对象，如果不存在，则在池中创建一个字符串s，否则，不在池中添加。</p>
+<p>原理2：Java中，只要使用new关键字来创建对象，则一定会（在堆区或栈区）创建一个新的对象。</p>
+<p>原理3：使用直接指定或者使用纯字符串串联来创建String对象，则仅仅会检查维护String池中的字符串，池中没有就在池中创建一个，有则罢了！但绝不会在堆栈区再去创建该String对象。</p>
+<p>原理4：使用包含变量的表达式来创建String对象，则不仅会检查维护String池，而且还会在堆栈区创建一个String对象。</p>
+<h1 id="字符串常量池（String-Pool）"><a href="#字符串常量池（String-Pool）" class="headerlink" title="字符串常量池（String Pool）"></a>字符串常量池（String Pool）</h1><p>字符串的分配，和其他的对象分配一样，耗费高昂的时间与空间代价，作为最基础的数据类型，大量频繁的创建字符串，极大程度地影响程序的性能。</p>
+<p>JVM为了提高性能和减少内存开销，在实例化字符串常量的时候进行了一些优化</p>
 <ul>
-<li style="list-style: none"><input type="checkbox" checked> List列表</li>
-<li style="list-style: none"><input type="checkbox" checked> Set集合</li>
-<li style="list-style: none"><input type="checkbox" checked> Map映射</li>
-<li style="list-style: none"><input type="checkbox" checked> 工具类（Iterator迭代器、Enumeration枚举类、Arrays和Collections）</li>
+<li>为字符串开辟一个字符串常量池，类似于缓存区</li>
+<li>创建字符串常量时，首先检查字符串常量池是否存在该字符串</li>
+<li>存在该字符串，返回引用实例，不存在，实例化该字符串并放入池中</li>
 </ul>
-<p>主要有三大接口Collection、Map、Iterator</p>
-<p><strong>Collection</strong>接口是一个高度抽象出来的集合，它包含了集合的基本操作和属性。主要有List接口和Set接口两个分支</p>
-<p>List是一个逻辑上有序（区别于元素有序–从大到小，从小到大）的队列，每一个元素都有它的索引，第一个元素的索引值是0，第二个是1……<br>List的实现类有LinkedList，ArrayList，Vector，Stack</p>
-<p>Set是一个不允许有重复元素的集合。<br>Set的实现类有HashSet，TreeSet。HashSet依赖于HashMap</p>
-<p><strong>Map</strong>是一个映射接口，即Key-value键值对。AbstractMap是个抽象类，它实现了Map接口中的大部分API。而HashMap，TreeMap，WeakHashMap都是继承自AbstractMap。</p>
-<p><strong>Iterator</strong>是遍历集合的工具，即我们通常通过Iterator迭代器来遍历集合。我们说Collection依赖于Iterator，是因为Collection的实现类都要实现iterator()函数，返回一个Iterator对象。</p>
-<p>ListIterator是专门为遍历List而存在的。</p>
-<h3 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h3><h4 id="Arrays-类"><a href="#Arrays-类" class="headerlink" title="Arrays 类"></a>Arrays 类</h4><p>java.util.Arrays 类能方便地操作数组，它提供的所有方法都是静态的。</p>
-<p>具有以下功能：</p>
+<p>实现的基础：</p>
 <ul>
-<li>给数组赋值：通过 fill 方法。</li>
-<li>对数组排序：通过 sort 方法,按升序。</li>
-<li>比较数组：通过 equals 方法比较数组中元素值是否相等。</li>
-<li>查找数组元素：通过 binarySearch 方法能对排序好的数组进行二分查找法操作。</li>
+<li>实现该优化的基础是因为字符串是不可变的，可以不用担心数据冲突进行共享</li>
+<li>运行时实例创建的全局字符串常量池中有一个表，总是为池中每个唯一的字符串对象维护一个引用,这就意味着它们一直引用着字符串常量池中的对象，所以，在常量池中的这些字符串不会被垃圾收集器回收</li>
 </ul>
-<h4 id="Collections类"><a href="#Collections类" class="headerlink" title="Collections类"></a>Collections类</h4><p>常见方法：</p>
-<p>1，对list进行二分查找：</p>
-<p>前提该集合一定要有序。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(list,key)</span></span>;</span><br><span class="line"><span class="comment">//必须根据元素自然顺序对列表进行升级排序</span></span><br><span class="line"><span class="comment">//要求list 集合中的元素都是Comparable 的子类。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(list,key,Comparator)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>2，对list集合进行排序。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sort(list); </span><br><span class="line"><span class="comment">//对list进行排序,其实使用的事list容器中的对象的compareTo方法</span></span><br><span class="line">sort(list,comaprator);</span><br><span class="line"><span class="comment">//按照指定比较器进行排序</span></span><br></pre></td></tr></table></figure></p>
-<p>3，对集合取最大值或者最小值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">max(Collection)</span><br><span class="line">max(Collection,comparator)</span><br><span class="line">min(Collection)</span><br><span class="line">min(Collection,comparator)</span><br></pre></td></tr></table></figure></p>
-<p>4，对list集合进行反转。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reverse(list);</span><br></pre></td></tr></table></figure></p>
-<p>5，对比较方式进行强行逆转。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Comparator <span class="title">reverseOrder</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function">Comparator <span class="title">reverseOrder</span><span class="params">(Comparator)</span></span>;</span><br></pre></td></tr></table></figure></p>
-<p>6，对list集合中的元素进行位置的置换。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swap(list,x,y);</span><br></pre></td></tr></table></figure></p>
-<p>7，对list集合进行元素的替换。如果被替换的元素不存在，那么原集合不变。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">replaceAll(list,old,<span class="keyword">new</span>);</span><br></pre></td></tr></table></figure></p>
-<p>8，可以将不同步的集合变成同步的集合。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Set <span class="title">synchronizedSet</span><span class="params">(Set&lt;T&gt; s)</span></span></span><br><span class="line"><span class="function">Map <span class="title">synchronizedMap</span><span class="params">(Map&lt;K,V&gt; m)</span></span></span><br><span class="line"><span class="function">List <span class="title">synchronizedList</span><span class="params">(List&lt;T&gt; list)</span></span></span><br></pre></td></tr></table></figure></p>
-<p> 如果想要将集合变数组：  </p>
-<p>可以使用Collection 中的toArray 方法。注意：是Collection不是Collections工具类<br>传入指定的类型数组即可，该数组的长度最好为集合的size。</p>
-<h2 id="具体的集合"><a href="#具体的集合" class="headerlink" title="具体的集合"></a>具体的集合</h2><table>
-<thead>
-<tr>
-<th>集合类型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ArrayList</td>
-<td>一种可以动态增长和缩减的索引序列</td>
-</tr>
-<tr>
-<td>LinkedList</td>
-<td>一种可以在任何位置进行高效地插入和删除操作的有序序列</td>
-</tr>
-<tr>
-<td>ArrayDeque</td>
-<td>一种用循环数组实现的双端队列</td>
-</tr>
-<tr>
-<td>HashSet</td>
-<td>一种没有重复元素的无序集合</td>
-</tr>
-<tr>
-<td>TreeSet</td>
-<td>一种有序集</td>
-</tr>
-<tr>
-<td>EnumSet</td>
-<td>一种包含枚举类型值的集</td>
-</tr>
-<tr>
-<td>LinkedHashSet</td>
-<td>一种可以记住元素插入次序的集</td>
-</tr>
-<tr>
-<td>PriorityQueue</td>
-<td>一种允许高效删除最小元素的集合</td>
-</tr>
-<tr>
-<td>HashMap</td>
-<td>一种存储键/值关联的数据结构</td>
-</tr>
-<tr>
-<td>TreeMap</td>
-<td>一种键值有序排列的映射表</td>
-</tr>
-<tr>
-<td>EnumMap</td>
-<td>一种键值属于枚举类型的映射表</td>
-</tr>
-<tr>
-<td>LinkedHashMap</td>
-<td>一种可以记住键/值项添加次序的映射表</td>
-</tr>
-<tr>
-<td>WeakHashMap</td>
-<td>一种其值无用武之地后可以被垃圾回收器回收的映射表</td>
-</tr>
-<tr>
-<td>IdentityHashMap</td>
-<td>一种用==而不是用equals比较键值的映射表</td>
-</tr>
-</tbody>
-</table>
+<p>字符串常量池是方法区的一部分，方法区属于静态区，跟堆一样，被所有线程共享，方法区中保存的都是在整个程序中永远唯一的元素，比如class，static变量等</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String str = <span class="keyword">new</span> String(<span class="string">"hello"</span>);<span class="comment">//会创建多少个对象？</span></span><br></pre></td></tr></table></figure>
+<p>使用new来创建String对象，首先会在常量池中查找是否有“hello”对象，没有就新建一个，然后会在堆中new一个String（“hello”）对象。</p>
+<p><a href="https://segmentfault.com/a/1190000009888357" target="_blank" rel="noopener">String的存储问题</a></p>
+<h1 id="Object类的两个方法"><a href="#Object类的两个方法" class="headerlink" title="Object类的两个方法"></a>Object类的两个方法</h1><h2 id="equals方法"><a href="#equals方法" class="headerlink" title="equals方法"></a>equals方法</h2><p>Object类中的equals方法用于检测一个对象是否等于另一个对象。这个方法将判断两个对象是否具有相同的引用。</p>
+<p>五种特性：</p>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> 自反性</li>
+<li style="list-style: none"><input type="checkbox" checked> 对称性</li>
+<li style="list-style: none"><input type="checkbox" checked> 传递性</li>
+<li style="list-style: none"><input type="checkbox" checked> 一致性</li>
+<li style="list-style: none"><input type="checkbox" checked> 对于任意非空引用x，x.equals(null)应该返回false</li>
+</ul>
+<h2 id="hashcode方法"><a href="#hashcode方法" class="headerlink" title="hashcode方法"></a>hashcode方法</h2><p>散列码是由对象导出的一个整数值，hashCode方法定义在Object类中，故每个对象都有一个默认的散列码，其值为对象的存储地址。</p>
+<p>字符串的散列码是由内容导出的，因此String new出两个相同字符串其对象拥有相同的散列码，StringBuffer new出两个相同字符串却拥有不同散列码，是因为在StringBuffer类中没有定义hashCode方法，它的散列码是由Object类的默认hashCode方法导出的对象存储地址。</p>
+<p>String类和八大包装类都是重写了equals和hashcode方法，因此equals比较的是两个对象的value值是否相等，如果没有重写equals方法，那么比较的将是对象的引用是否指向同一块内存地址。</p>
+<h1 id="关于“-”与equals"><a href="#关于“-”与equals" class="headerlink" title="关于“==”与equals"></a>关于“==”与equals</h1><p>对于基本数据类型的比较，只能用“==”，因为基本数据类型没有equals方法，equals方法是Object类下的一个方法，如果不重写这个方法的话，那么用equals判断两个对象是否相等与“==”没有区别，本质上都是在比较引用指向的内存地址。</p>
+<p>但，Java中重写了包装类和String类的equals方法和hashcode方法，使得equals方法的功能变成了比较对象的值而不是对象的地址，这更符合现实逻辑（现实中我们不会关心对象存储在哪个地址上）。</p>
+<p>前面提到JVM会使用String Pool来来优化存储字符串，事实上在Integer类中也有一些优化：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      Integer a = <span class="number">2</span>;</span><br><span class="line">      Integer b = <span class="number">2</span>;</span><br><span class="line">      System.out.println(a == b);   <span class="comment">//输出true</span></span><br><span class="line">        </span><br><span class="line">      Integer a1 = <span class="number">128</span>;</span><br><span class="line">      Integer b1 = <span class="number">128</span>;</span><br><span class="line">      System.out.println(a1 == b1);    <span class="comment">//输出false</span></span><br><span class="line">        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>分析：以上程序，当两个2自动装箱后，比较相等，但是两个128自动装箱后就不相等。<br>这是因为系统内部提供了一个缓存功能，把-128~127之间的整数自动装箱成一个Integer时，实际上直接指向对象的数值元素，而-128~127范围外的整数自动装箱成Integer时，总是新创建一个Integer实例。</p>
 
       
     </div>
@@ -515,7 +461,7 @@
           
             <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
           
-            <a href="/tags/容器/" rel="tag"><i class="fa fa-tag"></i> 容器</a>
+            <a href="/tags/String/" rel="tag"><i class="fa fa-tag"></i> String</a>
           
         </div>
       
@@ -528,8 +474,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/docker-kubernetes/" rel="next" title="云计算基础知识整理">
-                <i class="fa fa-chevron-left"></i> 云计算基础知识整理
+              <a href="/2019/03/Java-Collections/" rel="next" title="Java容器">
+                <i class="fa fa-chevron-left"></i> Java容器
               </a>
             
           </div>
@@ -537,10 +483,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/Java-String/" rel="prev" title="Java中的String">
-                Java中的String <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -716,7 +658,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#总体框架"><span class="nav-number">1.</span> <span class="nav-text">总体框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工具类"><span class="nav-number">1.1.</span> <span class="nav-text">工具类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Arrays-类"><span class="nav-number">1.1.1.</span> <span class="nav-text">Arrays 类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Collections类"><span class="nav-number">1.1.2.</span> <span class="nav-text">Collections类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体的集合"><span class="nav-number">2.</span> <span class="nav-text">具体的集合</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#String类"><span class="nav-number">1.</span> <span class="nav-text">String类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#String的特性"><span class="nav-number">1.1.</span> <span class="nav-text">String的特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String对象创建"><span class="nav-number">1.2.</span> <span class="nav-text">String对象创建</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串常量池（String-Pool）"><span class="nav-number">2.</span> <span class="nav-text">字符串常量池（String Pool）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Object类的两个方法"><span class="nav-number">3.</span> <span class="nav-text">Object类的两个方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#equals方法"><span class="nav-number">3.1.</span> <span class="nav-text">equals方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hashcode方法"><span class="nav-number">3.2.</span> <span class="nav-text">hashcode方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于“-”与equals"><span class="nav-number">4.</span> <span class="nav-text">关于“==”与equals</span></a></li></ol></div>
             
 
           </div>
