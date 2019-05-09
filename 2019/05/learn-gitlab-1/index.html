@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Java,浮点数," />
+  <meta name="keywords" content="git,GitLab," />
 
 
 
@@ -79,21 +79,18 @@
 
 
 
-<meta name="description" content="浮点数在内存中是如何存储的？我们知道，任何数据在计算机内存中都是用‘0\1’来存储的，浮点数亦是如此。因此十进制浮点数在存储时必定会转换为二进制的浮点数。  浮点数的进制转换主要看看十进制转二进制，整数部分和小数部分分开处理  整数部分：整数除以2，得到一个商和余数，得到的商继续除以2并得到一个商和一个余数，继续除以2操作直至商为0，上述操作得到一系列余数，从最后一个余数开始直至第一个余数，这一系">
-<meta name="keywords" content="Java,浮点数">
+<meta name="description" content="GitLab是什么GitLab是一个基于Git的项目管理软件。 GitHub是一个网站平台，提供网页版和客户端版接口，提供给用户空间存储git仓储，保存用户的一些数据文档或者代码等数据 Git是一个开源的分布式版本控制系统，用于处理项目中的版本迭代问题，GitLab和GitHub都是基于Git系统实现的。 与GitHub的区别GitLab是用来进行项目管理的软件，而Github同样可以实现版本控制">
+<meta name="keywords" content="git,GitLab">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于Java中的浮点数">
-<meta property="og:url" content="https://vicebery.github.io/2018/11/java-float/index.html">
+<meta property="og:title" content="GitLab简介">
+<meta property="og:url" content="https://vicebery.github.io/2019/05/learn-gitlab-1/index.html">
 <meta property="og:site_name" content="Vicebery&#39;blog">
-<meta property="og:description" content="浮点数在内存中是如何存储的？我们知道，任何数据在计算机内存中都是用‘0\1’来存储的，浮点数亦是如此。因此十进制浮点数在存储时必定会转换为二进制的浮点数。  浮点数的进制转换主要看看十进制转二进制，整数部分和小数部分分开处理  整数部分：整数除以2，得到一个商和余数，得到的商继续除以2并得到一个商和一个余数，继续除以2操作直至商为0，上述操作得到一系列余数，从最后一个余数开始直至第一个余数，这一系">
+<meta property="og:description" content="GitLab是什么GitLab是一个基于Git的项目管理软件。 GitHub是一个网站平台，提供网页版和客户端版接口，提供给用户空间存储git仓储，保存用户的一些数据文档或者代码等数据 Git是一个开源的分布式版本控制系统，用于处理项目中的版本迭代问题，GitLab和GitHub都是基于Git系统实现的。 与GitHub的区别GitLab是用来进行项目管理的软件，而Github同样可以实现版本控制">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203737830-2101089911.png">
-<meta property="og:image" content="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203756447-955115338.png">
-<meta property="og:updated_time" content="2018-11-21T12:39:35.476Z">
+<meta property="og:updated_time" content="2019-05-09T01:31:35.554Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于Java中的浮点数">
-<meta name="twitter:description" content="浮点数在内存中是如何存储的？我们知道，任何数据在计算机内存中都是用‘0\1’来存储的，浮点数亦是如此。因此十进制浮点数在存储时必定会转换为二进制的浮点数。  浮点数的进制转换主要看看十进制转二进制，整数部分和小数部分分开处理  整数部分：整数除以2，得到一个商和余数，得到的商继续除以2并得到一个商和一个余数，继续除以2操作直至商为0，上述操作得到一系列余数，从最后一个余数开始直至第一个余数，这一系">
-<meta name="twitter:image" content="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203737830-2101089911.png">
+<meta name="twitter:title" content="GitLab简介">
+<meta name="twitter:description" content="GitLab是什么GitLab是一个基于Git的项目管理软件。 GitHub是一个网站平台，提供网页版和客户端版接口，提供给用户空间存储git仓储，保存用户的一些数据文档或者代码等数据 Git是一个开源的分布式版本控制系统，用于处理项目中的版本迭代问题，GitLab和GitHub都是基于Git系统实现的。 与GitHub的区别GitLab是用来进行项目管理的软件，而Github同样可以实现版本控制">
 
 
 
@@ -123,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://vicebery.github.io/2018/11/java-float/"/>
+  <link rel="canonical" href="https://vicebery.github.io/2019/05/learn-gitlab-1/"/>
 
 
 
 
 
-  <title>关于Java中的浮点数 | Vicebery'blog</title>
+  <title>GitLab简介 | Vicebery'blog</title>
   
 
 
@@ -266,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2018/11/java-float/">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2019/05/learn-gitlab-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Vicebery">
@@ -283,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">关于Java中的浮点数</h1>
+          <h1 class="post-title" itemprop="name headline">GitLab简介</h1>
         
 
         <div class="post-meta">
@@ -295,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-22T04:15:25+08:00">
-                2018-11-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-09T09:28:42Z">
+                2019-05-09
               </time>
             
 
@@ -349,7 +346,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  945
+                  500
                 </span>
               
 
@@ -365,7 +362,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  2
                 </span>
               
             </div>
@@ -386,35 +383,27 @@
       
 
       
-        <h2 id="浮点数在内存中是如何存储的？"><a href="#浮点数在内存中是如何存储的？" class="headerlink" title="浮点数在内存中是如何存储的？"></a>浮点数在内存中是如何存储的？</h2><p>我们知道，任何数据在计算机内存中都是用‘0\1’来存储的，浮点数亦是如此。因此十进制浮点数在存储时必定会转换为二进制的浮点数。</p>
-<hr>
-<h2 id="浮点数的进制转换"><a href="#浮点数的进制转换" class="headerlink" title="浮点数的进制转换"></a>浮点数的进制转换</h2><p>主要看看十进制转二进制，整数部分和小数部分分开处理</p>
+        <h2 id="GitLab是什么"><a href="#GitLab是什么" class="headerlink" title="GitLab是什么"></a>GitLab是什么</h2><p>GitLab是一个基于Git的项目管理软件。</p>
+<p>GitHub是一个网站平台，提供网页版和客户端版接口，提供给用户空间存储git仓储，保存用户的一些数据文档或者代码等数据</p>
+<p>Git是一个开源的分布式版本控制系统，用于处理项目中的版本迭代问题，GitLab和GitHub都是基于Git系统实现的。</p>
+<h2 id="与GitHub的区别"><a href="#与GitHub的区别" class="headerlink" title="与GitHub的区别"></a>与GitHub的区别</h2><p>GitLab是用来进行项目管理的软件，而Github同样可以实现版本控制，为什么不用更受欢迎的GitHub呢？或者说GitLab的适用场景与GitHub有什么区别呢？</p>
+<p>二者在操作上基本相同，功能与底层实现上也差不多，但，如果你用GitHub，即便使用私有库，你的代码（存储在GitHub的服务器中）仍然掌握在别人手中（运营GitHub公司，目前是微软），对于一些对私密性要求较高的企业，这是无法忍受的。而GitLab则不同，GitLab是可以部署到自己的服务器上，数据库等一切信息都掌握在自己手上，适合团队内部协作开发，简单来说可把GitLab看作个人版的GitHub。</p>
+<p>另外，GitLab的权限管理优于GitHub，GitLab的仓库有三种</p>
 <ul>
-<li><p><strong>整数部分</strong>：整数除以2，得到一个商和余数，得到的商继续除以2并得到一个商和一个余数，继续除以2操作直至商为0，上述操作得到一系列余数，从最后一个余数开始直至第一个余数，这一系列0\1即为转换后的二进制数。</p>
-</li>
-<li><p><strong>小数部分</strong>：乘以2，然后取出整数部分，将剩下的小数部分继续乘以2，然后再取整数部分，一直取到小数部分为零为止。如果永远不为零，则按要求保留足够位数的小数，最后一位做0舍1入。将取出的整数顺序排列。</p>
-</li>
+<li>Private: 私人仓库，项目只有自己能看到，其他人都不能看到，包括系统管理员。</li>
+<li>Internal: 项目只有登录账户可看。</li>
+<li>Public: 项目即使是游客都能看到。</li>
 </ul>
-<p>从以上转换过程可以看出，并不是任何一个十进制小数都可以用二进制精确表示出来。一个在0到1之间的小数P可用如下形式表示：</p>
-<p><img src="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203737830-2101089911.png" alt=""></p>
-<p>从这个式子中我们也可看出二进制表示出的小数是分段的，这也是为什么在Java中浮点数很多时候并不是十分精确的表示十进制小数的根本原因。</p>
-<hr>
-<h2 id="float在内存中的表示"><a href="#float在内存中的表示" class="headerlink" title="float在内存中的表示"></a>float在内存中的表示</h2><p>float在Java中是4字节（32位），取值范围大约-3.4E+38F~3.4E<br>+38F。</p>
-<p>为什么取值范围是这个呢？</p>
-<p>二进制在内存中使用二进制的科学计数法来存储，因此分为阶码（即指数）和底数，由于也有正负之分，所以还有一位符号位。</p>
-<p>最高位为符号位，接着8位阶码，剩下23位为底数。</p>
-<p>值得注意的是，无论底数是什么值，我们都可以进行移位操作，使得底数=1.xxxxxx，这类似于十进制中的任意一个数转换为用科学计数法表示时进行的移位操作。由于底数前的一个1是固定不变的，故将其省略（为了表示更大的范围）。也就是说实际上底数是24位。</p>
-<p>底数可以表示的最大值为1.1111111111111111111111111（共24个1），转换为十进制的值约为1.999999（接近于2）。</p>
-<p>底数的最小值为1.00000000000000（23个0），转换为十进制为1。</p>
-<p>故可知，底数取值在1~2之间。</p>
-<p>阶码在这里用<a href="https://zh.wikipedia.org/wiki/%E7%A7%BB%E7%A0%81" target="_blank" rel="noopener">移码</a>表示，采用偏移值为127的移码，为什么要这样做？浮点数的阶码中，全0和全1被保留作特殊情况，所以实际只有254个值可用。</p>
-<p>阶码必定是有负值的，那么如何最优雅地表示负值呢？为了让计算机很容易比较阶码大小（以此来比较浮点数的大小），同时人也可以很轻松地辨别大小，因为移码相当于实际值在数轴上平移了一定位数。</p>
-<p><a href="https://www.zhihu.com/question/24115452" target="_blank" rel="noopener">为什么不用标准偏移而用127呢？</a></p>
-<p>我觉得应该是为了平衡精度与范围，并且让表示的范围尽可能大。</p>
-<p>阶码用移码表示后，8位二进制从1~254以此表示为-126~127。不仅去除了全0和全1的情况，还能让人一眼看出两个阶码的大小。</p>
-<p>知道阶码和底数的范围后，就可以得出float的取值范围：</p>
-<p><img src="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203756447-955115338.png" alt=""></p>
-<p>转化为十进制为<br><code>-3.4*10^38~-1.2*10^(-38)</code>与<code>1.2*10^(-38)~3.4*10^38</code></p>
+<p>而GitHub的仓库只有公有库和私有库两种，GitHub协作者的操作权限都是一样的，而GitLab提供更细粒度的划分，仓库所有者可以给不同的开发者设置不同的权限(4种不同的角色)，共有5种角色。</p>
+<ul>
+<li>Guest</li>
+<li>Reporter</li>
+<li>Developer</li>
+<li>Maintainer</li>
+<li>Owner</li>
+</ul>
+<p>不同角色权限可在<a href="https://docs.gitlab.com/ee/user/permissions.html#fn:1" target="_blank" rel="noopener">官方文档上查到</a></p>
+<h2 id="在服务器上搭建GitLab"><a href="#在服务器上搭建GitLab" class="headerlink" title="在服务器上搭建GitLab"></a>在服务器上搭建GitLab</h2><p>在centos上安装的<a href="https://www.cnblogs.com/wenwei-blog/p/5861450.html" target="_blank" rel="noopener">教程</a>，暂不作深入探讨。</p>
 
       
     </div>
@@ -443,9 +432,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+            <a href="/tags/git/" rel="tag"><i class="fa fa-tag"></i> git</a>
           
-            <a href="/tags/浮点数/" rel="tag"><i class="fa fa-tag"></i> 浮点数</a>
+            <a href="/tags/GitLab/" rel="tag"><i class="fa fa-tag"></i> GitLab</a>
           
         </div>
       
@@ -458,8 +447,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/learn-git-1/" rel="next" title="初识git">
-                <i class="fa fa-chevron-left"></i> 初识git
+              <a href="/2019/04/Java-String/" rel="next" title="Java中的String">
+                <i class="fa fa-chevron-left"></i> Java中的String
               </a>
             
           </div>
@@ -467,10 +456,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/01/docker-kubernetes/" rel="prev" title="云计算基础知识整理">
-                云计算基础知识整理 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -646,7 +631,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#浮点数在内存中是如何存储的？"><span class="nav-number">1.</span> <span class="nav-text">浮点数在内存中是如何存储的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浮点数的进制转换"><span class="nav-number">2.</span> <span class="nav-text">浮点数的进制转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#float在内存中的表示"><span class="nav-number">3.</span> <span class="nav-text">float在内存中的表示</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#GitLab是什么"><span class="nav-number">1.</span> <span class="nav-text">GitLab是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与GitHub的区别"><span class="nav-number">2.</span> <span class="nav-text">与GitHub的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在服务器上搭建GitLab"><span class="nav-number">3.</span> <span class="nav-text">在服务器上搭建GitLab</span></a></li></ol></div>
             
 
           </div>
