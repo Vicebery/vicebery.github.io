@@ -262,7 +262,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2019/05/初识redis/">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2019/05/redis-0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Vicebery">
@@ -281,7 +281,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/05/初识redis/" itemprop="url">初识redis</a></h1>
+                <a class="post-title-link" href="/2019/05/redis-0/" itemprop="url">初识redis</a></h1>
         
 
         <div class="post-meta">
@@ -304,6 +304,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                    <span itemprop="name">学习记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -325,7 +347,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  184
                 </span>
               
 
@@ -364,11 +386,20 @@
       
         
           
-          
+          基本概念redis一种非关系型数据库，主要基于key-value存储。
+为什么经常说用redis做缓存？
+redis将数据保存在内存中，减少了磁盘IO的次数，磁盘IO非常损耗资源，redis会直接从内存中读取数据，这样非常快（基本只需考虑网络连接上的延迟），但同时也意味着不应该用redis来处理那种经常需要修改的值。
+数据存储在内存，可靠吗？
+非常不可靠，服务器一旦出故障，数据岂不是都没了。redis提供数据持久化来解决这个问题，主要提供两种方式：
+
+RDB
+AOF
+
+两个应用场景缓存共享Session
           
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/05/初识redis/#more" rel="contents">
+            <a class="btn" href="/2019/05/redis-0/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2184,7 +2215,7 @@ ftpuser0与ftpuser同属于一个组ftpGroup
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
