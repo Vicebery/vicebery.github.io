@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="常见spring注解@Component@Service@Mapper@Value@Autowired@Slf4j@Param@RestControllerspring boot注解@PostMapping@RequestMappingspring cloud注解@FeignClient">
+<meta name="description" content="常见spring注解@Component把普通pojo实例化到spring容器中，相当于配置文件中的&amp;lt;bean id=&amp;quot;&amp;quot; class=&amp;quot;&amp;quot;/&amp;gt; 泛指各种组件，就是说当我们的类不属于各种归类的时候（不属于@Controller、@Services等的时候），我们就可以使用@Component来标注这个类。 @Controller用于标注控制层，相">
 <meta name="keywords" content="Spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring注解详解">
 <meta property="og:url" content="https://vicebery.github.io/2019/06/spring-autowire/index.html">
 <meta property="og:site_name" content="Vicebery&#39;blog">
-<meta property="og:description" content="常见spring注解@Component@Service@Mapper@Value@Autowired@Slf4j@Param@RestControllerspring boot注解@PostMapping@RequestMappingspring cloud注解@FeignClient">
+<meta property="og:description" content="常见spring注解@Component把普通pojo实例化到spring容器中，相当于配置文件中的&amp;lt;bean id=&amp;quot;&amp;quot; class=&amp;quot;&amp;quot;/&amp;gt; 泛指各种组件，就是说当我们的类不属于各种归类的时候（不属于@Controller、@Services等的时候），我们就可以使用@Component来标注这个类。 @Controller用于标注控制层，相">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-13T14:16:10.831Z">
+<meta property="og:updated_time" content="2019-07-03T12:22:21.791Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring注解详解">
-<meta name="twitter:description" content="常见spring注解@Component@Service@Mapper@Value@Autowired@Slf4j@Param@RestControllerspring boot注解@PostMapping@RequestMappingspring cloud注解@FeignClient">
+<meta name="twitter:description" content="常见spring注解@Component把普通pojo实例化到spring容器中，相当于配置文件中的&amp;lt;bean id=&amp;quot;&amp;quot; class=&amp;quot;&amp;quot;/&amp;gt; 泛指各种组件，就是说当我们的类不属于各种归类的时候（不属于@Controller、@Services等的时候），我们就可以使用@Component来标注这个类。 @Controller用于标注控制层，相">
 
 
 
@@ -292,7 +292,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-13T22:13:18Z">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-14T06:13:18+08:00">
                 2019-06-13
               </time>
             
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  24
+                  691
                 </span>
               
 
@@ -362,7 +362,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -383,7 +383,30 @@
       
 
       
-        <h1 id="常见spring注解"><a href="#常见spring注解" class="headerlink" title="常见spring注解"></a>常见spring注解</h1><h2 id="Component"><a href="#Component" class="headerlink" title="@Component"></a>@Component</h2><h2 id="Service"><a href="#Service" class="headerlink" title="@Service"></a>@Service</h2><h2 id="Mapper"><a href="#Mapper" class="headerlink" title="@Mapper"></a>@Mapper</h2><h2 id="Value"><a href="#Value" class="headerlink" title="@Value"></a>@Value</h2><h2 id="Autowired"><a href="#Autowired" class="headerlink" title="@Autowired"></a>@Autowired</h2><h2 id="Slf4j"><a href="#Slf4j" class="headerlink" title="@Slf4j"></a>@Slf4j</h2><h2 id="Param"><a href="#Param" class="headerlink" title="@Param"></a>@Param</h2><h2 id="RestController"><a href="#RestController" class="headerlink" title="@RestController"></a>@RestController</h2><h1 id="spring-boot注解"><a href="#spring-boot注解" class="headerlink" title="spring boot注解"></a>spring boot注解</h1><h2 id="PostMapping"><a href="#PostMapping" class="headerlink" title="@PostMapping"></a>@PostMapping</h2><h2 id="RequestMapping"><a href="#RequestMapping" class="headerlink" title="@RequestMapping"></a>@RequestMapping</h2><h1 id="spring-cloud注解"><a href="#spring-cloud注解" class="headerlink" title="spring cloud注解"></a>spring cloud注解</h1><h2 id="FeignClient"><a href="#FeignClient" class="headerlink" title="@FeignClient"></a>@FeignClient</h2>
+        <h1 id="常见spring注解"><a href="#常见spring注解" class="headerlink" title="常见spring注解"></a>常见spring注解</h1><h2 id="Component"><a href="#Component" class="headerlink" title="@Component"></a>@Component</h2><p>把普通pojo实例化到spring容器中，相当于配置文件中的<br><code>&lt;bean id=&quot;&quot; class=&quot;&quot;/&gt;</code></p>
+<p>泛指各种组件，就是说当我们的类不属于各种归类的时候（不属于@Controller、@Services等的时候），我们就可以使用@Component来标注这个类。</p>
+<h2 id="Controller"><a href="#Controller" class="headerlink" title="@Controller"></a>@Controller</h2><p>用于标注控制层，相当于struts中的action层</p>
+<h2 id="Service"><a href="#Service" class="headerlink" title="@Service"></a>@Service</h2><p>用于标注服务层，主要用来进行业务的逻辑处理</p>
+<h2 id="Repository"><a href="#Repository" class="headerlink" title="@Repository"></a>@Repository</h2><p>用于标注数据访问组件，即DAO组件</p>
+<p>通过在类上使用 @Repository、@Component、@Service 和 @Constroller 注解，Spring会自动创建相应的 BeanDefinition 对象，并注册到 ApplicationContext 中。这些类就成了 Spring受管组件。</p>
+<h2 id="Mapper"><a href="#Mapper" class="headerlink" title="@Mapper"></a>@Mapper</h2><h2 id="Value"><a href="#Value" class="headerlink" title="@Value"></a>@Value</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@value(&quot;$&#123;key:default&quot;)</span><br><span class="line">private String var;</span><br></pre></td></tr></table></figure>
+<p>以上声明指导spring根据key去属性配置文件查找value，如果没找到，则使用default作为默认值。</p>
+<p>注意以上的${…}占位符只有当注册了PropertySourcesPlaceholderConfigurer bean后才能被解析，否则@Value注解会一直将默认值赋值给var。</p>
+<h2 id="Autowired"><a href="#Autowired" class="headerlink" title="@Autowired"></a>@Autowired</h2><p>可以对成员变量、方法和构造函数进行标注，来完成自动装配的工作，另外，需要知道的是，@Autowired是根据类型进行自动装配的。</p>
+<h2 id="Slf4j"><a href="#Slf4j" class="headerlink" title="@Slf4j"></a>@Slf4j</h2><p>import 引入lombok插件</p>
+<p>写日志的时候，肯定需要:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(LoggerTest.class);</span><br></pre></td></tr></table></figure></p>
+<p>每次写新的类，就需要重新写logger，这时，我们有更简单的方式，就是使用@Slf4j注解，使用注解后，在类中就可以直接使用<code>log.info(&quot;information&quot;);</code>来输出日志信息了。</p>
+<h2 id="Param"><a href="#Param" class="headerlink" title="@Param"></a>@Param</h2><p>当我们在写dao层的对数据库的一些操作时，有时需要传入多个参数，这时需要用<code>@Param</code>来标记每个参数，不然mybatis会无法识别对应参数而出错。</p>
+<h2 id="ResponseBody"><a href="#ResponseBody" class="headerlink" title="@ResponseBody"></a>@ResponseBody</h2><p>该注解用于将Controller的方法返回的对象，通过适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body数据区。</p>
+<p>使用时机：<br>返回的数据不是html标签的页面，而是其他某种格式的数据时（如json、xml等）使用。</p>
+<h2 id="RestController"><a href="#RestController" class="headerlink" title="@RestController"></a>@RestController</h2><p>@RestController是@ResponseBody和@Controller的组合注解。</p>
+<p>当我们在Controller上标注了@RestController，这样相当于Controller的所有方法都标注了@ResponseBody</p>
+<h2 id="RequestMapping"><a href="#RequestMapping" class="headerlink" title="@RequestMapping"></a>@RequestMapping</h2><p>要配置 Web 请求的映射，就需要用到 @RequestMapping 注解。</p>
+<p>@RequestMapping 注解可以在控制器类的级别和/或其中的方法的级别上使用。</p>
+<p>在类的级别上的注解会将一个特定请求或者请求模式映射到一个控制器之上。之后你还可以另外添加方法级别的注解来进一步指定到处理方法的映射关系。</p>
+<h2 id="PostMapping"><a href="#PostMapping" class="headerlink" title="@PostMapping"></a>@PostMapping</h2><p>映射一个POST请求，处理post请求<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@PostMapping(value = &quot;/user/login&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>等同于<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(value = &quot;/user/login&quot;,method = RequestMethod.POST)</span><br></pre></td></tr></table></figure></p>
+<h2 id="FeignClient"><a href="#FeignClient" class="headerlink" title="@FeignClient"></a>@FeignClient</h2>
       
     </div>
     
@@ -433,6 +456,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/learn-git-2/" rel="prev" title="git相关问题">
+                git相关问题 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -513,7 +540,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -608,7 +635,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常见spring注解"><span class="nav-number">1.</span> <span class="nav-text">常见spring注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Component"><span class="nav-number">1.1.</span> <span class="nav-text">@Component</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service"><span class="nav-number">1.2.</span> <span class="nav-text">@Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mapper"><span class="nav-number">1.3.</span> <span class="nav-text">@Mapper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Value"><span class="nav-number">1.4.</span> <span class="nav-text">@Value</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Autowired"><span class="nav-number">1.5.</span> <span class="nav-text">@Autowired</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Slf4j"><span class="nav-number">1.6.</span> <span class="nav-text">@Slf4j</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Param"><span class="nav-number">1.7.</span> <span class="nav-text">@Param</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RestController"><span class="nav-number">1.8.</span> <span class="nav-text">@RestController</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spring-boot注解"><span class="nav-number">2.</span> <span class="nav-text">spring boot注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PostMapping"><span class="nav-number">2.1.</span> <span class="nav-text">@PostMapping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RequestMapping"><span class="nav-number">2.2.</span> <span class="nav-text">@RequestMapping</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spring-cloud注解"><span class="nav-number">3.</span> <span class="nav-text">spring cloud注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FeignClient"><span class="nav-number">3.1.</span> <span class="nav-text">@FeignClient</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常见spring注解"><span class="nav-number">1.</span> <span class="nav-text">常见spring注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Component"><span class="nav-number">1.1.</span> <span class="nav-text">@Component</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Controller"><span class="nav-number">1.2.</span> <span class="nav-text">@Controller</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service"><span class="nav-number">1.3.</span> <span class="nav-text">@Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Repository"><span class="nav-number">1.4.</span> <span class="nav-text">@Repository</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mapper"><span class="nav-number">1.5.</span> <span class="nav-text">@Mapper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Value"><span class="nav-number">1.6.</span> <span class="nav-text">@Value</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Autowired"><span class="nav-number">1.7.</span> <span class="nav-text">@Autowired</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Slf4j"><span class="nav-number">1.8.</span> <span class="nav-text">@Slf4j</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Param"><span class="nav-number">1.9.</span> <span class="nav-text">@Param</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ResponseBody"><span class="nav-number">1.10.</span> <span class="nav-text">@ResponseBody</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RestController"><span class="nav-number">1.11.</span> <span class="nav-text">@RestController</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RequestMapping"><span class="nav-number">1.12.</span> <span class="nav-text">@RequestMapping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PostMapping"><span class="nav-number">1.13.</span> <span class="nav-text">@PostMapping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FeignClient"><span class="nav-number">1.14.</span> <span class="nav-text">@FeignClient</span></a></li></ol></li></ol></div>
             
 
           </div>

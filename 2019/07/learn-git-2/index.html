@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Linux,shell,bash," />
+  <meta name="keywords" content="git," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="&amp;emsp;&amp;emsp;shell，英文意为“壳”，在计算机领域，意为操作系统的最外面一层，用于人机交互。shell管理用户与操作系统之间的交互。shell提供一个用户操作系统的一个接口。广义的shell包括图形界面的软件。  本文主要简略介绍一下命令行界面的shell。 Linux中有许多shell，可以通过/etc/shells这个文件来查看自己系统里有多少可用的shell。笔者系统里ubun">
-<meta name="keywords" content="Linux,shell,bash">
+<meta name="description" content="强制拉取当我们需要忽略掉本地库未commit的修改时，可以用到以下代码，强行覆盖掉本地的修改，拉取远程库的最新的master分支。123git fetch --allgit reset --hard origin/master git pull git loggit log查看提交历史 当想要查看项目中某个文件的修改历史时：首先要进入到该文件的目录下，然后以下执行git命令12git log 文件">
+<meta name="keywords" content="git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="初识shell">
-<meta property="og:url" content="https://vicebery.github.io/2018/08/start-shell/index.html">
+<meta property="og:title" content="git相关问题">
+<meta property="og:url" content="https://vicebery.github.io/2019/07/learn-git-2/index.html">
 <meta property="og:site_name" content="Vicebery&#39;blog">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;shell，英文意为“壳”，在计算机领域，意为操作系统的最外面一层，用于人机交互。shell管理用户与操作系统之间的交互。shell提供一个用户操作系统的一个接口。广义的shell包括图形界面的软件。  本文主要简略介绍一下命令行界面的shell。 Linux中有许多shell，可以通过/etc/shells这个文件来查看自己系统里有多少可用的shell。笔者系统里ubun">
+<meta property="og:description" content="强制拉取当我们需要忽略掉本地库未commit的修改时，可以用到以下代码，强行覆盖掉本地的修改，拉取远程库的最新的master分支。123git fetch --allgit reset --hard origin/master git pull git loggit log查看提交历史 当想要查看项目中某个文件的修改历史时：首先要进入到该文件的目录下，然后以下执行git命令12git log 文件">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-13T08:29:53.950Z">
+<meta property="og:updated_time" content="2019-07-03T12:26:40.119Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="初识shell">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;shell，英文意为“壳”，在计算机领域，意为操作系统的最外面一层，用于人机交互。shell管理用户与操作系统之间的交互。shell提供一个用户操作系统的一个接口。广义的shell包括图形界面的软件。  本文主要简略介绍一下命令行界面的shell。 Linux中有许多shell，可以通过/etc/shells这个文件来查看自己系统里有多少可用的shell。笔者系统里ubun">
+<meta name="twitter:title" content="git相关问题">
+<meta name="twitter:description" content="强制拉取当我们需要忽略掉本地库未commit的修改时，可以用到以下代码，强行覆盖掉本地的修改，拉取远程库的最新的master分支。123git fetch --allgit reset --hard origin/master git pull git loggit log查看提交历史 当想要查看项目中某个文件的修改历史时：首先要进入到该文件的目录下，然后以下执行git命令12git log 文件">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://vicebery.github.io/2018/08/start-shell/"/>
+  <link rel="canonical" href="https://vicebery.github.io/2019/07/learn-git-2/"/>
 
 
 
 
 
-  <title>初识shell | Vicebery'blog</title>
+  <title>git相关问题 | Vicebery'blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2018/08/start-shell/">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2019/07/learn-git-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Vicebery">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">初识shell</h1>
+          <h1 class="post-title" itemprop="name headline">git相关问题</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-14T00:22:27+08:00">
-                2018-08-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-03T20:24:01Z">
+                2019-07-03
               </time>
             
 
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,255
+                  675
                 </span>
               
 
@@ -362,7 +362,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  3
                 </span>
               
             </div>
@@ -383,44 +383,24 @@
       
 
       
-        <p>&emsp;&emsp;shell，英文意为“壳”，在计算机领域，意为操作系统的最外面一层，用于人机交互。shell管理用户与操作系统之间的交互。shell提供一个用户操作系统的一个接口。广义的shell包括图形界面的软件。 </p>
-<p>本文主要简略介绍一下命令行界面的shell。</p>
-<p>Linux中有许多shell，可以通过/etc/shells这个文件来查看自己系统里有多少可用的shell。笔者系统里<em>ubuntu 18.04</em>里有如下shell:</p>
-<blockquote>
-<ul>
-<li>/bin/sh  &emsp;&emsp;<em>(已经被/bin/bash所替代)</em></li>
-<li>/bin/bash &emsp;&emsp;<em>(许多Linux平台内定的shell)</em></li>
-<li>/bin/rbash &emsp;&emsp;<em>(受限的bash)</em></li>
-<li>/bin/dash &emsp;&emsp;<em>(当前系统默认的shell)</em></li>
-</ul>
-</blockquote>
-<p>&emsp;&emsp;在GNU/Linux操作系统中的/bin/sh本是bash的符号链接，但鉴于bash太过复杂，于是把bash从NetBSD移植到Linux并更名为dash。于是，在现在的Debian和ubuntu中，/bin/sh默认指向dash，dash可以看做是一个简化版的bash，它主要是为了执行脚本而出现的，而不是为了与内核交互，虽然功能相比bash要少很多，但它速度更快。</p>
-<p>bash的功能甚为强大，以下主要介绍以下bash这种shell。</p>
-<h2 id="shell的变量功能"><a href="#shell的变量功能" class="headerlink" title="shell的变量功能"></a>shell的变量功能</h2><h3 id="变量的显示与设置"><a href="#变量的显示与设置" class="headerlink" title="变量的显示与设置"></a>变量的显示与设置</h3><p>echo命令能直接显示出变量，方法为“echo <code>$</code>{变量名}”，例如，显示系统环境变量PATH:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vicebery@vicebery-pc:~$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/<span class="built_in">local</span>/games:/snap/bin</span><br></pre></td></tr></table></figure></p>
-<p><br><br>变量设置直接“=”，例如，将fabric的工作目录设置为fabricwork，这样每次可以很快进入到其目录下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vicebery@vicebery-pc:~$ <span class="built_in">echo</span> <span class="variable">$GOPATH</span></span><br><span class="line">/home/vicebery/go</span><br><span class="line">vicebery@vicebery-pc:~$ fabricwork=<span class="string">"<span class="variable">$GOPATH</span>/src/github.com/hyperledger/fabric"</span></span><br><span class="line">vicebery@vicebery-pc:~$ <span class="built_in">echo</span> <span class="variable">$fabricwork</span></span><br><span class="line">/home/vicebery/go/src/github.com/hyperledger/fabric</span><br><span class="line">vicebery@vicebery-pc:~$ <span class="built_in">cd</span> <span class="variable">$fabricwork</span></span><br><span class="line">vicebery@vicebery-pc:~/go/src/github.com/hyperledger/fabric$</span><br></pre></td></tr></table></figure></p>
-<p>未设置之前，每次进入该目录要输入一大堆东西，设置后输入可以很方便就进入到该目录下。</p>
-<p>取消变量的方法为使用“unset 变量名称”，例如，取消fabricwork的设置后，输出为空：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vicebery@vicebery-pc:~$ <span class="built_in">unset</span> fabricwork</span><br><span class="line">vicebery@vicebery-pc:~$ <span class="built_in">echo</span> <span class="variable">$fabricwork</span></span><br><span class="line"></span><br><span class="line">vicebery@vicebery-pc:~$</span><br></pre></td></tr></table></figure></p>
-<h3 id="环境变量的功能"><a href="#环境变量的功能" class="headerlink" title="环境变量的功能"></a>环境变量的功能</h3><p>环境变量可以帮我们达到很多功能，包括主文件夹的变换、提示符的显示、执行文件查找的路径等，可以通过env和export这两个命令来查看自己系统里的环境变量。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">vicebery@vicebery-pc:~$ env</span><br><span class="line">LOGNAME=vicebery</span><br><span class="line">PWD=/home/vicebery</span><br><span class="line">HOME=/home/vicebery</span><br><span class="line">TERM=xterm-256color</span><br><span class="line">SHELL=/bin/bash</span><br><span class="line">PATH=/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/<span class="built_in">local</span>/games:/snap/bin</span><br><span class="line">LC_IDENTIFICATION=zh_CN.UTF-8</span><br><span class="line">GTK_IM_MODULE=fcitx</span><br><span class="line">LC_TIME=zh_CN.UTF-8</span><br><span class="line">_=/usr/bin/env</span><br></pre></td></tr></table></figure></p>
-<p>上面仅列出部分，其中：<br><code>HOME</code>代表用户的主文件夹<br><code>PATH</code>是执行文件命令查找路径<br><code>SHELL</code>是目前这个环境下使用的Shell是哪一个程序<br><code>_</code>上例中的最后一行是上一次使用的命令的最后一个参数（或命令本身），本例中即为<code>env</code>。</p>
-<p><strong>用set查看所有变量</strong><br>所有变量是指包括环境变量和自定义变量以及一些与bash操作接口有关的变量。里面涉及到的变量相当多，这里不详细描述。</p>
-<h2 id="bash的环境配置文件"><a href="#bash的环境配置文件" class="headerlink" title="bash的环境配置文件"></a>bash的环境配置文件</h2><h3 id="login与non-login-shell"><a href="#login与non-login-shell" class="headerlink" title="login与non-login shell"></a>login与non-login shell</h3><p>从语义上就可看出，二者之间的区别在于有没有登录。  </p>
-<p><strong>login shell</strong>:  取得bash时需要完整的登录流程的，就称为login shell.<br><strong>non-login shell</strong>:  取得bash接口的方法不需要重复登录的举动。</p>
-<p>一般来说，<strong>login shell</strong>只会读取两个配置文件：</p>
-<ol>
-<li><code>/etc/profile</code>:  这个系统整体的设置，不要轻易修改  </li>
-<li><code>~/.bash_profile</code>或<code>~/.bash_login</code>或<code>~/.profile</code>:  属于用户个人设置，如果要修改自己的数据，就写入这里。</li>
-</ol>
-<p><strong>/etc/profile</strong><br>每个用户登录取得bash时一定会读取的配置文件。可以帮助所有用户设置整体环境。</p>
-<p><strong>~/.bash_profile</strong>   <em>(login shell才会读)</em><br>bash在读完了整体环境设置的/etc/profile并借此调用其他配置文件后，接下来则是会读取用户的个人配置文件。在login shell的bash环境中，所读取的个人偏好配置文件其实主要有三个，按照读取优先级依次是：</p>
-<ol>
-<li>~/.bash_profile</li>
-<li>~/.bash_login</li>
-<li>~/.profile</li>
-</ol>
-<p>实际上bash的login shell设置只会读取上面三个文件的其中一个，而读取的顺序则是依照上面的优先级顺序。</p>
-<p><strong>source</strong>:  读入环境配置文件的命令<br>前面说过/etc/profile与~/.bash_profile都是在取得login shell的时候才会读取的配置文件，那修改后如何让其不用注销再登录就生效呢？用source命令可以实现修改配置文件后立即生效。</p>
-<p>假设你已经修改了<code>/etc/profile</code>这个配置文件，想让其立即生效，输入以下命令即可：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure></p>
-<p><strong>~/.bashrc</strong>  <em>(non-login shell 会读)</em><br>在非登录情况下取得bash操作接口的环境配置文件是<code>~/.bashrc</code>。</p>
+        <h2 id="强制拉取"><a href="#强制拉取" class="headerlink" title="强制拉取"></a>强制拉取</h2><p>当我们需要忽略掉本地库未commit的修改时，可以用到以下代码，强行覆盖掉本地的修改，拉取远程库的最新的master分支。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git fetch --all</span><br><span class="line">git reset --hard origin/master </span><br><span class="line">git pull</span><br></pre></td></tr></table></figure></p>
+<h2 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h2><p><a href="https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2" target="_blank" rel="noopener">git log查看提交历史</a></p>
+<p>当想要查看项目中某个文件的修改历史时：<br>首先要进入到该文件的目录下，然后以下执行git命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git log 文件名</span><br><span class="line">git log -p 文件名</span><br></pre></td></tr></table></figure></p>
+<p>不加字母选项，仅会显示commit历史信息，不会显示详细修改信息，加上<code>-p</code>选项，就 可以显示该文件每次提交的diff。</p>
+<p>查看某次提交中的所有变化可用以下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git show commit-id</span><br></pre></td></tr></table></figure></p>
+<p>查看某次提交中的某个文件变化可以用以下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git show commit-id filename</span><br></pre></td></tr></table></figure></p>
+<h2 id="忽略已被track的文件"><a href="#忽略已被track的文件" class="headerlink" title="忽略已被track的文件"></a>忽略已被track的文件</h2><p>有时我们会遇到这种问题，在新建项目时没有编辑<code>.gitignore</code>文件，导致许多无用的或者私密的文件被track，然后被提交到远程库，等我们意识到这个问题时，我们创建了<code>.gitignore</code>文件，并将相应的不需要提交到远程库的文件（主要是编译文件和私密文件）按照规则写到<code>.gitignore</code>文件中，然后提交，但却发现，<code>.gitignore</code>文件没有生效。已被track的文件仍然会被commit，如何解决？</p>
+<p>该问题在Stack Overflow上的<a href="https://stackoverflow.com/questions/1274057/how-to-make-git-forget-about-a-file-that-was-tracked-but-is-now-in-gitignore" target="_blank" rel="noopener">解决方案</a></p>
+<p>在项目根目录下执行以下三条语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git rm -r --cached . </span><br><span class="line">git add .</span><br><span class="line">git commit -m &quot;update .gitignore and it is now working&quot;</span><br></pre></td></tr></table></figure></p>
+<p><code>git rm --cached &lt;file&gt;</code>这条语句意思是删除已被track文件的track标记（并不是真的删除文件）</p>
+<p><code>git rm -r --cached .</code>这句意为删除当前目录下的所有已被track文件的track标记。<code>-r</code> 意为递归执行，即对当前文件下的所有文件以及文件夹操作。</p>
+<p><code>git add .</code>为所有未被忽略的文件添加track标记，或者说是将本地库中需要被提交的文件添加到Git Index。在执行这行命令前，确保已经编辑好了<code>.gitignore</code>文件，这条命令会按照<code>.gitignore</code>文件设定的规则来track文件。</p>
+<p><code>git commit -m &quot;update .gitignore and it is now working&quot;</code>提交此次操作到远程库。</p>
+<p><em>有关<a href="https://marklodato.github.io/visual-git-guide/index-zh-cn.html" target="_blank" rel="noopener">Git Index</a>的知识介绍。</em></p>
+<p><em>有关<a href="https://gitirc.eu/git-rm.html" target="_blank" rel="noopener">git rm</a>的详细介绍。</em></p>
+<h2 id="放弃本地修改，以远程库为主"><a href="#放弃本地修改，以远程库为主" class="headerlink" title="放弃本地修改，以远程库为主"></a>放弃本地修改，以远程库为主</h2><p>当我们不需要保留本地的修改时<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git fetch --all</span><br><span class="line">git reset --hard origin/master</span><br></pre></td></tr></table></figure></p>
+<p>如果不在master分支，命令相应换为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git fetch --all</span><br><span class="line">git reset --hard origin/&lt;your_branch_name&gt;</span><br></pre></td></tr></table></figure></p>
+<p><em>有关<a href="https://git-scm.com/docs/git-reset" target="_blank" rel="noopener">Git reset</a>的知识介绍。</em></p>
 
       
     </div>
@@ -449,11 +429,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
-          
-            <a href="/tags/shell/" rel="tag"><i class="fa fa-tag"></i> shell</a>
-          
-            <a href="/tags/bash/" rel="tag"><i class="fa fa-tag"></i> bash</a>
+            <a href="/tags/git/" rel="tag"><i class="fa fa-tag"></i> git</a>
           
         </div>
       
@@ -466,8 +442,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/start-vim/" rel="next" title="初识vim">
-                <i class="fa fa-chevron-left"></i> 初识vim
+              <a href="/2019/06/spring-autowire/" rel="next" title="spring注解详解">
+                <i class="fa fa-chevron-left"></i> spring注解详解
               </a>
             
           </div>
@@ -475,10 +451,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/ftp-server-centos/" rel="prev" title="FTP服务器搭建">
-                FTP服务器搭建 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -654,7 +626,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#shell的变量功能"><span class="nav-number">1.</span> <span class="nav-text">shell的变量功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量的显示与设置"><span class="nav-number">1.1.</span> <span class="nav-text">变量的显示与设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境变量的功能"><span class="nav-number">1.2.</span> <span class="nav-text">环境变量的功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bash的环境配置文件"><span class="nav-number">2.</span> <span class="nav-text">bash的环境配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#login与non-login-shell"><span class="nav-number">2.1.</span> <span class="nav-text">login与non-login shell</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#强制拉取"><span class="nav-number">1.</span> <span class="nav-text">强制拉取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-log"><span class="nav-number">2.</span> <span class="nav-text">git log</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#忽略已被track的文件"><span class="nav-number">3.</span> <span class="nav-text">忽略已被track的文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#放弃本地修改，以远程库为主"><span class="nav-number">4.</span> <span class="nav-text">放弃本地修改，以远程库为主</span></a></li></ol></div>
             
 
           </div>
