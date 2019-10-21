@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/avatar.jpg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="对Java的一些基础知识进行整理，持续更新……  基本类型数据类型Java中，一共有8种基本类型，其中有4种整型、2种浮点类型、1种用于表示Unicode编码的字符单元的字符类型char和一种用于表示真值的boolean。 整型：int  4字节  -2147483648~2147483647（大约21亿）short 2字节  -32768~32767long 8字节  -922337203685">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础知识整理">
+<meta property="og:url" content="https://vicebery.github.io/2019/10/java-1/index.html">
+<meta property="og:site_name" content="Vicebery&#39;blog">
+<meta property="og:description" content="对Java的一些基础知识进行整理，持续更新……  基本类型数据类型Java中，一共有8种基本类型，其中有4种整型、2种浮点类型、1种用于表示Unicode编码的字符单元的字符类型char和一种用于表示真值的boolean。 整型：int  4字节  -2147483648~2147483647（大约21亿）short 2字节  -32768~32767long 8字节  -922337203685">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-21T13:58:23.888Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java基础知识整理">
+<meta name="twitter:description" content="对Java的一些基础知识进行整理，持续更新……  基本类型数据类型Java中，一共有8种基本类型，其中有4种整型、2种浮点类型、1种用于表示Unicode编码的字符单元的字符类型char和一种用于表示真值的boolean。 整型：int  4字节  -2147483648~2147483647（大约21亿）short 2字节  -32768~32767long 8字节  -922337203685">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://vicebery.github.io/2019/10/java-1/"/>
+
+
+
+
+
+  <title>Java基础知识整理 | Vicebery'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vicebery'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">thinking && coding && dreaming</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2019/10/java-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vicebery">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vicebery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java基础知识整理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-22T05:53:35+08:00">
+                2019-10-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                    <span itemprop="name">学习记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,191
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>对Java的一些基础知识进行整理，持续更新……</p>
+<hr>
+<h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>Java中，一共有8种基本类型，其中有4种整型、2种浮点类型、1种用于表示Unicode编码的字符单元的字符类型char和一种用于表示真值的boolean。</p>
+<h4 id="整型："><a href="#整型：" class="headerlink" title="整型："></a>整型：</h4><p>int  4字节  -2147483648~2147483647（大约21亿）<br>short 2字节  -32768~32767<br>long 8字节  -9223372036854775808~9223372036854775807（大约922亿亿）<br>byte 1字节 -128~127  </p>
+<h4 id="浮点类型："><a href="#浮点类型：" class="headerlink" title="浮点类型："></a>浮点类型：</h4><p>float 4字节 大约+-3.4E+38F(有效位数为6~7位)<br>double 8字节 大约+-1.79E+308(有效位数为15位)  </p>
+<p>用于表示溢出和出错情况的三个特殊的浮点值：  </p>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> 正无穷大</li>
+<li style="list-style: none"><input type="checkbox" checked> 负无穷大</li>
+<li style="list-style: none"><input type="checkbox" checked> NaN(不是一个数字)</li>
+</ul>
+<h4 id="char类型"><a href="#char类型" class="headerlink" title="char类型"></a>char类型</h4><p>2个字节，16位，表示单个字符。</p>
+<p>char 使用 UTF-16 编码。char 不能存储所有汉字，只能存储在 UTF-16 编码下占两字节的汉字，</p>
+<h4 id="boolean类型"><a href="#boolean类型" class="headerlink" title="boolean类型"></a>boolean类型</h4><p>只有两个值：false和true，并且不可被0或者1（非0）代替。  </p>
+<h4 id="变量与常量"><a href="#变量与常量" class="headerlink" title="变量与常量"></a>变量与常量</h4><p>变量申请后必须初始化<br>在Java中，必须使用final定义常量</p>
+<h4 id="String类"><a href="#String类" class="headerlink" title="String类"></a>String类</h4><p>Java中没有内置的字符串类型，而在标准Java类库中提供了一个预定义类String。每个用双引号括起来的字符串都是String类的一个实例。String类中没有提供用于修改字符串的方法。故String类对象称为不可变字符串。  </p>
+<p><strong>空串<code>&quot;&quot;</code></strong>是长度为0的字符串，是一个Java对象，有自己的串长度（0）和内容（空）</p>
+<p><strong><code>null</code></strong>表示没有任何对象与该变量关联，没有分配内存。</p>
+<p>String、StringBuilder和StringBuffer<br>执行速度：StringBuilder&gt;StringBuffer&gt;String<br>StringBuilder 和 StringBuffer均为字符串变量，两者的对象是变量，是可以更改的。<br>StringBuilder线程不安全，适用于单线程下在字符缓冲区进行大量操作的情况<br>StringBuffer线程安全，适用于多线程下在字符缓冲区进行大量操作的情况  </p>
+<h4 id="多重选择：switch"><a href="#多重选择：switch" class="headerlink" title="多重选择：switch"></a>多重选择：switch</h4><p>case标签可以是：  </p>
+<ul>
+<li>类型为char,byte,short,int的常量表达式</li>
+<li>枚举常量</li>
+<li>字符串字面量（从java7开始）</li>
+</ul>
+<p>例如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="string">"yes"</span>: ...</span><br><span class="line">   <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="string">"no"</span>: ...</span><br><span class="line">   <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure></p>
+<h2 id="对象与类"><a href="#对象与类" class="headerlink" title="对象与类"></a>对象与类</h2><p>对象与对象变量之间存在一个重要区别，未初始化的对象变量本质上不是一个对象，但它可以引用相应类型的对象。在Java中，任何对象变量的值都是对存储在另外一个地方的一个对象的引用。new操作符的返回值也是一个引用。所有的Java对象都存储在堆中</p>
+<h3 id="更改器方法与访问器方法"><a href="#更改器方法与访问器方法" class="headerlink" title="更改器方法与访问器方法"></a>更改器方法与访问器方法</h3><p>只访问对象而不修改对象的方法有时称为访问器方法。<br>调用完方法后对象的状态会改变，这种方法称为更改器方法。  </p>
+<h3 id="预定义类"><a href="#预定义类" class="headerlink" title="预定义类"></a>预定义类</h3><p>Math类<br>Date类<br>LocalDate类  </p>
+<p>使用这些预定义类能更灵活地处理这个业务。</p>
+<h3 id="隐式参数与显式参数"><a href="#隐式参数与显式参数" class="headerlink" title="隐式参数与显式参数"></a>隐式参数与显式参数</h3><p>方法用于操作对象以及存取它们的实例域。<br>出现在方法名前的类对象称为隐式参数，方法名后括号中的参数称为显式参数。每个方法中，关键字this表示隐式函数。</p>
+<p>注意不要编写返回引用可变对象的访问器方法。</p>
+<p>一个类的方法可以访问该类的任何一个对象的私有域。</p>
+<h3 id="final实例域"><a href="#final实例域" class="headerlink" title="final实例域"></a>final实例域</h3><p>将实例域定义为final，构建对象时必须初始化这样的域，并且在后面的操作中，不能够再对它进行修改。</p>
+<h3 id="静态域与静态方法"><a href="#静态域与静态方法" class="headerlink" title="静态域与静态方法"></a>静态域与静态方法</h3><p>静态域也称类域，一个类即使没有一个对象，静态域也存在。它属于类，而不属于任何独立的对象。</p>
+<h4 id="静态常量"><a href="#静态常量" class="headerlink" title="静态常量"></a>静态常量</h4><p>例：定义一个π的常量<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">double</span> PI = <span class="number">3.141592653</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h4><p>静态方法是一种不能向对象实施操作的方法。</p>
+<p>例如：Math类的pow方法就是一个静态方法。</p>
+<h4 id="工厂方法"><a href="#工厂方法" class="headerlink" title="工厂方法"></a>工厂方法</h4><p>静态工厂方法可以用来构造对象</p>
+<h3 id="方法参数"><a href="#方法参数" class="headerlink" title="方法参数"></a>方法参数</h3><p>Java采用按值传递，方法得到的是所有参数值的一个拷贝，故，方法不能修改传递给它的任何参数变量的内容。</p>
+<p>方法参数有两种类型：</p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 基本数据类型</li>
+<li style="list-style: none"><input type="checkbox"> 对象引用</li>
+</ul>
+<p>方法无法修改一个基本数据类型的参数，但可以修改对象引用，类似C中的指针传递。</p>
+<p>Java的参数传递，不管是基本数据类型还是引用类型的参数，都是按值传递，没有按引用传递！<br>当一个实例对象作为参数被传递到方法中时，参数的值就是该对象的引用的一个副本。指向同一个对象，对象的内容可以在被调用的方法内改变，但对象的引用(不是引用的副本) 是永远不会改变的。</p>
+<p><a href="https://juejin.im/post/5bce68226fb9a05ce46a0476" target="_blank" rel="noopener">Java值传递和引用传递</a></p>
+<h3 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h3><p>如果构造器中没有显式地给域赋初值，那么就会被自动地赋为默认值：数值为0、布尔值为false、对象引用为null。</p>
+<p>如果没有在构造器中对某些域进行初始化，就会被赋值为默认值。</p>
+<p><strong>无参数的构造器</strong>:<em>当且仅当</em>一个类没有编写构造器时，系统会为类提供一个无参数的构造器，该无参构造器为所有实例域设置为默认值。</p>
+<p>this调用另一个构造器，当构造器第一个语句形如this（…），这个构造器将调用同一个类中的另一个构造器。</p>
+<h3 id="包作用域"><a href="#包作用域" class="headerlink" title="包作用域"></a>包作用域</h3><p>标记为public的部分可以被任意的类使用；标记为private的部分只能被定义它们的类使用，如果没有指定public或private，这个部分（类、方法或变量）可以被同一个包中的所有方法访问。</p>
+<h2 id="继承extends"><a href="#继承extends" class="headerlink" title="继承extends"></a>继承extends</h2><p>关键词extends表明正在构造的新类派生于一个已存在的类。已存在的类称为超类、基类或父类；新类称为子类、派生类或孩子类。 </p>
+<h3 id="阻止继承：final类和方法"><a href="#阻止继承：final类和方法" class="headerlink" title="阻止继承：final类和方法"></a>阻止继承：final类和方法</h3><p>不允许扩展的类被称为final类。定义类的时候使用了final修饰符就表明这个类是final类。</p>
+<p>类中的特定方法也可以被声明为final，这样子类就不能覆盖这个方法（final类中的所有方法自动成为final方法,但不包括其中的域）。</p>
+<p>域声明为final后，构造对象之后就不能改变它们的值了。</p>
+<h3 id="覆盖方法"><a href="#覆盖方法" class="headerlink" title="覆盖方法"></a>覆盖方法</h3><p>子类不能直接访问父类的私有方法，须通过公有接口访问。子类用新方法覆盖超类中的方法时，用super调用父类中的这个方法。</p>
+<p>在覆盖一个方法的时候，子类方法不能低于超类方法的可见性。特别是，如果超类方法是public，子类方法一定要声明为public。</p>
+<h3 id="子类构造器"><a href="#子类构造器" class="headerlink" title="子类构造器"></a>子类构造器</h3><p>用super（参数）调用父类的构造器，super语句必须是子类构造器的第一条语句。</p>
+<p>super的用途：</p>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> 调用超类的方法</li>
+<li style="list-style: none"><input type="checkbox" checked> 调用超类的构造器</li>
+</ul>
+<p>this的用途：</p>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> 引用隐式参数</li>
+<li style="list-style: none"><input type="checkbox" checked> 调用该类其他的构造器</li>
+</ul>
+<h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><p>一个对象变量可以指示多种实际类型的现象被称为多态。</p>
+<h3 id="抽象类abstract"><a href="#抽象类abstract" class="headerlink" title="抽象类abstract"></a>抽象类abstract</h3><p>抽象类中不仅可定义抽象方法，还可定义具体数据和具体方法，建议尽量将通用的域和方法放在超类（不管是否是抽象类）中。</p>
+<p>抽象类不能被实例化，但可以定义一个抽象类的对象变量，且它只能引用非抽象子类的对象。</p>
+<p>抽象方法充当着占位的角色，它们的具体实现在子类中。一旦类中声明抽象方法，那么该类必须为抽象类。</p>
+<h3 id="受保护的访问protected"><a href="#受保护的访问protected" class="headerlink" title="受保护的访问protected"></a>受保护的访问protected</h3><p>有些时候人们希望超类中的某些方法允许被子类访问，或允许子类的方法访问超类中的某个域，需要将这些方法或域声明为protected。</p>
+<p>Java用于控制可见性的4个访问修饰符：</p>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> 仅对本类可见–private</li>
+<li style="list-style: none"><input type="checkbox" checked> 对所有类可见–public</li>
+<li style="list-style: none"><input type="checkbox" checked> 对本包和所有子类可见–protected</li>
+<li style="list-style: none"><input type="checkbox" checked> 对本包可见–默认（不需要修饰符）</li>
+</ul>
+<p>在同一包内，protected和默认的作用相同。当子类与超类不在同一个包时二者显现区别。</p>
+<h3 id="Object：所有类的超类"><a href="#Object：所有类的超类" class="headerlink" title="Object：所有类的超类"></a>Object：所有类的超类</h3><p>Object类是Java中所有类的始祖，Java中的每个类都由它扩展而来。</p>
+<h3 id="equals方法"><a href="#equals方法" class="headerlink" title="equals方法"></a>equals方法</h3><p>Object类中的equals方法用于检测一个对象是否等于另一个对象。这个方法将判断两个对象是否具有相同的引用。</p>
+<p>五种特性：</p>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> 自反性</li>
+<li style="list-style: none"><input type="checkbox" checked> 对称性</li>
+<li style="list-style: none"><input type="checkbox" checked> 传递性</li>
+<li style="list-style: none"><input type="checkbox" checked> 一致性</li>
+<li style="list-style: none"><input type="checkbox" checked> 对于任意非空引用x，x.equals(null)应该返回false</li>
+</ul>
+<h3 id="hashcode方法"><a href="#hashcode方法" class="headerlink" title="hashcode方法"></a>hashcode方法</h3><p>散列码是由对象导出的一个整数值，hashCode方法定义在Object类中，故每个对象都有一个默认的散列码，其值为对象的存储地址。</p>
+<p>字符串的散列码是由内容导出的，因此String new出两个相同字符串其对象拥有相同的散列码，StringBuffer new出两个相同字符串却拥有不同散列码，是因为在StringBuffer类中没有定义hashCode方法，它的散列码是由Object类的默认hashCode方法导出的对象存储地址。</p>
+<h2 id="泛型数组列表"><a href="#泛型数组列表" class="headerlink" title="泛型数组列表"></a>泛型数组列表</h2><p>ArrayList类，使用起来有点像数组，但在添加或删除元素时，具有自动调节数组容量的功能，而不需要为此编写任何代码。</p>
+<p>ArrayList是一个采用类型参数的泛型类</p>
+<p>List接口有三个实现类，分别是ArrayList、Vector、LinkedList。ArrayList和Vector允许对元素进行随机访问，前者不支持线程安全，后者支持线程安全，如果不考虑线程的安全因素，一般用ArrayList效率比较高。LinkedList是用链表结构存储数据的，适合数据的动态插入和删除，随机访问和遍历数组比较慢。</p>
+<h3 id="对象包装器和自动装箱"><a href="#对象包装器和自动装箱" class="headerlink" title="对象包装器和自动装箱"></a>对象包装器和自动装箱</h3><p>所有的基本类型都有一个与之对应的类（Integer-&gt;int），这些类称为包装器。Integer、Long、Float、Double、Short、Byte、Character、Void、Boolean（前6个派生于公共的超类Number）。</p>
+<h3 id="枚举类"><a href="#枚举类" class="headerlink" title="枚举类"></a>枚举类</h3><h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>接口是对类的一组需求描述，这些类要遵从接口描述的统一格式进行定义。</p>
+<p>接口中的所有方法自动地属于public，因此在接口中声明方法时，不必提供关键字public。但在实现接口时，必须把方法声明为public。 </p>
+<p>为了让类实现一个接口，通常需要以下步骤：<br>1） 将类声明为实现给定的接口<br>2） 对接口中的所有方法进行定义</p>
+<p>接口的作用：</p>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> 提供多重继承的大多数好处，同时避免多重继承的复杂性和低效性</li>
+<li style="list-style: none"><input type="checkbox" checked> </li>
+</ul>
+<h3 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h3><p>内部类是定义在另一个类中的类。内部类方法可以访问该类定义所在的作用域中的数据，包括私有的数据。内部类可以对同一个包中的其他类隐藏起来。当想要定义一个回调函数且不想编写大量代码时，使用匿名内部类比较便捷。</p>
+<h4 id="局部内部类"><a href="#局部内部类" class="headerlink" title="局部内部类"></a>局部内部类</h4><h4 id="匿名内部类"><a href="#匿名内部类" class="headerlink" title="匿名内部类"></a>匿名内部类</h4><h4 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h4><h2 id="泛型程序设计"><a href="#泛型程序设计" class="headerlink" title="泛型程序设计"></a>泛型程序设计</h2><h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><h3 id="迭代器Iterator"><a href="#迭代器Iterator" class="headerlink" title="迭代器Iterator"></a>迭代器Iterator</h3><h3 id="具体的集合"><a href="#具体的集合" class="headerlink" title="具体的集合"></a>具体的集合</h3><table>
+<thead>
+<tr>
+<th>集合类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ArrayList</td>
+<td>一种可以动态增长和缩减的索引序列</td>
+</tr>
+<tr>
+<td>LinkedList</td>
+<td>一种可以在任何位置进行高效地插入和删除操作的有序序列</td>
+</tr>
+<tr>
+<td>ArrayDeque</td>
+<td>一种用循环数组实现的双端队列</td>
+</tr>
+<tr>
+<td>HashSet</td>
+<td>一种没有重复元素的无序集合</td>
+</tr>
+<tr>
+<td>TreeSet</td>
+<td>一种有序集</td>
+</tr>
+<tr>
+<td>EnumSet</td>
+<td>一种包含枚举类型值的集</td>
+</tr>
+<tr>
+<td>LinkedHashSet</td>
+<td>一种可以记住元素插入次序的集</td>
+</tr>
+<tr>
+<td>PriorityQueue</td>
+<td>一种允许高效删除最小元素的集合</td>
+</tr>
+<tr>
+<td>HashMap</td>
+<td>一种存储键/值关联的数据结构</td>
+</tr>
+<tr>
+<td>TreeMap</td>
+<td>一种键值有序排列的映射表</td>
+</tr>
+<tr>
+<td>EnumMap</td>
+<td>一种键值属于枚举类型的映射表</td>
+</tr>
+<tr>
+<td>LinkedHashMap</td>
+<td>一种可以记住键/值项添加次序的映射表</td>
+</tr>
+<tr>
+<td>WeakHashMap</td>
+<td>一种其值无用武之地后可以被垃圾回收器回收的映射表</td>
+</tr>
+<tr>
+<td>IdentityHashMap</td>
+<td>一种用==而不是用equals比较键值的映射表</td>
+</tr>
+</tbody>
+</table>
+<h3 id="散列集"><a href="#散列集" class="headerlink" title="散列集"></a>散列集</h3><h2 id="异常、断言和日志"><a href="#异常、断言和日志" class="headerlink" title="异常、断言和日志"></a>异常、断言和日志</h2><h3 id="异常分类"><a href="#异常分类" class="headerlink" title="异常分类"></a>异常分类</h3><p>Java中所有的异常都是由Throwable继承而来，但在下一层立即分解为两个分支：Error和Exception。</p>
+
+      
+    </div>
+    
+    
+    
+
+<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #555;font-size:14px;">-------------The End-------------</div>
+    
+</div>
+
+  
+</div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/learn-git-2/" rel="next" title="git相关问题">
+                <i class="fa fa-chevron-left"></i> git相关问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Vicebery" />
+            
+              <p class="site-author-name" itemprop="name">Vicebery</p>
+              <p class="site-description motion-element" itemprop="description">stay hungry, stay young</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/vicebery" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/vicebery/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-gittip"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://douban.com/people/vicebery" target="_blank" title="豆瓣">
+                      
+                        <i class="fa fa-fw fa-heart-o"></i>豆瓣</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:vicebery@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://plus.google.com/u/0/109399728266375769175" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/vicebery" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本类型"><span class="nav-number">1.</span> <span class="nav-text">基本类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据类型"><span class="nav-number">1.1.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#整型："><span class="nav-number">1.1.1.</span> <span class="nav-text">整型：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#浮点类型："><span class="nav-number">1.1.2.</span> <span class="nav-text">浮点类型：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#char类型"><span class="nav-number">1.1.3.</span> <span class="nav-text">char类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#boolean类型"><span class="nav-number">1.1.4.</span> <span class="nav-text">boolean类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量与常量"><span class="nav-number">1.1.5.</span> <span class="nav-text">变量与常量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String类"><span class="nav-number">1.1.6.</span> <span class="nav-text">String类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多重选择：switch"><span class="nav-number">1.1.7.</span> <span class="nav-text">多重选择：switch</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象与类"><span class="nav-number">2.</span> <span class="nav-text">对象与类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#更改器方法与访问器方法"><span class="nav-number">2.1.</span> <span class="nav-text">更改器方法与访问器方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预定义类"><span class="nav-number">2.2.</span> <span class="nav-text">预定义类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐式参数与显式参数"><span class="nav-number">2.3.</span> <span class="nav-text">隐式参数与显式参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#final实例域"><span class="nav-number">2.4.</span> <span class="nav-text">final实例域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态域与静态方法"><span class="nav-number">2.5.</span> <span class="nav-text">静态域与静态方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#静态常量"><span class="nav-number">2.5.1.</span> <span class="nav-text">静态常量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#静态方法"><span class="nav-number">2.5.2.</span> <span class="nav-text">静态方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工厂方法"><span class="nav-number">2.5.3.</span> <span class="nav-text">工厂方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法参数"><span class="nav-number">2.6.</span> <span class="nav-text">方法参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造器"><span class="nav-number">2.7.</span> <span class="nav-text">构造器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#包作用域"><span class="nav-number">2.8.</span> <span class="nav-text">包作用域</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承extends"><span class="nav-number">3.</span> <span class="nav-text">继承extends</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#阻止继承：final类和方法"><span class="nav-number">3.1.</span> <span class="nav-text">阻止继承：final类和方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#覆盖方法"><span class="nav-number">3.2.</span> <span class="nav-text">覆盖方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子类构造器"><span class="nav-number">3.3.</span> <span class="nav-text">子类构造器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多态"><span class="nav-number">3.4.</span> <span class="nav-text">多态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象类abstract"><span class="nav-number">3.5.</span> <span class="nav-text">抽象类abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#受保护的访问protected"><span class="nav-number">3.6.</span> <span class="nav-text">受保护的访问protected</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object：所有类的超类"><span class="nav-number">3.7.</span> <span class="nav-text">Object：所有类的超类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#equals方法"><span class="nav-number">3.8.</span> <span class="nav-text">equals方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hashcode方法"><span class="nav-number">3.9.</span> <span class="nav-text">hashcode方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型数组列表"><span class="nav-number">4.</span> <span class="nav-text">泛型数组列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象包装器和自动装箱"><span class="nav-number">4.1.</span> <span class="nav-text">对象包装器和自动装箱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#枚举类"><span class="nav-number">4.2.</span> <span class="nav-text">枚举类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口"><span class="nav-number">5.</span> <span class="nav-text">接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内部类"><span class="nav-number">5.1.</span> <span class="nav-text">内部类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#局部内部类"><span class="nav-number">5.1.1.</span> <span class="nav-text">局部内部类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#匿名内部类"><span class="nav-number">5.1.2.</span> <span class="nav-text">匿名内部类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#静态内部类"><span class="nav-number">5.1.3.</span> <span class="nav-text">静态内部类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型程序设计"><span class="nav-number">6.</span> <span class="nav-text">泛型程序设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合"><span class="nav-number">7.</span> <span class="nav-text">集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器Iterator"><span class="nav-number">7.1.</span> <span class="nav-text">迭代器Iterator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体的集合"><span class="nav-number">7.2.</span> <span class="nav-text">具体的集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#散列集"><span class="nav-number">7.3.</span> <span class="nav-text">散列集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常、断言和日志"><span class="nav-number">8.</span> <span class="nav-text">异常、断言和日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#异常分类"><span class="nav-number">8.1.</span> <span class="nav-text">异常分类</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vicebery</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://github.com/vicebery">Github</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
