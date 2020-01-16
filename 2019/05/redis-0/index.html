@@ -80,17 +80,16 @@
 
 
 <meta name="description" content="基本概念redis一种非关系型数据库，主要基于key-value存储。 为什么经常说用redis做缓存？ redis将数据保存在内存中，减少了磁盘IO的次数，磁盘IO非常损耗资源，redis会直接从内存中读取数据，这样非常快（基本只需考虑网络连接上的延迟），但同时也意味着不应该用redis来处理那种经常需要修改的值。 数据存储在内存，可靠吗？ 非常不可靠，服务器一旦出故障，数据岂不是都没了。red">
-<meta name="keywords" content="redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初识redis">
 <meta property="og:url" content="https://vicebery.github.io/2019/05/redis-0/index.html">
 <meta property="og:site_name" content="Vicebery&#39;blog">
 <meta property="og:description" content="基本概念redis一种非关系型数据库，主要基于key-value存储。 为什么经常说用redis做缓存？ redis将数据保存在内存中，减少了磁盘IO的次数，磁盘IO非常损耗资源，redis会直接从内存中读取数据，这样非常快（基本只需考虑网络连接上的延迟），但同时也意味着不应该用redis来处理那种经常需要修改的值。 数据存储在内存，可靠吗？ 非常不可靠，服务器一旦出故障，数据岂不是都没了。red">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-28T00:09:20.226Z">
+<meta property="article:published_time" content="2019-05-23T20:56:39.000Z">
+<meta property="article:modified_time" content="2019-05-28T00:09:20.226Z">
+<meta property="article:author" content="Vicebery">
+<meta property="article:tag" content="redis">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="初识redis">
-<meta name="twitter:description" content="基本概念redis一种非关系型数据库，主要基于key-value存储。 为什么经常说用redis做缓存？ redis将数据保存在内存中，减少了磁盘IO的次数，磁盘IO非常损耗资源，redis会直接从内存中读取数据，这样非常快（基本只需考虑网络连接上的延迟），但同时也意味着不应该用redis来处理那种经常需要修改的值。 数据存储在内存，可靠吗？ 非常不可靠，服务器一旦出故障，数据岂不是都没了。red">
 
 
 
@@ -136,7 +135,7 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -182,7 +181,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -192,7 +191,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -202,7 +201,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
+          <a href="/categories/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -212,7 +211,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+          <a href="/tags/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -222,7 +221,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+          <a href="/about/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -315,7 +314,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -346,7 +345,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  431
+                  429
                 </span>
               
 
@@ -528,9 +527,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -552,7 +551,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -645,7 +644,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

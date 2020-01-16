@@ -80,20 +80,19 @@
 
 
 <meta name="description" content="前言笔者的系统是ubuntu 18.04，为了在Leetcode上更好地刷题，于是想搭建一个IDE提高工作效率，在ubuntu上命令行调试不人性化，于是想找一个有图形界面的调试工具，最开始想到的是codeblocks，但是其界面不美观，而且对其他语言的支持也不太友好，于是就想到vs code。 下载安装官网下载链接   安装过程省略…… 安装好后添加扩展工具      相关配置我们需要链接到系统的">
-<meta name="keywords" content="vscode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vscode配置调试cpp程序">
 <meta property="og:url" content="https://vicebery.github.io/2018/09/vscode-debug-cpp/index.html">
 <meta property="og:site_name" content="Vicebery&#39;blog">
 <meta property="og:description" content="前言笔者的系统是ubuntu 18.04，为了在Leetcode上更好地刷题，于是想搭建一个IDE提高工作效率，在ubuntu上命令行调试不人性化，于是想找一个有图形界面的调试工具，最开始想到的是codeblocks，但是其界面不美观，而且对其他语言的支持也不太友好，于是就想到vs code。 下载安装官网下载链接   安装过程省略…… 安装好后添加扩展工具      相关配置我们需要链接到系统的">
-<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://wx4.sinaimg.cn/mw690/007kSKbMgy1fvkns76uatj30950c2757.jpg">
 <meta property="og:image" content="http://wx2.sinaimg.cn/mw690/007kSKbMgy1fvko78aesoj309e09f0sy.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/mw690/007kSKbMgy1fvkplmxdczj30ru0htgo1.jpg">
-<meta property="og:updated_time" content="2018-09-24T08:38:38.610Z">
+<meta property="article:published_time" content="2018-09-24T16:36:08.000Z">
+<meta property="article:modified_time" content="2018-09-24T08:38:38.610Z">
+<meta property="article:author" content="Vicebery">
+<meta property="article:tag" content="vscode">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="vscode配置调试cpp程序">
-<meta name="twitter:description" content="前言笔者的系统是ubuntu 18.04，为了在Leetcode上更好地刷题，于是想搭建一个IDE提高工作效率，在ubuntu上命令行调试不人性化，于是想找一个有图形界面的调试工具，最开始想到的是codeblocks，但是其界面不美观，而且对其他语言的支持也不太友好，于是就想到vs code。 下载安装官网下载链接   安装过程省略…… 安装好后添加扩展工具      相关配置我们需要链接到系统的">
 <meta name="twitter:image" content="http://wx4.sinaimg.cn/mw690/007kSKbMgy1fvkns76uatj30950c2757.jpg">
 
 
@@ -140,7 +139,7 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -186,7 +185,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -196,7 +195,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -206,7 +205,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
+          <a href="/categories/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -216,7 +215,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+          <a href="/tags/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -226,7 +225,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+          <a href="/about/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -319,7 +318,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -350,7 +349,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,154
+                  1.2k
                 </span>
               
 
@@ -398,14 +397,15 @@
 <p>笔者创建了一个文件夹名为CPP，作为工作空间，在其下默认生成了一个名为.vscode的文件夹（在Windows平台下你可能看不到它，因为它默认是隐藏文件），在这个文件夹（/CPP/.vscode/，CPP文件夹前面的路径在此处省略）下面有四个json文件，分别是c_cpp_properties.json、launch.json、settings.json、tasks.json。</p>
 <p>你必须把你要调试的文件放置在你的工作空间根目录（笔者为/CPP/）下，有上图你也可看到，笔者的cpp文件的放置位置。</p>
 <h2 id="json文件配置信息"><a href="#json文件配置信息" class="headerlink" title="json文件配置信息"></a>json文件配置信息</h2><p>事实上我们只需要关注其中是三个文件。  </p>
-<h3 id="修改launch-json"><a href="#修改launch-json" class="headerlink" title="修改launch.json"></a>修改launch.json</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    // 使用 IntelliSense 了解相关属性。 </span><br><span class="line">    // 悬停以查看现有属性的描述。</span><br><span class="line">    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span><br><span class="line">    &quot;version&quot;: &quot;0.2.0&quot;,</span><br><span class="line">    &quot;configurations&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;name&quot;: &quot;(gdb) Launch&quot;,</span><br><span class="line">            &quot;type&quot;: &quot;cppdbg&quot;,</span><br><span class="line">            &quot;request&quot;: &quot;launch&quot;,</span><br><span class="line">            &quot;program&quot;: &quot;$&#123;workspaceFolder&#125;/a.out&quot;,</span><br><span class="line">            &quot;args&quot;: [],</span><br><span class="line">            &quot;stopAtEntry&quot;: false,</span><br><span class="line">            &quot;cwd&quot;: &quot;$&#123;workspaceFolder&#125;&quot;,</span><br><span class="line">            &quot;environment&quot;: [],</span><br><span class="line">            &quot;externalConsole&quot;: true,</span><br><span class="line">            &quot;MIMode&quot;: &quot;gdb&quot;,</span><br><span class="line">            &quot;preLaunchTask&quot;: &quot;Compile&quot;,</span><br><span class="line">            &quot;setupCommands&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;description&quot;: &quot;Enable pretty-printing for gdb&quot;,</span><br><span class="line">                    &quot;text&quot;: &quot;-enable-pretty-printing&quot;,</span><br><span class="line">                    &quot;ignoreFailures&quot;: true</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="修改launch-json"><a href="#修改launch-json" class="headerlink" title="修改launch.json"></a>修改launch.json</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; 使用 IntelliSense 了解相关属性。 </span><br><span class="line">    &#x2F;&#x2F; 悬停以查看现有属性的描述。</span><br><span class="line">    &#x2F;&#x2F; 欲了解更多信息，请访问: https:&#x2F;&#x2F;go.microsoft.com&#x2F;fwlink&#x2F;?linkid&#x3D;830387</span><br><span class="line">    &quot;version&quot;: &quot;0.2.0&quot;,</span><br><span class="line">    &quot;configurations&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;name&quot;: &quot;(gdb) Launch&quot;,</span><br><span class="line">            &quot;type&quot;: &quot;cppdbg&quot;,</span><br><span class="line">            &quot;request&quot;: &quot;launch&quot;,</span><br><span class="line">            &quot;program&quot;: &quot;$&#123;workspaceFolder&#125;&#x2F;a.out&quot;,</span><br><span class="line">            &quot;args&quot;: [],</span><br><span class="line">            &quot;stopAtEntry&quot;: false,</span><br><span class="line">            &quot;cwd&quot;: &quot;$&#123;workspaceFolder&#125;&quot;,</span><br><span class="line">            &quot;environment&quot;: [],</span><br><span class="line">            &quot;externalConsole&quot;: true,</span><br><span class="line">            &quot;MIMode&quot;: &quot;gdb&quot;,</span><br><span class="line">            &quot;preLaunchTask&quot;: &quot;Compile&quot;,</span><br><span class="line">            &quot;setupCommands&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;description&quot;: &quot;Enable pretty-printing for gdb&quot;,</span><br><span class="line">                    &quot;text&quot;: &quot;-enable-pretty-printing&quot;,</span><br><span class="line">                    &quot;ignoreFailures&quot;: true</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们注意到‘program’参数，它指向要调试的文件，原因是每次.cpp文件编译后都会默认生成一个a.out文件。  </p>
-<h3 id="修改tasks-json文件"><a href="#修改tasks-json文件" class="headerlink" title="修改tasks.json文件"></a>修改tasks.json文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    // See https://go.microsoft.com/fwlink/?LinkId=733558</span><br><span class="line">    // for the documentation about the tasks.json format</span><br><span class="line">    &quot;version&quot;: &quot;2.0.0&quot;,</span><br><span class="line">    &quot;tasks&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;label&quot;: &quot;Compile&quot;,</span><br><span class="line">            &quot;type&quot;: &quot;shell&quot;,</span><br><span class="line">            &quot;command&quot;: &quot;gcc&quot;,</span><br><span class="line">            &quot;args&quot;: [</span><br><span class="line">                &quot;-g&quot;,&quot;$&#123;file&#125;&quot;,&quot;-o&quot;,&quot;$&#123;workspaceRoot&#125;/a.out&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;group&quot;: &#123;</span><br><span class="line">                &quot;kind&quot;: &quot;build&quot;,</span><br><span class="line">                &quot;isDefault&quot;: true</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="修改tasks-json文件"><a href="#修改tasks-json文件" class="headerlink" title="修改tasks.json文件"></a>修改tasks.json文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; See https:&#x2F;&#x2F;go.microsoft.com&#x2F;fwlink&#x2F;?LinkId&#x3D;733558</span><br><span class="line">    &#x2F;&#x2F; for the documentation about the tasks.json format</span><br><span class="line">    &quot;version&quot;: &quot;2.0.0&quot;,</span><br><span class="line">    &quot;tasks&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;label&quot;: &quot;Compile&quot;,</span><br><span class="line">            &quot;type&quot;: &quot;shell&quot;,</span><br><span class="line">            &quot;command&quot;: &quot;gcc&quot;,</span><br><span class="line">            &quot;args&quot;: [</span><br><span class="line">                &quot;-g&quot;,&quot;$&#123;file&#125;&quot;,&quot;-o&quot;,&quot;$&#123;workspaceRoot&#125;&#x2F;a.out&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;group&quot;: &#123;</span><br><span class="line">                &quot;kind&quot;: &quot;build&quot;,</span><br><span class="line">                &quot;isDefault&quot;: true</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>像‘command’的参数为gcc，我们知道在用gdb调试时正是用到这条命令，‘args’参数规定入口信息，所调试的文件正是”<code>$</code>{workspaceRoot}/a.out”，”<code>$</code>{file}”表示当前文件，即你的当前主窗口显示的文件，这也是为什么我们每次调试时需要打开那个需调试的文件，并编译运行它，使其生成a.out文件（所以当调试不同的cpp文件时，需及时更新a.out文件），如此才能使配置文件正确输入文件信息。  </p>
 <p>这个文件很容易理解，它主要将gdb中的一些调试指令写入到一个操作集合，简化我们在调试时的工作，将原本命令行实现的东西集成到可视化界面上。</p>
 <h3 id="修改c-cpp-properties-json文件"><a href="#修改c-cpp-properties-json文件" class="headerlink" title="修改c_cpp_properties.json文件"></a>修改c_cpp_properties.json文件</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"configurations"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"Linux"</span>,</span><br><span class="line">            <span class="attr">"intelliSenseMode"</span>: <span class="string">"clang-x64"</span>,</span><br><span class="line">            <span class="attr">"compilerPath"</span>: <span class="string">"/usr/bin/gcc"</span>,</span><br><span class="line">            <span class="attr">"includePath"</span>: [</span><br><span class="line">                <span class="string">"/usr/include/x86_64-linux-gnu/c++/7.3.0"</span>,</span><br><span class="line">                <span class="string">"/usr/include/c++/7.3.0"</span>,</span><br><span class="line">                <span class="string">"/usr/local/include"</span>,</span><br><span class="line">                <span class="string">"usr/include/x86_64-linux-gnu"</span>,</span><br><span class="line">                <span class="string">"/usr/include"</span>,</span><br><span class="line">                <span class="string">"$&#123;workspaceFolder&#125;"</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">"defines"</span>: [],</span><br><span class="line">            <span class="attr">"browse"</span>: &#123;</span><br><span class="line">                <span class="attr">"path"</span>: [</span><br><span class="line">                    <span class="string">"/usr/include/x86_64-linux-gnu/c++/7.3.0"</span>,</span><br><span class="line">                    <span class="string">"/usr/include/c++/7.3.0"</span>,</span><br><span class="line">                    <span class="string">"/usr/local/include"</span>,</span><br><span class="line">                    <span class="string">"usr/include/x86_64-linux-gnu"</span>,</span><br><span class="line">                    <span class="string">"/usr/include"</span>,</span><br><span class="line">                    <span class="string">"$&#123;workspaceFolder&#125;"</span></span><br><span class="line">                ],</span><br><span class="line">                <span class="attr">"limitSymbolsToIncludedHeaders"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">"databaseFilename"</span>: <span class="string">""</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"version"</span>: <span class="number">4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这个文件主要定位我们系统环境中的命令位置，不同的系统位置信息不同。</p>
-<h1 id="实例运行调试"><a href="#实例运行调试" class="headerlink" title="实例运行调试"></a>实例运行调试</h1><p>笔者创建了一个简单的cpp文件来演示调试过程。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++) </span><br><span class="line">	&#123;</span><br><span class="line">		a=a+i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,a);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="实例运行调试"><a href="#实例运行调试" class="headerlink" title="实例运行调试"></a>实例运行调试</h1><p>笔者创建了一个简单的cpp文件来演示调试过程。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++) </span><br><span class="line">	&#123;</span><br><span class="line">		a=a+i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,a);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>先Run Code，然后依次点击调试-&gt;启动调试，调试界面如下：<br><img src="http://wx1.sinaimg.cn/mw690/007kSKbMgy1fvkplmxdczj30ru0htgo1.jpg" alt="debug"></p>
 <p>左边“变量栏”显示所有变量的实时变化，“监视”栏可以添加要监视表达式，当然还可以设置各种断点。具体过程不详叙，需各位自行实验。</p>
 
@@ -540,9 +540,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -564,7 +564,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -657,7 +657,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

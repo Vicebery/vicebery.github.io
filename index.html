@@ -85,10 +85,8 @@
 <meta property="og:url" content="https://vicebery.github.io/index.html">
 <meta property="og:site_name" content="Vicebery&#39;blog">
 <meta property="og:description" content="stay hungry, stay young">
-<meta property="og:locale" content="zh-Hans">
+<meta property="article:author" content="Vicebery">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Vicebery&#39;blog">
-<meta name="twitter:description" content="stay hungry, stay young">
 
 
 
@@ -134,7 +132,7 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -181,7 +179,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -191,7 +189,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -201,7 +199,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
+          <a href="/categories/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -211,7 +209,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+          <a href="/tags/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -221,7 +219,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+          <a href="/about/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -248,6 +246,351 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2020/01/kubernetes-operator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vicebery">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vicebery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/01/kubernetes-operator/" itemprop="url">operator开发实践</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-15T13:51:52Z">
+                2020-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
+                    <span itemprop="name">学习记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  19
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          operator开发实践operator的概念kubernetes对于无状态应用能够很好地调度处理，对于有状态的应用提供了一个Statefulset来处理，但Statefulset对于有状态应用的支持相当有限，稍微复杂一点的有状态应用就支持不了，为了对实际生产中的各种复杂应用提供更好的支持，我们需要创建一个自定义的控制器对Kubernetes API进行拓展，这种面向特定应用的控制器我们称之为Operator。
+Operator一般包含对Kubernetes内置资源、用户自定义资源的调度，用户自定义资源本质上也是Kubernetes内置资源的一个包装和拓展，因此这个controller本质上还是对kubernetes内置资源的调度，不同于Kubernetes API提供的配置、管理，cont
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/01/kubernetes-operator/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+  
+</div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2019/11/Stream%E6%B5%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vicebery">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vicebery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/Stream%E6%B5%81/" itemprop="url">Stream流</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-15T08:14:54Z">
+                2019-11-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  0
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          
+          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/11/Stream%E6%B5%81/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+  
+</div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -316,7 +659,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -347,7 +690,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3,191
+                  3.2k
                 </span>
               
 
@@ -389,9 +732,9 @@
           对Java的一些基础知识进行整理，持续更新……
 
 基本类型数据类型Java中，一共有8种基本类型，其中有4种整型、2种浮点类型、1种用于表示Unicode编码的字符单元的字符类型char和一种用于表示真值的boolean。
-整型：int  4字节  -2147483648~2147483647（大约21亿）short 2字节  -32768~32767long 8字节  -9223372036854775808~9223372036854775807（大约922亿亿）byte 1字节 -128~127  
+整型：int  4字节  -21474836482147483647（大约21亿）short 2字节  -3276832767long 8字节  -92233720368547758089223372036854775807（大约922亿亿）byte 1字节 -128127  
 浮点类型：float 4字节 大约+-3.4E+38F(有效位数为6~7位)double 8字节 大约+-1.79E+308(有效位数为15位)  
-用于表示溢出和出错情况的三个特殊的浮点
+用于表示溢出和出错情况的三个特殊的浮点值：  
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -504,7 +847,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -535,7 +878,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  675
+                  668
                 </span>
               
 
@@ -551,7 +894,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  2
                 </span>
               
             </div>
@@ -574,12 +917,17 @@
       
         
           
-          强制拉取当我们需要忽略掉本地库未commit的修改时，可以用到以下代码，强行覆盖掉本地的修改，拉取远程库的最新的master分支。123git fetch --allgit reset --hard origin/master git pull
+          强制拉取当我们需要忽略掉本地库未commit的修改时，可以用到以下代码，强行覆盖掉本地的修改，拉取远程库的最新的master分支。
+123git fetch --allgit reset --hard origin&#x2F;master git pull
+
 git loggit log查看提交历史
-当想要查看项目中某个文件的修改历史时：首先要进入到该文件的目录下，然后以下执行git命令12git log 文件名git log -p 文件名
+当想要查看项目中某个文件的修改历史时：首先要进入到该文件的目录下，然后以下执行git命令
+12git log 文件名git log -p 文件名
 不加字母选项，仅会显示commit历史信息，不会显示详细修改信息，加上-p选项，就 可以显示该文件每次提交的diff。
-查看某次提交中的所有变化可用以下代码：1git show commit-id
-查看某次提交中的某个文件变化可以用以下代码：1git show com
+查看某次提交中的所有变化可用以下代码：
+1git show commit-id
+查看某次提交中的某个文件变化可以用以下代码：
+1gi
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -692,7 +1040,7 @@ git loggit log查看提交历史
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -723,7 +1071,7 @@ git loggit log查看提交历史
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  691
+                  705
                 </span>
               
 
@@ -739,7 +1087,7 @@ git loggit log查看提交历史
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  2
                 </span>
               
             </div>
@@ -880,7 +1228,7 @@ git loggit log查看提交历史
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -911,7 +1259,7 @@ git loggit log查看提交历史
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  10
+                  9
                 </span>
               
 
@@ -1065,7 +1413,7 @@ Cookie、local Storage、session Storage
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -1096,7 +1444,7 @@ Cookie、local Storage、session Storage
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  75
+                  69
                 </span>
               
 
@@ -1253,7 +1601,7 @@ concattrimXML文件中的SQL转义符mybatis中可以使用java中的方法吗�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -1284,7 +1632,7 @@ concattrimXML文件中的SQL转义符mybatis中可以使用java中的方法吗�
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  431
+                  429
                 </span>
               
 
@@ -1445,7 +1793,7 @@ AOFAOF文件，追加式文件，会记录每一个服务器收到的写操作�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -1476,7 +1824,7 @@ AOFAOF文件，追加式文件，会记录每一个服务器收到的写操作�
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  434
+                  429
                 </span>
               
 
@@ -1492,7 +1840,7 @@ AOFAOF文件，追加式文件，会记录每一个服务器收到的写操作�
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  1
                 </span>
               
             </div>
@@ -1633,7 +1981,7 @@ main方法为什么在SSM框架中没有显式的main方法，而在spring boot�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -1664,7 +2012,7 @@ main方法为什么在SSM框架中没有显式的main方法，而在spring boot�
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  500
+                  497
                 </span>
               
 
@@ -1680,7 +2028,7 @@ main方法为什么在SSM框架中没有显式的main方法，而在spring boot�
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  1
                 </span>
               
             </div>
@@ -1753,388 +2101,11 @@ Git是一个开源的分布式版本控制系统，用于处理项目中的版�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2019/04/Java-String/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Vicebery">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vicebery'blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/Java-String/" itemprop="url">Java中的String</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-09T22:32:19Z">
-                2019-04-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
-                    <span itemprop="name">学习记录</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,767
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  6
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          String类Java中没有内置的字符串类型，而在标准Java类库中提供了一个预定义类String。每个用双引号括起来的字符串都是String类的一个实例。String类中没有提供用于修改字符串的方法。故String类对象称为不可变字符串。空串””是长度为0的字符串，是一个Java对象，有自己的串长度（0）和内容（空）
-String、StringBuilder和StringBuffer执行速度：StringBuilder&gt;StringBuffer&gt;StringStringBuilder 和 StringBuffer均为字符串变量，两者的对象是变量，是可以更改的。StringBuilder线程不安全，适用于单线程下在字符缓冲区进行大量操作的情况StringBuffer线程安全，适用
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/Java-String/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-  
-</div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2019/03/Java-Collections/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Vicebery">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vicebery'blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/Java-Collections/" itemprop="url">Java容器</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-27T09:19:16Z">
-                2019-03-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
-                    <span itemprop="name">学习记录</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  985
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          总体框架Java容器是Java提供的工具包，包含了常用的数据结构：集合、链表、队列、栈、数组、映射等。Java容器工具包位置是java.util.*
-Java集合主要可以划分为4个部分：
-
- List列表
- Set集合
- Map映射
- 工具类（Iterator迭代器、Enumeration枚举类、Arrays和Collections）
-
-主要有三大接口Collection、Map、Iterator
-Collection接口是一个高度抽象出来的集合，它包含了集合的基本操作和属性。主要有List接口和Set接口两个分支
-List是一个逻辑上有序（区别于元素有序–从大到小，从小到大）的队列，每一个元素都有它的索引，第一个元素的索引值是0，第二个是1……List的实现类有LinkedList，Arr
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/Java-Collections/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-  
-</div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -2182,9 +2153,9 @@ List是一个逻辑上有序（区别于元素有序–从大到小，从小到�
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2206,7 +2177,7 @@ List是一个逻辑上有序（区别于元素有序–从大到小，从小到�
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2283,7 +2254,7 @@ List是一个逻辑上有序（区别于元素有序–从大到小，从小到�
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

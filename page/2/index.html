@@ -85,10 +85,8 @@
 <meta property="og:url" content="https://vicebery.github.io/page/2/index.html">
 <meta property="og:site_name" content="Vicebery&#39;blog">
 <meta property="og:description" content="stay hungry, stay young">
-<meta property="og:locale" content="zh-Hans">
+<meta property="article:author" content="Vicebery">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Vicebery&#39;blog">
-<meta name="twitter:description" content="stay hungry, stay young">
 
 
 
@@ -134,7 +132,7 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -181,7 +179,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -191,7 +189,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -201,7 +199,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
+          <a href="/categories/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -211,7 +209,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+          <a href="/tags/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -221,7 +219,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+          <a href="/about/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -248,6 +246,383 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2019/04/Java-String/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vicebery">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vicebery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/Java-String/" itemprop="url">Java中的String</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-09T22:32:19Z">
+                2019-04-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
+                    <span itemprop="name">学习记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.8k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          String类Java中没有内置的字符串类型，而在标准Java类库中提供了一个预定义类String。每个用双引号括起来的字符串都是String类的一个实例。String类中没有提供用于修改字符串的方法。故String类对象称为不可变字符串。空串””是长度为0的字符串，是一个Java对象，有自己的串长度（0）和内容（空）
+String、StringBuilder和StringBuffer执行速度：StringBuilder&gt;StringBuffer&gt;StringStringBuilder 和 StringBuffer均为字符串变量，两者的对象是变量，是可以更改的。StringBuilder线程不安全，适用于单线程下在字符缓冲区进行大量操作的情况StringBuffer线程安全，适用
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/Java-String/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+  
+</div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2019/03/Java-Collections/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Vicebery">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vicebery'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/Java-Collections/" itemprop="url">Java容器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-27T09:19:16Z">
+                2019-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
+                    <span itemprop="name">学习记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  981
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          总体框架Java容器是Java提供的工具包，包含了常用的数据结构：集合、链表、队列、栈、数组、映射等。Java容器工具包位置是java.util.*
+Java集合主要可以划分为4个部分：
+
+ List列表
+ Set集合
+ Map映射
+ 工具类（Iterator迭代器、Enumeration枚举类、Arrays和Collections）
+
+主要有三大接口Collection、Map、Iterator
+Collection接口是一个高度抽象出来的集合，它包含了集合的基本操作和属性。主要有List接口和Set接口两个分支
+List是一个逻辑上有序（区别于元素有序–从大到小，从小到大）的队列，每一个元素都有它的索引，第一个元素的索引值是0，第二个是1……List的实现类有LinkedList，Arr
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/03/Java-Collections/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+  
+</div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -316,7 +691,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -347,7 +722,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  6,406
+                  6.4k
                 </span>
               
 
@@ -363,7 +738,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  23
+                  22
                 </span>
               
             </div>
@@ -504,7 +879,7 @@ PaaS，平台即服务，为应用开发人员服务，提供支撑
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -535,7 +910,7 @@ PaaS，平台即服务，为应用开发人员服务，提供支撑
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  945
+                  942
                 </span>
               
 
@@ -696,7 +1071,7 @@ PaaS，平台即服务，为应用开发人员服务，提供支撑
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -727,7 +1102,7 @@ PaaS，平台即服务，为应用开发人员服务，提供支撑
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,512
+                  1.5k
                 </span>
               
 
@@ -743,7 +1118,7 @@ PaaS，平台即服务，为应用开发人员服务，提供支撑
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6
+                  5
                 </span>
               
             </div>
@@ -885,7 +1260,7 @@ PaaS，平台即服务，为应用开发人员服务，提供支撑
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -916,7 +1291,7 @@ PaaS，平台即服务，为应用开发人员服务，提供支撑
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,154
+                  1.2k
                 </span>
               
 
@@ -1075,7 +1450,7 @@ PaaS，平台即服务，为应用开发人员服务，提供支撑
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -1106,7 +1481,7 @@ PaaS，平台即服务，为应用开发人员服务，提供支撑
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  992
+                  999
                 </span>
               
 
@@ -1262,7 +1637,7 @@ ftpuser0与ftpuser同属于一个组ftpGroup
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -1293,7 +1668,7 @@ ftpuser0与ftpuser同属于一个组ftpGroup
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,255
+                  1.2k
                 </span>
               
 
@@ -1309,7 +1684,7 @@ ftpuser0与ftpuser同属于一个组ftpGroup
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  4
                 </span>
               
             </div>
@@ -1453,7 +1828,7 @@ Linux中有许多shell，可以通过/etc/shells这个文件来查看自己系�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -1484,7 +1859,7 @@ Linux中有许多shell，可以通过/etc/shells这个文件来查看自己系�
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  838
+                  895
                 </span>
               
 
@@ -1641,7 +2016,7 @@ vim共分为3种模式，分别是一般模式、编辑模式与命令行模式�
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -1672,7 +2047,7 @@ vim共分为3种模式，分别是一般模式、编辑模式与命令行模式�
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  629
+                  666
                 </span>
               
 
@@ -1712,10 +2087,12 @@ vim共分为3种模式，分别是一般模式、编辑模式与命令行模式�
         
           
           
-插入图片题图上图片插入格式如下：1![top](https://b-ssl.duitang.com/uploads/item/201504/23/20150423H1407_32LxZ.jpeg)
+插入图片题图上图片插入格式如下：
+1![top](https:&#x2F;&#x2F;b-ssl.duitang.com&#x2F;uploads&#x2F;item&#x2F;201504&#x2F;23&#x2F;20150423H1407_32LxZ.jpeg)
+
 
 行内缩进和换行缩进&emsp;&emsp;不管是在段首还是在文章中间，都可以用以下几种方式实现word写作中的“空格”，也就算缩进。&ensp;&ensp;半方大的空白&amp;ensp;或&amp;#8194;&emsp;&emsp;全方大的空白&amp;emsp;或&amp;#8195;&nbsp;&nbsp;不断行的空白格&amp;nbsp;或&amp;#160;  
-换行markdown语法中，在编辑时，文字中间空了一行，显示在网页上就是这两段文字被一行隔开但有时，我们不需要两段文字有
+换行markdown语法中，在编辑时，文字中间
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1761,387 +2138,11 @@ vim共分为3种模式，分别是一般模式、编辑模式与命令行模式�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2018/08/linux-user-file/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Vicebery">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vicebery'blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/linux-user-file/" itemprop="url">Linux用户与文件基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-08T21:25:52Z">
-                2018-08-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
-                    <span itemprop="name">学习记录</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,652
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  6
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          用户与用户组任何一个文件都具有“User、Group、Others”三种身份的个别权限。/etc/passwd  &emsp;记录所有的系统上的账号与一般身份用户，以及root的相关信息;/etc/shadow  &emsp;记录个人密码;/etc/group  &emsp;记录所有的组名;
-改变文件属性与权限chgrp: &emsp; 改变文件所属用户组chown: &emsp; 改变文件所有者chmod: &emsp; 改变文件的权限
-数字类型改变文件权限
-r:4w:2  &emsp;//让用户删除、更新、新建文件或目录x:1  &emsp;//在目录当中是与“能否进入该目录”
-eg: chmod [-R] xyz 文件或目录   &emsp;//xyz为rwx属性数值的相加，-R为进行
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/linux-user-file/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-  
-</div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2018/08/fabric-env-exam/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Vicebery">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vicebery'blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/fabric-env-exam/" itemprop="url">fabric环境搭建以及实例运行</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-03T21:49:07Z">
-                2018-08-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
-                    <span itemprop="name">学习记录</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  755
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          前言以下操作是在ubuntu 18.04上进行，网络使用SS代理，如不使用网络代理，操作过程中可能会出现各种问题。
-先行步骤具体请查看官方文档介绍，这里主要介绍两点：
-安装go以及环境变量配置建议直接命令安装 :sudo apt-get install golang
-安装好后设置环境变量，在主目录下新建一个文件夹“go”，作为你的工作空间。
-打开终端，编辑记录环境变量的文件：sudo vim /etc/profile在文件最后添加：export GOPATH=$HOME/goexport PATH=$PATH:$GOPATH/bin
-在系统下用命令安装不需要添加GOROOT，因为默认安装位置是/usr/lib，此路径已经被写入环境变量了。
-官方文档写的是编辑~/.bashrc这个文件，关于这
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/fabric-env-exam/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-  
-</div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -2189,9 +2190,9 @@ eg: chmod [-R] xyz 文件或目录   &emsp;//xyz为rwx属性数值的相加，-R
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2213,7 +2214,7 @@ eg: chmod [-R] xyz 文件或目录   &emsp;//xyz为rwx属性数值的相加，-R
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2290,7 +2291,7 @@ eg: chmod [-R] xyz 文件或目录   &emsp;//xyz为rwx属性数值的相加，-R
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

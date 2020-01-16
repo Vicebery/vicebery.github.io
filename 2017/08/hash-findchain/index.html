@@ -79,18 +79,19 @@
 
 
 
-<meta name="description" content="散列（hash)是一种重要的算法思想，hash函数在计算机领域应用非常广泛，下面主要谈谈其在字符查找方面的一些应用。 当我们需要在一个域里面查找一些元素时，最简单的思想是遍历整个域，将查询元素与域内元素进行判断是否一致，这项工作相当耗时，我们不妨这样想，将查询元素与查询域建立一个联系，构建一个函数关系hash(X),X为待查元素，hash(X)=0(初始化)为没有X元素,hash(X)=1为X元素">
-<meta name="keywords" content="hash,字符串查询,算法思想">
+<meta name="description" content="散列（hash)是一种重要的算法思想，hash函数在计算机领域应用非常广泛，下面主要谈谈其在字符查找方面的一些应用。 当我们需要在一个域里面查找一些元素时，最简单的思想是遍历整个域，将查询元素与域内元素进行判断是否一致，这项工作相当耗时，我们不妨这样想，将查询元素与查询域建立一个联系，构建一个函数关系hash(X),X为待查元素，hash(X)&#x3D;0(初始化)为没有X元素,hash(X)&#x3D;1为X元素">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hash查找思想">
 <meta property="og:url" content="https://vicebery.github.io/2017/08/hash-findchain/index.html">
 <meta property="og:site_name" content="Vicebery&#39;blog">
-<meta property="og:description" content="散列（hash)是一种重要的算法思想，hash函数在计算机领域应用非常广泛，下面主要谈谈其在字符查找方面的一些应用。 当我们需要在一个域里面查找一些元素时，最简单的思想是遍历整个域，将查询元素与域内元素进行判断是否一致，这项工作相当耗时，我们不妨这样想，将查询元素与查询域建立一个联系，构建一个函数关系hash(X),X为待查元素，hash(X)=0(初始化)为没有X元素,hash(X)=1为X元素">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-08T13:40:29.383Z">
+<meta property="og:description" content="散列（hash)是一种重要的算法思想，hash函数在计算机领域应用非常广泛，下面主要谈谈其在字符查找方面的一些应用。 当我们需要在一个域里面查找一些元素时，最简单的思想是遍历整个域，将查询元素与域内元素进行判断是否一致，这项工作相当耗时，我们不妨这样想，将查询元素与查询域建立一个联系，构建一个函数关系hash(X),X为待查元素，hash(X)&#x3D;0(初始化)为没有X元素,hash(X)&#x3D;1为X元素">
+<meta property="article:published_time" content="2017-08-21T23:23:18.000Z">
+<meta property="article:modified_time" content="2018-08-08T13:40:29.383Z">
+<meta property="article:author" content="Vicebery">
+<meta property="article:tag" content="hash">
+<meta property="article:tag" content="字符串查询">
+<meta property="article:tag" content="算法思想">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hash查找思想">
-<meta name="twitter:description" content="散列（hash)是一种重要的算法思想，hash函数在计算机领域应用非常广泛，下面主要谈谈其在字符查找方面的一些应用。 当我们需要在一个域里面查找一些元素时，最简单的思想是遍历整个域，将查询元素与域内元素进行判断是否一致，这项工作相当耗时，我们不妨这样想，将查询元素与查询域建立一个联系，构建一个函数关系hash(X),X为待查元素，hash(X)=0(初始化)为没有X元素,hash(X)=1为X元素">
 
 
 
@@ -136,7 +137,7 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -182,7 +183,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -192,7 +193,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -202,7 +203,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
+          <a href="/categories/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -212,7 +213,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+          <a href="/tags/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -222,7 +223,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+          <a href="/about/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -315,7 +316,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -418,9 +419,9 @@
           
             <a href="/tags/hash/" rel="tag"><i class="fa fa-tag"></i> hash</a>
           
-            <a href="/tags/字符串查询/" rel="tag"><i class="fa fa-tag"></i> 字符串查询</a>
+            <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9F%A5%E8%AF%A2/" rel="tag"><i class="fa fa-tag"></i> 字符串查询</a>
           
-            <a href="/tags/算法思想/" rel="tag"><i class="fa fa-tag"></i> 算法思想</a>
+            <a href="/tags/%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/" rel="tag"><i class="fa fa-tag"></i> 算法思想</a>
           
         </div>
       
@@ -515,9 +516,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -539,7 +540,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -616,7 +617,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

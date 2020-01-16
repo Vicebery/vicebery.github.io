@@ -79,18 +79,19 @@
 
 
 
-<meta name="description" content="前言系统为cent OS，使用vsftpd搭建sftp。sftp为ftp的一个升级版，较之更为安全。在华为弹性云服务器上测试成功。 测试时的设置：用户根目录/home/ftp，其下有两个文件夹/pub、/upload，为普通用户可见目录。管理员为ftpuser,普通用户为ftpuser0、ftpuser1……其中密码都与用户名一样。 目标一部分用户(管理员)可以新建文件夹、上传文件、删除文件夹、删">
-<meta name="keywords" content="FTP,centOS,vsftpd">
+<meta name="description" content="前言系统为cent OS，使用vsftpd搭建sftp。sftp为ftp的一个升级版，较之更为安全。在华为弹性云服务器上测试成功。 测试时的设置：用户根目录&#x2F;home&#x2F;ftp，其下有两个文件夹&#x2F;pub、&#x2F;upload，为普通用户可见目录。管理员为ftpuser,普通用户为ftpuser0、ftpuser1……其中密码都与用户名一样。 目标一部分用户(管理员)可以新建文件夹、上传文件、删除文件夹、删">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FTP服务器搭建">
 <meta property="og:url" content="https://vicebery.github.io/2018/08/ftp-server-centos/index.html">
 <meta property="og:site_name" content="Vicebery&#39;blog">
-<meta property="og:description" content="前言系统为cent OS，使用vsftpd搭建sftp。sftp为ftp的一个升级版，较之更为安全。在华为弹性云服务器上测试成功。 测试时的设置：用户根目录/home/ftp，其下有两个文件夹/pub、/upload，为普通用户可见目录。管理员为ftpuser,普通用户为ftpuser0、ftpuser1……其中密码都与用户名一样。 目标一部分用户(管理员)可以新建文件夹、上传文件、删除文件夹、删">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-17T16:09:40.551Z">
+<meta property="og:description" content="前言系统为cent OS，使用vsftpd搭建sftp。sftp为ftp的一个升级版，较之更为安全。在华为弹性云服务器上测试成功。 测试时的设置：用户根目录&#x2F;home&#x2F;ftp，其下有两个文件夹&#x2F;pub、&#x2F;upload，为普通用户可见目录。管理员为ftpuser,普通用户为ftpuser0、ftpuser1……其中密码都与用户名一样。 目标一部分用户(管理员)可以新建文件夹、上传文件、删除文件夹、删">
+<meta property="article:published_time" content="2018-08-16T21:57:39.000Z">
+<meta property="article:modified_time" content="2018-08-17T16:09:40.551Z">
+<meta property="article:author" content="Vicebery">
+<meta property="article:tag" content="FTP">
+<meta property="article:tag" content="centOS">
+<meta property="article:tag" content="vsftpd">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FTP服务器搭建">
-<meta name="twitter:description" content="前言系统为cent OS，使用vsftpd搭建sftp。sftp为ftp的一个升级版，较之更为安全。在华为弹性云服务器上测试成功。 测试时的设置：用户根目录/home/ftp，其下有两个文件夹/pub、/upload，为普通用户可见目录。管理员为ftpuser,普通用户为ftpuser0、ftpuser1……其中密码都与用户名一样。 目标一部分用户(管理员)可以新建文件夹、上传文件、删除文件夹、删">
 
 
 
@@ -136,7 +137,7 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -182,7 +183,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -192,7 +193,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -202,7 +203,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
+          <a href="/categories/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -212,7 +213,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+          <a href="/tags/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -222,7 +223,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+          <a href="/about/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -315,7 +316,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -346,7 +347,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  992
+                  999
                 </span>
               
 
@@ -390,29 +391,52 @@
 <p>ftpuser0与ftpuser同属于一个组ftpGroup，ftpuser0权限为5，ftpuser0不能上传文件或创建文件夹，只能下载文件，且不能看见或进入其他任何非自己主目录的目录。其他与ftpuser在同一个用户组的用户都和ftpuser0具有一样的特性。</p>
 <h2 id="centOS下搭建FTP服务"><a href="#centOS下搭建FTP服务" class="headerlink" title="centOS下搭建FTP服务"></a>centOS下搭建FTP服务</h2><p>Linux下ftp服务可以通过搭建vsftpd服务来实现，我们以在centOS下为例。</p>
 <h3 id="安装vsftpd"><a href="#安装vsftpd" class="headerlink" title="安装vsftpd"></a>安装vsftpd</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install vsftpd</span><br></pre></td></tr></table></figure>
-<h3 id="设置用户组"><a href="#设置用户组" class="headerlink" title="设置用户组"></a>设置用户组</h3><p>创建FTP用户组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupadd ftpGroup</span><br></pre></td></tr></table></figure></p>
-<p>创建新用户ftpuser，将其加入到FTP用户组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -G ftpGroup ftpuser</span><br></pre></td></tr></table></figure></p>
-<p>设置用户密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 输入两次密码，出现的提示信息不用管</span><br><span class="line">passwd ftpuser</span><br></pre></td></tr></table></figure></p>
-<p>安全设置，限制用户只能通过ftp访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod -s /sbin/nologin ftpuser</span><br></pre></td></tr></table></figure></p>
-<p>设置过程中可以用以下命令进行检查：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//查看当前目录下所有文件夹以及文件的权限、所属用户、所属用户组、大小</span><br><span class="line">ls -lh</span><br></pre></td></tr></table></figure></p>
-<h3 id="目录权限设置"><a href="#目录权限设置" class="headerlink" title="目录权限设置"></a>目录权限设置</h3><p>修改文件目录用户，ftp根目录以上的目录都必须为root所有，权限值设为755<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown root /home/ftp</span><br><span class="line">chmod 755 /home/ftp</span><br></pre></td></tr></table></figure></p>
-<p>更改用户的根目录，用户的根目录之上的所有目录都必须为root所有<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod -d /home/ftp ftpuser</span><br></pre></td></tr></table></figure></p>
-<p>此已经设置为ftp根目录，设为ftp管理员所有，管理员负责上传文件、新建文件夹、删除文件或文件夹等操作，非管理用户登录后只能看见/home/ftp下的/pub、/upload等文件夹或文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown -R ftpuser:ftpGroup /home/ftp/pub</span><br><span class="line">chown -R ftpuser:ftpGroup /home/ftp/upload</span><br></pre></td></tr></table></figure></p>
-<p>修改文件夹权限,用户权限为7，用户组权限为5，其他为5<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod -R 755 /home/ftp/pub</span><br><span class="line">chmod -R 755 /home/ftp/upload</span><br></pre></td></tr></table></figure></p>
-<p>添加新用户：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">useradd -G ftpGroup -s /sbin/nologin ftpuser1</span><br><span class="line">passwd ftpuser1</span><br><span class="line">//注意：无论是管理用户还是非管理用户，其上一层  </span><br><span class="line">//一直到系统根目录都必须为root用户所有，否</span><br><span class="line">//则无法正常连接</span><br><span class="line">usermod -d /home/ftp ftpuser1</span><br><span class="line">service vsftpd restart</span><br></pre></td></tr></table></figure></p>
-<p>其他用法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//修改用户组默认根目录,-R使文件夹下的所有子目录都生效</span><br><span class="line">chgrp -R ftpGroup /home/ftp/</span><br></pre></td></tr></table></figure></p>
-<h3 id="编辑-etc-ssh-sshd-config"><a href="#编辑-etc-ssh-sshd-config" class="headerlink" title="编辑/etc/ssh/sshd_config"></a>编辑/etc/ssh/sshd_config</h3><p>编辑sshd_config<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure></p>
-<p>输入/Subsystem搜索到下列内容，注释掉原有的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># Subsystem sftp /usr/libexec/openssh/sftp-server</span><br></pre></td></tr></table></figure></p>
-<p>改为internal-sftp<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Subsystem  sftp  internal-sftp</span><br></pre></td></tr></table></figure></p>
-<p>匹配用户组，如果要匹配多个组，多个组之间用逗号分割<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Match Group ftpGroup</span><br></pre></td></tr></table></figure></p>
-<p>指定登陆用户到自己的用户目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ChrootDirectory %h</span><br></pre></td></tr></table></figure></p>
-<p>指定 sftp 命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ForceCommand internal-sftp</span><br></pre></td></tr></table></figure></p>
-<p>这两行，如果不希望该用户能使用端口转发的话就加上，否则删掉<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X11Forwarding no</span><br><span class="line">AllowTcpForwarding no</span><br></pre></td></tr></table></figure></p>
-<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//vsftpd.conf</span><br><span class="line">chroot_local_user=YES</span><br><span class="line">chroot_list_enable=YES</span><br><span class="line">chroot_list_file=/etc/vsftpd/chroot_list</span><br></pre></td></tr></table></figure>
-<p>如果希望个别用户可以访问用户根目录以外的目录，可以将用户名加入到chroot_list，一个用户名占一行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/vsftpd/chroot_list</span><br></pre></td></tr></table></figure></p>
-<h3 id="服务启动"><a href="#服务启动" class="headerlink" title="服务启动"></a>服务启动</h3><p>每次修改了配置文件后都要重启服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service vsftpd restart</span><br></pre></td></tr></table></figure></p>
-<h3 id="测试访问"><a href="#测试访问" class="headerlink" title="测试访问"></a>测试访问</h3><p>终端访问：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sftp ftpuser@114.116.83.240</span><br><span class="line">输入密码</span><br></pre></td></tr></table></figure></p>
+<h3 id="设置用户组"><a href="#设置用户组" class="headerlink" title="设置用户组"></a>设置用户组</h3><p>创建FTP用户组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupadd ftpGroup</span><br></pre></td></tr></table></figure>
+<p>创建新用户ftpuser，将其加入到FTP用户组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -G ftpGroup ftpuser</span><br></pre></td></tr></table></figure>
+<p>设置用户密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 输入两次密码，出现的提示信息不用管</span><br><span class="line">passwd ftpuser</span><br></pre></td></tr></table></figure>
+<p>安全设置，限制用户只能通过ftp访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod -s &#x2F;sbin&#x2F;nologin ftpuser</span><br></pre></td></tr></table></figure>
+<p>设置过程中可以用以下命令进行检查：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;查看当前目录下所有文件夹以及文件的权限、所属用户、所属用户组、大小</span><br><span class="line">ls -lh</span><br></pre></td></tr></table></figure>
 
+<h3 id="目录权限设置"><a href="#目录权限设置" class="headerlink" title="目录权限设置"></a>目录权限设置</h3><p>修改文件目录用户，ftp根目录以上的目录都必须为root所有，权限值设为755</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown root &#x2F;home&#x2F;ftp</span><br><span class="line">chmod 755 &#x2F;home&#x2F;ftp</span><br></pre></td></tr></table></figure>
+<p>更改用户的根目录，用户的根目录之上的所有目录都必须为root所有</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod -d &#x2F;home&#x2F;ftp ftpuser</span><br></pre></td></tr></table></figure>
+<p>此已经设置为ftp根目录，设为ftp管理员所有，管理员负责上传文件、新建文件夹、删除文件或文件夹等操作，非管理用户登录后只能看见/home/ftp下的/pub、/upload等文件夹或文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown -R ftpuser:ftpGroup &#x2F;home&#x2F;ftp&#x2F;pub</span><br><span class="line">chown -R ftpuser:ftpGroup &#x2F;home&#x2F;ftp&#x2F;upload</span><br></pre></td></tr></table></figure>
+<p>修改文件夹权限,用户权限为7，用户组权限为5，其他为5</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod -R 755 &#x2F;home&#x2F;ftp&#x2F;pub</span><br><span class="line">chmod -R 755 &#x2F;home&#x2F;ftp&#x2F;upload</span><br></pre></td></tr></table></figure>
+<p>添加新用户：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">useradd -G ftpGroup -s &#x2F;sbin&#x2F;nologin ftpuser1</span><br><span class="line">passwd ftpuser1</span><br><span class="line">&#x2F;&#x2F;注意：无论是管理用户还是非管理用户，其上一层  </span><br><span class="line">&#x2F;&#x2F;一直到系统根目录都必须为root用户所有，否</span><br><span class="line">&#x2F;&#x2F;则无法正常连接</span><br><span class="line">usermod -d &#x2F;home&#x2F;ftp ftpuser1</span><br><span class="line">service vsftpd restart</span><br></pre></td></tr></table></figure>
+<p>其他用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;修改用户组默认根目录,-R使文件夹下的所有子目录都生效</span><br><span class="line">chgrp -R ftpGroup &#x2F;home&#x2F;ftp&#x2F;</span><br></pre></td></tr></table></figure>
+<h3 id="编辑-etc-ssh-sshd-config"><a href="#编辑-etc-ssh-sshd-config" class="headerlink" title="编辑/etc/ssh/sshd_config"></a>编辑/etc/ssh/sshd_config</h3><p>编辑sshd_config</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;ssh&#x2F;sshd_config</span><br></pre></td></tr></table></figure>
+<p>输入/Subsystem搜索到下列内容，注释掉原有的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># Subsystem sftp &#x2F;usr&#x2F;libexec&#x2F;openssh&#x2F;sftp-server</span><br></pre></td></tr></table></figure>
+<p>改为internal-sftp</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Subsystem  sftp  internal-sftp</span><br></pre></td></tr></table></figure>
+<p>匹配用户组，如果要匹配多个组，多个组之间用逗号分割</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Match Group ftpGroup</span><br></pre></td></tr></table></figure>
+<p>指定登陆用户到自己的用户目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ChrootDirectory %h</span><br></pre></td></tr></table></figure>
+<p>指定 sftp 命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ForceCommand internal-sftp</span><br></pre></td></tr></table></figure>
+<p>这两行，如果不希望该用户能使用端口转发的话就加上，否则删掉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X11Forwarding no</span><br><span class="line">AllowTcpForwarding no</span><br></pre></td></tr></table></figure>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;vsftpd.conf</span><br><span class="line">chroot_local_user&#x3D;YES</span><br><span class="line">chroot_list_enable&#x3D;YES</span><br><span class="line">chroot_list_file&#x3D;&#x2F;etc&#x2F;vsftpd&#x2F;chroot_list</span><br></pre></td></tr></table></figure>
+<p>如果希望个别用户可以访问用户根目录以外的目录，可以将用户名加入到chroot_list，一个用户名占一行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;etc&#x2F;vsftpd&#x2F;chroot_list</span><br></pre></td></tr></table></figure>
+
+<h3 id="服务启动"><a href="#服务启动" class="headerlink" title="服务启动"></a>服务启动</h3><p>每次修改了配置文件后都要重启服务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service vsftpd restart</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试访问"><a href="#测试访问" class="headerlink" title="测试访问"></a>测试访问</h3><p>终端访问：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sftp ftpuser@114.116.83.240</span><br><span class="line">输入密码</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -548,9 +572,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -572,7 +596,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -645,7 +669,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目标"><span class="nav-number">2.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#centOS下搭建FTP服务"><span class="nav-number">3.</span> <span class="nav-text">centOS下搭建FTP服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装vsftpd"><span class="nav-number">3.1.</span> <span class="nav-text">安装vsftpd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置用户组"><span class="nav-number">3.2.</span> <span class="nav-text">设置用户组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目录权限设置"><span class="nav-number">3.3.</span> <span class="nav-text">目录权限设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编辑-etc-ssh-sshd-config"><span class="nav-number">3.4.</span> <span class="nav-text">编辑/etc/ssh/sshd_config</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置文件"><span class="nav-number">3.5.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务启动"><span class="nav-number">3.6.</span> <span class="nav-text">服务启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试访问"><span class="nav-number">3.7.</span> <span class="nav-text">测试访问</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目标"><span class="nav-number">2.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#centOS下搭建FTP服务"><span class="nav-number">3.</span> <span class="nav-text">centOS下搭建FTP服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装vsftpd"><span class="nav-number">3.1.</span> <span class="nav-text">安装vsftpd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置用户组"><span class="nav-number">3.2.</span> <span class="nav-text">设置用户组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目录权限设置"><span class="nav-number">3.3.</span> <span class="nav-text">目录权限设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编辑-etc-ssh-sshd-config"><span class="nav-number">3.4.</span> <span class="nav-text">编辑&#x2F;etc&#x2F;ssh&#x2F;sshd_config</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置文件"><span class="nav-number">3.5.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务启动"><span class="nav-number">3.6.</span> <span class="nav-text">服务启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试访问"><span class="nav-number">3.7.</span> <span class="nav-text">测试访问</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -665,7 +689,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

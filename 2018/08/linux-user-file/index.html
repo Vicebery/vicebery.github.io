@@ -79,18 +79,17 @@
 
 
 
-<meta name="description" content="用户与用户组任何一个文件都具有“User、Group、Others”三种身份的个别权限。/etc/passwd  &amp;emsp;记录所有的系统上的账号与一般身份用户，以及root的相关信息;/etc/shadow  &amp;emsp;记录个人密码;/etc/group  &amp;emsp;记录所有的组名; 改变文件属性与权限chgrp: &amp;emsp; 改变文件所属用户组chown: &amp;emsp; 改变文件所有者">
-<meta name="keywords" content="Linux">
+<meta name="description" content="用户与用户组任何一个文件都具有“User、Group、Others”三种身份的个别权限。&#x2F;etc&#x2F;passwd  &amp;emsp;记录所有的系统上的账号与一般身份用户，以及root的相关信息;&#x2F;etc&#x2F;shadow  &amp;emsp;记录个人密码;&#x2F;etc&#x2F;group  &amp;emsp;记录所有的组名; 改变文件属性与权限chgrp: &amp;emsp; 改变文件所属用户组chown: &amp;emsp; 改变文件所有者">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux用户与文件基础">
 <meta property="og:url" content="https://vicebery.github.io/2018/08/linux-user-file/index.html">
 <meta property="og:site_name" content="Vicebery&#39;blog">
-<meta property="og:description" content="用户与用户组任何一个文件都具有“User、Group、Others”三种身份的个别权限。/etc/passwd  &amp;emsp;记录所有的系统上的账号与一般身份用户，以及root的相关信息;/etc/shadow  &amp;emsp;记录个人密码;/etc/group  &amp;emsp;记录所有的组名; 改变文件属性与权限chgrp: &amp;emsp; 改变文件所属用户组chown: &amp;emsp; 改变文件所有者">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-11T11:55:30.700Z">
+<meta property="og:description" content="用户与用户组任何一个文件都具有“User、Group、Others”三种身份的个别权限。&#x2F;etc&#x2F;passwd  &amp;emsp;记录所有的系统上的账号与一般身份用户，以及root的相关信息;&#x2F;etc&#x2F;shadow  &amp;emsp;记录个人密码;&#x2F;etc&#x2F;group  &amp;emsp;记录所有的组名; 改变文件属性与权限chgrp: &amp;emsp; 改变文件所属用户组chown: &amp;emsp; 改变文件所有者">
+<meta property="article:published_time" content="2018-08-08T21:25:52.000Z">
+<meta property="article:modified_time" content="2018-08-11T11:55:30.700Z">
+<meta property="article:author" content="Vicebery">
+<meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux用户与文件基础">
-<meta name="twitter:description" content="用户与用户组任何一个文件都具有“User、Group、Others”三种身份的个别权限。/etc/passwd  &amp;emsp;记录所有的系统上的账号与一般身份用户，以及root的相关信息;/etc/shadow  &amp;emsp;记录个人密码;/etc/group  &amp;emsp;记录所有的组名; 改变文件属性与权限chgrp: &amp;emsp; 改变文件所属用户组chown: &amp;emsp; 改变文件所有者">
 
 
 
@@ -136,7 +135,7 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -182,7 +181,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -192,7 +191,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -202,7 +201,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
+          <a href="/categories/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -212,7 +211,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+          <a href="/tags/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -222,7 +221,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+          <a href="/about/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -315,7 +314,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -346,7 +345,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,652
+                  1.7k
                 </span>
               
 
@@ -390,45 +389,61 @@
 <p>eg: chmod [-R] xyz 文件或目录   &emsp;//xyz为rwx属性数值的相加，-R为进行递归的持续更改，即连同子目录下的所有文件都会更改</p>
 <h2 id="目录配置"><a href="#目录配置" class="headerlink" title="目录配置"></a>目录配置</h2><p><strong>/根目录</strong> &emsp;与开机系统有关</p>
 <p><em>/bin</em>  &emsp;放置在单用户维护模式下还能够被操作的命令，重要执行文件<br><em>/boot</em>  &emsp;开机与内核文件,放置grub引导装载程序<br><em>/etc</em>  &emsp;配置文件<br><em>/lib</em>  &emsp;开机时会用到的函数库，以及在/bin或/sbin下面的命令会调用的函数库<br><em>/sbin</em>  &emsp;重要的系统执行文件，开机过程中需要的，包括开机、修复、还原系统所需要的命令。某些服务器软件程序则一般放置在/usr/sbin中，而本机自行安装的软件所产生的系统执行文件，则放置在/usr/local/sbin中</p>
-<p><strong>/usr </strong> &emsp;软件放置处，与软件安装/执行有关<br><em>/usr/bin/</em>  &emsp;绝大部分的用户可使用命令都放在这.(与/bin不同之处在于是否与开机过程相关)<br><em>/usr/include/</em>  &emsp;程序头文件与包含文件放置处<br><em>/usr/lib/</em>  &emsp;包含各应用软件的函数库、目标文件，以及不被一般用户惯用的执行文件或脚本。<br><em>/usr/local/</em>  &emsp;自行下载安装的软件建议安装的目录。<br><em>/usr/sbin/</em>  &emsp;非系统正常运行所需要的系统命令。<br><em>/usr/share/</em>  &emsp;放置共享文件<br><em>/usr/src/</em>  &emsp;放置源码</p>
+<p><em><em>/usr *</em> &emsp;软件放置处，与软件安装/执行有关<br>*/usr/bin/</em>  &emsp;绝大部分的用户可使用命令都放在这.(与/bin不同之处在于是否与开机过程相关)<br><em>/usr/include/</em>  &emsp;程序头文件与包含文件放置处<br><em>/usr/lib/</em>  &emsp;包含各应用软件的函数库、目标文件，以及不被一般用户惯用的执行文件或脚本。<br><em>/usr/local/</em>  &emsp;自行下载安装的软件建议安装的目录。<br><em>/usr/sbin/</em>  &emsp;非系统正常运行所需要的系统命令。<br><em>/usr/share/</em>  &emsp;放置共享文件<br><em>/usr/src/</em>  &emsp;放置源码</p>
 <p><strong>/var</strong>  &emsp;主要针对常态性变动的文件，包括缓存、登陆文件以及某些软件运行所产生的文件。  </p>
 <p><strong>/opt</strong>  &emsp;第三方软件  </p>
 <h2 id="目录与路径"><a href="#目录与路径" class="headerlink" title="目录与路径"></a>目录与路径</h2><h3 id="目录创建与切换"><a href="#目录创建与切换" class="headerlink" title="目录创建与切换"></a>目录创建与切换</h3><p>绝对路径：路径的写法由根目录/写起</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/bin</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;usr&#x2F;bin</span><br></pre></td></tr></table></figure>
+
 <p>相对路径：从当前目录开始写起</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd usr/bin  </span><br><span class="line">cd ./usr/bin</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd usr&#x2F;bin  </span><br><span class="line">cd .&#x2F;usr&#x2F;bin</span><br></pre></td></tr></table></figure>
+
 <p><code>.</code>  代表当前的目录，也可以使用<code>./</code>来表示<br><code>..</code>代表上一层目录，也可以用<code>../</code>来表示<br><code>-</code> 代表前一个工作目录<br><code>~</code> 代表“目前用户身份”所在的主文件夹  </p>
 <p>处理目录的相关命令：<br><code>cd</code>: 切换目录<br><code>pwd</code>: 显示当前目录<br><code>mkdir</code>: 新建一个新的目录<br><code>rmdir</code>: 删除一个空的目录  </p>
 <p>一些常见用法： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p github.com/hyperledger/fabric</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p github.com&#x2F;hyperledger&#x2F;fabric</span><br></pre></td></tr></table></figure>
+
 <p>加上<code>-p</code>这个参数，可以自行创建多层目录  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -m 711 test</span><br></pre></td></tr></table></figure>
+
 <p>新建权限为rwx–x–x的目录  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -r test</span><br></pre></td></tr></table></figure>
+
 <p>删除test目录下所有的文件  </p>
 <h3 id="文件的复制、移动与删除"><a href="#文件的复制、移动与删除" class="headerlink" title="文件的复制、移动与删除"></a>文件的复制、移动与删除</h3><h4 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp [-adfilprsu] 源文件 目标文件</span><br></pre></td></tr></table></figure>
+
 <p>常用参数：<br>-i  :  若目标文件已经存在，在覆盖时会先询问操作的进行<br>-r  :  递归持续复制，用户目录的复制  </p>
 <p>一些常见用法：<br>复制/etc/目录下的所有内容到/tmp下<br><code>cp /etc/ /tmp</code><br>或<code>cp -r /etc/ /tmp</code><br>一般源文件为目录时，需要用到<code>-r</code></p>
 <h4 id="移动"><a href="#移动" class="headerlink" title="移动"></a>移动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv [-fiu] source destination</span><br></pre></td></tr></table></figure>
+
 <p>参数：<br>-f  :  force强制的意思，若目标文件已存在，则直接覆盖<br>-i  :  若目标文件已存在，就会询问是否覆盖<br>-u  :  若目标文件已存在，且source比较新，才会更新  </p>
 <h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm [-fir] 文件或目录</span><br></pre></td></tr></table></figure>
+
 <p>参数：<br>-f  :  强制删除，忽略不存在的文件，不出现警告信息<br>-i  :  删除前询问<br>-r  :  递归删除，删除目录文件夹，文件夹里的所有东西都会删除  </p>
 <h3 id="文件权限以及属性"><a href="#文件权限以及属性" class="headerlink" title="文件权限以及属性"></a>文件权限以及属性</h3><p>查看文件默认权限：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">umask -S</span><br></pre></td></tr></table></figure>
-<p>新建文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch newfilename</span><br></pre></td></tr></table></figure></p>
-<p>查看文件类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file /etc/profile</span><br></pre></td></tr></table></figure></p>
+
+<p>新建文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch newfilename</span><br></pre></td></tr></table></figure>
+<p>查看文件类型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file &#x2F;etc&#x2F;profile</span><br></pre></td></tr></table></figure>
+
 <h1 id="Linux磁盘与文件系统管理"><a href="#Linux磁盘与文件系统管理" class="headerlink" title="Linux磁盘与文件系统管理"></a>Linux磁盘与文件系统管理</h1><h2 id="文件压缩与打包"><a href="#文件压缩与打包" class="headerlink" title="文件压缩与打包"></a>文件压缩与打包</h2><p>以下是几种常见的压缩文件：  </p>
 <p><code>*.Z</code>   compress程序压缩的文件<br><code>*.gz</code>  gzip程序压缩的文件<br><code>*.bz2</code>  bzip2程序压缩的文件<br><code>*.tar</code>  tar程序打包的数据，并没有压缩过<br><code>*.tar.gz</code>  tar程序打包的文件，其中经过gzip的压缩<br><code>*.tar.bz2</code>  tar程序打包的文件，其中经过bzip2的压缩  </p>
 <h3 id="gzip和zcat"><a href="#gzip和zcat" class="headerlink" title="gzip和zcat"></a>gzip和zcat</h3><p>gzip可以解开compress、zip和gzip等软件所压缩的文件。gzip所新建的压缩文件为<code>*.gz</code>的文件名。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gzip [-cdtv`#`] 文件名 </span><br><span class="line">zcat 文件名.gz</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gzip [-cdtv&#96;#&#96;] 文件名 </span><br><span class="line">zcat 文件名.gz</span><br></pre></td></tr></table></figure>
+
 <p>参数：<br>-c  :  将压缩的数据输出到屏幕上，可通过数据流重定向来处理;<br>-d  :  解压缩的参数;<br>-t  :  可以用来检验一个压缩文件的一致性，看看文件有无错误;<br>-v  :  可以显示出原文件/压缩文件的压缩比等信息;<br>-#  :  压缩等级，-1最快，但是压缩比最差，-9最慢，但是压缩比最好，默认是-6.</p>
 <h3 id="bzip2和bzcat"><a href="#bzip2和bzcat" class="headerlink" title="bzip2和bzcat"></a>bzip2和bzcat</h3><p>bzip2比gzip提供更好的压缩比，且用法与其差不多。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bzip2 [-cdkzv`#`] 文件名</span><br><span class="line">bzcat 文件名.bz2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bzip2 [-cdkzv&#96;#&#96;] 文件名</span><br><span class="line">bzcat 文件名.bz2</span><br></pre></td></tr></table></figure>
+
 <p>参数：<br>-c  :  将压缩的数据输出到屏幕上，可通过数据流重定向来处理;<br>-d  :  解压缩的参数;<br>-k  :  保留原文件，而不会删除原始的文件;<br>-z  :  压缩的参数;<br>-v  :  可以显示出原文件/压缩文件的压缩比等信息;<br>-#  :  压缩等级，-1最快，但是压缩比最差，-9最慢，但是压缩比最好，默认是-6.</p>
 <h3 id="打包命令：tar"><a href="#打包命令：tar" class="headerlink" title="打包命令：tar"></a>打包命令：tar</h3><p>打包与压缩的用法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar [-j|-z] [cv] [-f 新建的文件名] filename</span><br></pre></td></tr></table></figure>
+
 <p>解压缩的用法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar [-j|-z] [xv] [-f 新建的文件名] [-C 目录]</span><br></pre></td></tr></table></figure>
+
 <p>参数:<br>-c  :  新建打包文件，可搭配-v来查看过程中被打包的文件名;<br>-t  :  查看打包文件的内容含有哪些文件名，重点在查看文件名;<br>-x  :  解打包或压缩的功能，可以搭配-C在特定目录解开;<br>-j  :  通过bzip2的支持进行压缩/解压缩，此时文件名最好为<code>*.tar.bz2</code>;<br>-z  :  通过gzip的支持进行压缩/解压缩，此时文件名最好为<code>*.tar.gz</code>;<br>-v  :  在压缩/解压缩过程中，将正在处理的文件名显示出来;<br>-f filename  :  -f 后面要接被处理的文件名，建议-f<br>单独写一个参数;<br>-C 目录  :  在特定目录解压缩</p>
 
       
@@ -562,9 +577,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -586,7 +601,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -679,7 +694,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

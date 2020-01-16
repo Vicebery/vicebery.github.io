@@ -80,17 +80,17 @@
 
 
 <meta name="description" content="总体框架Java容器是Java提供的工具包，包含了常用的数据结构：集合、链表、队列、栈、数组、映射等。Java容器工具包位置是java.util.* Java集合主要可以划分为4个部分：   List列表  Set集合  Map映射  工具类（Iterator迭代器、Enumeration枚举类、Arrays和Collections）  主要有三大接口Collection、Map、Iterator">
-<meta name="keywords" content="Java,容器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java容器">
 <meta property="og:url" content="https://vicebery.github.io/2019/03/Java-Collections/index.html">
 <meta property="og:site_name" content="Vicebery&#39;blog">
 <meta property="og:description" content="总体框架Java容器是Java提供的工具包，包含了常用的数据结构：集合、链表、队列、栈、数组、映射等。Java容器工具包位置是java.util.* Java集合主要可以划分为4个部分：   List列表  Set集合  Map映射  工具类（Iterator迭代器、Enumeration枚举类、Arrays和Collections）  主要有三大接口Collection、Map、Iterator">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-27T01:22:22.655Z">
+<meta property="article:published_time" content="2019-03-27T09:19:16.000Z">
+<meta property="article:modified_time" content="2019-03-27T01:22:22.655Z">
+<meta property="article:author" content="Vicebery">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="容器">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java容器">
-<meta name="twitter:description" content="总体框架Java容器是Java提供的工具包，包含了常用的数据结构：集合、链表、队列、栈、数组、映射等。Java容器工具包位置是java.util.* Java集合主要可以划分为4个部分：   List列表  Set集合  Map映射  工具类（Iterator迭代器、Enumeration枚举类、Arrays和Collections）  主要有三大接口Collection、Map、Iterator">
 
 
 
@@ -136,7 +136,7 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -182,7 +182,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -192,7 +192,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -202,7 +202,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
+          <a href="/categories/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -212,7 +212,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+          <a href="/tags/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -222,7 +222,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+          <a href="/about/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -315,7 +315,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  985
+                  981
                 </span>
               
 
@@ -362,7 +362,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  3
                 </span>
               
             </div>
@@ -386,10 +386,10 @@
         <h2 id="总体框架"><a href="#总体框架" class="headerlink" title="总体框架"></a>总体框架</h2><p>Java容器是Java提供的工具包，包含了常用的数据结构：集合、链表、队列、栈、数组、映射等。Java容器工具包位置是java.util.*</p>
 <p>Java集合主要可以划分为4个部分：</p>
 <ul>
-<li style="list-style: none"><input type="checkbox" checked> List列表</li>
-<li style="list-style: none"><input type="checkbox" checked> Set集合</li>
-<li style="list-style: none"><input type="checkbox" checked> Map映射</li>
-<li style="list-style: none"><input type="checkbox" checked> 工具类（Iterator迭代器、Enumeration枚举类、Arrays和Collections）</li>
+<li><input checked disabled type="checkbox"> List列表</li>
+<li><input checked disabled type="checkbox"> Set集合</li>
+<li><input checked disabled type="checkbox"> Map映射</li>
+<li><input checked disabled type="checkbox"> 工具类（Iterator迭代器、Enumeration枚举类、Arrays和Collections）</li>
 </ul>
 <p>主要有三大接口Collection、Map、Iterator</p>
 <p><strong>Collection</strong>接口是一个高度抽象出来的集合，它包含了集合的基本操作和属性。主要有List接口和Set接口两个分支</p>
@@ -410,13 +410,20 @@
 <p>1，对list进行二分查找：</p>
 <p>前提该集合一定要有序。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(list,key)</span></span>;</span><br><span class="line"><span class="comment">//必须根据元素自然顺序对列表进行升级排序</span></span><br><span class="line"><span class="comment">//要求list 集合中的元素都是Comparable 的子类。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(list,key,Comparator)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>2，对list集合进行排序。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sort(list); </span><br><span class="line"><span class="comment">//对list进行排序,其实使用的事list容器中的对象的compareTo方法</span></span><br><span class="line">sort(list,comaprator);</span><br><span class="line"><span class="comment">//按照指定比较器进行排序</span></span><br></pre></td></tr></table></figure></p>
-<p>3，对集合取最大值或者最小值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">max(Collection)</span><br><span class="line">max(Collection,comparator)</span><br><span class="line">min(Collection)</span><br><span class="line">min(Collection,comparator)</span><br></pre></td></tr></table></figure></p>
-<p>4，对list集合进行反转。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reverse(list);</span><br></pre></td></tr></table></figure></p>
-<p>5，对比较方式进行强行逆转。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Comparator <span class="title">reverseOrder</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function">Comparator <span class="title">reverseOrder</span><span class="params">(Comparator)</span></span>;</span><br></pre></td></tr></table></figure></p>
-<p>6，对list集合中的元素进行位置的置换。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swap(list,x,y);</span><br></pre></td></tr></table></figure></p>
-<p>7，对list集合进行元素的替换。如果被替换的元素不存在，那么原集合不变。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">replaceAll(list,old,<span class="keyword">new</span>);</span><br></pre></td></tr></table></figure></p>
-<p>8，可以将不同步的集合变成同步的集合。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Set <span class="title">synchronizedSet</span><span class="params">(Set&lt;T&gt; s)</span></span></span><br><span class="line"><span class="function">Map <span class="title">synchronizedMap</span><span class="params">(Map&lt;K,V&gt; m)</span></span></span><br><span class="line"><span class="function">List <span class="title">synchronizedList</span><span class="params">(List&lt;T&gt; list)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>2，对list集合进行排序。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sort(list); </span><br><span class="line"><span class="comment">//对list进行排序,其实使用的事list容器中的对象的compareTo方法</span></span><br><span class="line">sort(list,comaprator);</span><br><span class="line"><span class="comment">//按照指定比较器进行排序</span></span><br></pre></td></tr></table></figure>
+<p>3，对集合取最大值或者最小值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">max(Collection)</span><br><span class="line">max(Collection,comparator)</span><br><span class="line">min(Collection)</span><br><span class="line">min(Collection,comparator)</span><br></pre></td></tr></table></figure>
+<p>4，对list集合进行反转。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reverse(list);</span><br></pre></td></tr></table></figure>
+<p>5，对比较方式进行强行逆转。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Comparator <span class="title">reverseOrder</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function">Comparator <span class="title">reverseOrder</span><span class="params">(Comparator)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>6，对list集合中的元素进行位置的置换。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swap(list,x,y);</span><br></pre></td></tr></table></figure>
+<p>7，对list集合进行元素的替换。如果被替换的元素不存在，那么原集合不变。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">replaceAll(list,old,<span class="keyword">new</span>);</span><br></pre></td></tr></table></figure>
+<p>8，可以将不同步的集合变成同步的集合。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Set <span class="title">synchronizedSet</span><span class="params">(Set&lt;T&gt; s)</span></span></span><br><span class="line"><span class="function">Map <span class="title">synchronizedMap</span><span class="params">(Map&lt;K,V&gt; m)</span></span></span><br><span class="line"><span class="function">List <span class="title">synchronizedList</span><span class="params">(List&lt;T&gt; list)</span></span></span><br></pre></td></tr></table></figure>
 <p> 如果想要将集合变数组：  </p>
 <p>可以使用Collection 中的toArray 方法。注意：是Collection不是Collections工具类<br>传入指定的类型数组即可，该数组的长度最好为集合的size。</p>
 <h2 id="具体的集合"><a href="#具体的集合" class="headerlink" title="具体的集合"></a>具体的集合</h2><table>
@@ -426,8 +433,7 @@
 <th>描述</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>ArrayList</td>
 <td>一种可以动态增长和缩减的索引序列</td>
 </tr>
@@ -483,8 +489,7 @@
 <td>IdentityHashMap</td>
 <td>一种用==而不是用equals比较键值的映射表</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 
       
     </div>
@@ -515,7 +520,7 @@
           
             <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
           
-            <a href="/tags/容器/" rel="tag"><i class="fa fa-tag"></i> 容器</a>
+            <a href="/tags/%E5%AE%B9%E5%99%A8/" rel="tag"><i class="fa fa-tag"></i> 容器</a>
           
         </div>
       
@@ -619,9 +624,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -643,7 +648,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -736,7 +741,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

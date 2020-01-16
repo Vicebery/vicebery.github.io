@@ -80,19 +80,19 @@
 
 
 <meta name="description" content="浮点数在内存中是如何存储的？我们知道，任何数据在计算机内存中都是用‘0\1’来存储的，浮点数亦是如此。因此十进制浮点数在存储时必定会转换为二进制的浮点数。  浮点数的进制转换主要看看十进制转二进制，整数部分和小数部分分开处理  整数部分：整数除以2，得到一个商和余数，得到的商继续除以2并得到一个商和一个余数，继续除以2操作直至商为0，上述操作得到一系列余数，从最后一个余数开始直至第一个余数，这一系">
-<meta name="keywords" content="Java,浮点数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于Java中的浮点数">
 <meta property="og:url" content="https://vicebery.github.io/2018/11/java-float/index.html">
 <meta property="og:site_name" content="Vicebery&#39;blog">
 <meta property="og:description" content="浮点数在内存中是如何存储的？我们知道，任何数据在计算机内存中都是用‘0\1’来存储的，浮点数亦是如此。因此十进制浮点数在存储时必定会转换为二进制的浮点数。  浮点数的进制转换主要看看十进制转二进制，整数部分和小数部分分开处理  整数部分：整数除以2，得到一个商和余数，得到的商继续除以2并得到一个商和一个余数，继续除以2操作直至商为0，上述操作得到一系列余数，从最后一个余数开始直至第一个余数，这一系">
-<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203737830-2101089911.png">
 <meta property="og:image" content="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203756447-955115338.png">
-<meta property="og:updated_time" content="2018-11-21T12:39:35.476Z">
+<meta property="article:published_time" content="2018-11-21T20:15:25.000Z">
+<meta property="article:modified_time" content="2018-11-21T12:39:35.476Z">
+<meta property="article:author" content="Vicebery">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="浮点数">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于Java中的浮点数">
-<meta name="twitter:description" content="浮点数在内存中是如何存储的？我们知道，任何数据在计算机内存中都是用‘0\1’来存储的，浮点数亦是如此。因此十进制浮点数在存储时必定会转换为二进制的浮点数。  浮点数的进制转换主要看看十进制转二进制，整数部分和小数部分分开处理  整数部分：整数除以2，得到一个商和余数，得到的商继续除以2并得到一个商和一个余数，继续除以2操作直至商为0，上述操作得到一系列余数，从最后一个余数开始直至第一个余数，这一系">
 <meta name="twitter:image" content="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203737830-2101089911.png">
 
 
@@ -139,7 +139,7 @@
 
 
 
-</head>
+<meta name="generator" content="Hexo 4.2.0"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -185,7 +185,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -195,7 +195,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/archives/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -205,7 +205,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
+          <a href="/categories/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -215,7 +215,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+          <a href="/tags/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -225,7 +225,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+          <a href="/about/%20" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -318,7 +318,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习记录/" itemprop="url" rel="index">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
                     <span itemprop="name">学习记录</span>
                   </a>
                 </span>
@@ -349,7 +349,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  945
+                  942
                 </span>
               
 
@@ -396,7 +396,7 @@
 </li>
 </ul>
 <p>从以上转换过程可以看出，并不是任何一个十进制小数都可以用二进制精确表示出来。一个在0到1之间的小数P可用如下形式表示：</p>
-<p><img src="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203737830-2101089911.png" alt=""></p>
+<p><img src="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203737830-2101089911.png" alt></p>
 <p>从这个式子中我们也可看出二进制表示出的小数是分段的，这也是为什么在Java中浮点数很多时候并不是十分精确的表示十进制小数的根本原因。</p>
 <hr>
 <h2 id="float在内存中的表示"><a href="#float在内存中的表示" class="headerlink" title="float在内存中的表示"></a>float在内存中的表示</h2><p>float在Java中是4字节（32位），取值范围大约-3.4E+38F~3.4E<br>+38F。</p>
@@ -411,9 +411,9 @@
 <p>阶码必定是有负值的，那么如何最优雅地表示负值呢？为了让计算机很容易比较阶码大小（以此来比较浮点数的大小），同时人也可以很轻松地辨别大小，因为移码相当于实际值在数轴上平移了一定位数。</p>
 <p><a href="https://www.zhihu.com/question/24115452" target="_blank" rel="noopener">为什么不用标准偏移而用127呢？</a></p>
 <p>我觉得应该是为了平衡精度与范围，并且让表示的范围尽可能大。</p>
-<p>阶码用移码表示后，8位二进制从1~254以此表示为-126~127。不仅去除了全0和全1的情况，还能让人一眼看出两个阶码的大小。</p>
+<p>阶码用移码表示后，8位二进制从1<del>254以此表示为-126</del>127。不仅去除了全0和全1的情况，还能让人一眼看出两个阶码的大小。</p>
 <p>知道阶码和底数的范围后，就可以得出float的取值范围：</p>
-<p><img src="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203756447-955115338.png" alt=""></p>
+<p><img src="https://img2018.cnblogs.com/blog/774017/201811/774017-20181121203756447-955115338.png" alt></p>
 <p>转化为十进制为<br><code>-3.4*10^38~-1.2*10^(-38)</code>与<code>1.2*10^(-38)~3.4*10^38</code></p>
 
       
@@ -445,7 +445,7 @@
           
             <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
           
-            <a href="/tags/浮点数/" rel="tag"><i class="fa fa-tag"></i> 浮点数</a>
+            <a href="/tags/%E6%B5%AE%E7%82%B9%E6%95%B0/" rel="tag"><i class="fa fa-tag"></i> 浮点数</a>
           
         </div>
       
@@ -549,9 +549,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -573,7 +573,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -666,7 +666,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
