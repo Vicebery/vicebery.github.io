@@ -1,392 +1,209 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <meta name="author" content="Vicebery">
 
 
+    <meta name="subtitle" content="thinking && coding && dreaming">
 
 
+    <meta name="description" content="stay hungry, stay young">
 
 
 
+<title>operator开发实践 | Vicebery&#39;blog</title>
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
+    <link rel="icon" href="/images/avatar.jpg">
 
 
 
 
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
 
 
 
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
 
 
 
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/avatar.jpg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="kubernetes,operator,go," />
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="operator开发实践operator的概念kubernetes对于无状态应用能够很好地调度处理，对于有状态的应用提供了一个Statefulset来处理，但Statefulset对于有状态应用的支持相当有限，稍微复杂一点的有状态应用就支持不了，为了对实际生产中的各种复杂应用提供更好的支持，我们需要创建一个自定义的控制器对Kubernetes API进行拓展，这种面向特定应用的控制器我们称之为Op">
-<meta property="og:type" content="article">
-<meta property="og:title" content="operator开发实践">
-<meta property="og:url" content="https://vicebery.github.io/2020/01/kubernetes-operator/index.html">
-<meta property="og:site_name" content="Vicebery&#39;blog">
-<meta property="og:description" content="operator开发实践operator的概念kubernetes对于无状态应用能够很好地调度处理，对于有状态的应用提供了一个Statefulset来处理，但Statefulset对于有状态应用的支持相当有限，稍微复杂一点的有状态应用就支持不了，为了对实际生产中的各种复杂应用提供更好的支持，我们需要创建一个自定义的控制器对Kubernetes API进行拓展，这种面向特定应用的控制器我们称之为Op">
-<meta property="og:image" content="https://vicebery.github.io/.io//a.jpg">
-<meta property="article:published_time" content="2020-01-15T13:51:52.000Z">
-<meta property="article:modified_time" content="2020-01-16T13:27:42.531Z">
-<meta property="article:author" content="Vicebery">
-<meta property="article:tag" content="kubernetes">
-<meta property="article:tag" content="operator">
-<meta property="article:tag" content="go">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://vicebery.github.io/.io//a.jpg">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="https://vicebery.github.io/2020/01/kubernetes-operator/"/>
-
-
-
-
-
-  <title>operator开发实践 | Vicebery'blog</title>
-  
-
-
-
-
-
-
+    
+    
+        
+    
 
 
 <meta name="generator" content="Hexo 4.2.0"></head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Vicebery'blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle">thinking && coding && dreaming</p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/%20" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/%20" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/%20" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/%20" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/%20" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2020/01/kubernetes-operator/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Vicebery">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vicebery'blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">operator开发实践</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-15T21:51:52+08:00">
-                2020-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
-                    <span itemprop="name">学习记录</span>
-                  </a>
-                </span>
-
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Vicebery&#39;s Blog</a></div>
+            <div class="menu navbar-right">
                 
+                    <a class="menu-item" href="/archives">Posts</a>
                 
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
+                    <a class="menu-item" href="/category">Categories</a>
                 
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
+                    <a class="menu-item" href="/tag">Tags</a>
                 
-                  <span class="post-meta-item-text">字数统计&#58;</span>
+                    <a class="menu-item" href="/about">About</a>
                 
-                <span title="字数统计">
-                  3.9k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  19
-                </span>
-              
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
             </div>
-          
-
-          
 
         </div>
-      </header>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Vicebery&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
     
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">operator开发实践</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Vicebery</a>
+                    
 
-      
-      
+                    
+                        <span class="post-time">
+                        Date: <a href="#">January 15, 2020&nbsp;&nbsp;13:51:52</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">学习记录</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
 
-      
-        <h1 id="operator开发实践"><a href="#operator开发实践" class="headerlink" title="operator开发实践"></a>operator开发实践</h1><h2 id="operator的概念"><a href="#operator的概念" class="headerlink" title="operator的概念"></a>operator的概念</h2><p>kubernetes对于无状态应用能够很好地调度处理，对于有状态的应用提供了一个<a href="https://kubernetes.io/zh/docs/concepts/workloads/controllers/statefulset/" target="_blank" rel="noopener"><code>Statefulset</code></a>来处理，但<code>Statefulset</code>对于有状态应用的支持相当有限，稍微复杂一点的有状态应用就支持不了，为了对实际生产中的各种复杂应用提供更好的支持，我们需要创建一个自定义的控制器对Kubernetes API进行拓展，这种面向特定应用的控制器我们称之为<code>Operator</code>。</p>
+        <div class="post-content">
+            <h1 id="operator开发实践"><a href="#operator开发实践" class="headerlink" title="operator开发实践"></a>operator开发实践</h1><h2 id="operator的概念"><a href="#operator的概念" class="headerlink" title="operator的概念"></a>operator的概念</h2><p>kubernetes对于无状态应用能够很好地调度处理，对于有状态的应用提供了一个<a href="https://kubernetes.io/zh/docs/concepts/workloads/controllers/statefulset/" target="_blank" rel="noopener"><code>Statefulset</code></a>来处理，但<code>Statefulset</code>对于有状态应用的支持相当有限，稍微复杂一点的有状态应用就支持不了，为了对实际生产中的各种复杂应用提供更好的支持，我们需要创建一个自定义的控制器对Kubernetes API进行拓展，这种面向特定应用的控制器我们称之为<code>Operator</code>。</p>
 <p><code>Operator</code>一般包含对<code>Kubernetes</code>内置资源、用户自定义资源的调度，用户自定义资源本质上也是<code>Kubernetes</code>内置资源的一个包装和拓展，因此这个<code>controller</code>本质上还是对<code>kubernetes</code>内置资源的调度，不同于<code>Kubernetes API</code>提供的配置、管理，<code>controller</code>给用户的自由度更高，能根据用户自己的需求来调度各种资源以满足更多复杂的业务场景。</p>
 <p>Operator基于两个Kubernetes的核心概念： 资源和控制器，从技术上来讲，就是通过CRD和controller来实现。CRD用来定义一些我们的调度逻辑所需的参数，并接收参数，controller根据接收到的参数来进行相应的调度逻辑。</p>
 <p>Operator一般以单一Deployment的形式进行部署，作为集群中的一个Pod来运行。Operator运行起来后，会实例化一个我们编写好的controller，该controller会监听、调度CRD资源以及内置资源，以此来达到我们的运维需求。</p>
@@ -447,443 +264,51 @@
 <p>在<code>$GOPATH/src/vicebery.cn/billing-system-workflow-operator/pkg/</code>目录下新建目录<code>controller</code>目录和<code>cmd</code>目录，在<code>controller</code>目录下新建<code>controller.go</code>文件，在controller文件中编写相应的业务逻辑：</p>
 <figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> controller</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">	<span class="string">"reflect"</span></span><br><span class="line">	<span class="string">"strconv"</span></span><br><span class="line">	<span class="string">"strings"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line"></span><br><span class="line">	<span class="string">"github.com/arduino/go-properties-map"</span></span><br><span class="line">	<span class="string">"github.com/golang/glog"</span></span><br><span class="line">	cronutil <span class="string">"github.com/robfig/cron"</span></span><br><span class="line">	<span class="string">"vicebery.cn/billing-system-workflow-operator/pkg/controller/workload"</span></span><br><span class="line">	corev1 <span class="string">"k8s.io/api/core/v1"</span></span><br><span class="line">	<span class="string">"k8s.io/apimachinery/pkg/api/errors"</span></span><br><span class="line">	metav1 <span class="string">"k8s.io/apimachinery/pkg/apis/meta/v1"</span></span><br><span class="line">	<span class="string">"k8s.io/apimachinery/pkg/util/runtime"</span></span><br><span class="line">	utilruntime <span class="string">"k8s.io/apimachinery/pkg/util/runtime"</span></span><br><span class="line">	<span class="string">"k8s.io/apimachinery/pkg/util/wait"</span></span><br><span class="line">	<span class="string">"k8s.io/client-go/kubernetes"</span></span><br><span class="line">	<span class="string">"k8s.io/client-go/kubernetes/scheme"</span></span><br><span class="line">	typedcorev1 <span class="string">"k8s.io/client-go/kubernetes/typed/core/v1"</span></span><br><span class="line">	<span class="string">"k8s.io/client-go/tools/cache"</span></span><br><span class="line">	<span class="string">"k8s.io/client-go/tools/record"</span></span><br><span class="line">	<span class="string">"k8s.io/client-go/util/workqueue"</span></span><br><span class="line"></span><br><span class="line">	workflowoperatorv1 <span class="string">"vicebery.cn/billing-system-workflow-operator/pkg/apis/workflowoperator/v1"</span></span><br><span class="line">	clientset <span class="string">"vicebery.cn/billing-system-workflow-operator/pkg/client/clientset/versioned"</span></span><br><span class="line">	workflowscheme <span class="string">"vicebery.cn/billing-system-workflow-operator/pkg/client/clientset/versioned/scheme"</span></span><br><span class="line">	informers <span class="string">"vicebery.cn/billing-system-workflow-operator/pkg/client/informers/externalversions/workflowoperator/v1"</span></span><br><span class="line">	listers <span class="string">"vicebery.cn/billing-system-workflow-operator/pkg/client/listers/workflowoperator/v1"</span></span><br><span class="line">	<span class="string">"vicebery.cn/billing-system-workflow-operator/pkg/controller/oracle"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> RecorderCompName = <span class="string">"workflow-controller"</span></span><br><span class="line"><span class="keyword">const</span> EnvOperatorNamespace = <span class="string">"OPERATOR_NAMESPACE"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Controller is the controller implementation for workflow resources</span></span><br><span class="line"><span class="keyword">type</span> Controller <span class="keyword">struct</span> &#123;</span><br><span class="line">	<span class="comment">// kubeclientset is a standard kubernetes clientset</span></span><br><span class="line">	kubeclientset kubernetes.Interface</span><br><span class="line">	<span class="comment">// workflowclientset is a clientset for our own API group</span></span><br><span class="line">	workflowclientset clientset.Interface</span><br><span class="line"></span><br><span class="line">	workflowLister listers.WorkflowLister</span><br><span class="line">	workflowSynced cache.InformerSynced</span><br><span class="line"></span><br><span class="line">	workqueue workqueue.RateLimitingInterface</span><br><span class="line"></span><br><span class="line">	recorder record.EventRecorder</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// NewController returns a new workflow controller</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewController</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">	kubeclientset kubernetes.Interface,</span></span></span><br><span class="line"><span class="function"><span class="params">	workflowclientset clientset.Interface,</span></span></span><br><span class="line"><span class="function"><span class="params">	workflowInformer informers.WorkflowInformer)</span> *<span class="title">Controller</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	utilruntime.Must(workflowscheme.AddToScheme(scheme.Scheme))</span><br><span class="line">	eventBroadcaster := record.NewBroadcaster()</span><br><span class="line">	eventBroadcaster.StartLogging(glog.Infof)</span><br><span class="line">	eventBroadcaster.StartRecordingToSink(&amp;typedcorev1.EventSinkImpl&#123;Interface: kubeclientset.CoreV1().Events(<span class="string">""</span>)&#125;)</span><br><span class="line">	recorder := eventBroadcaster.NewRecorder(scheme.Scheme, corev1.EventSource&#123;Component: RecorderCompName&#125;)</span><br><span class="line"></span><br><span class="line">	controller := &amp;Controller&#123;</span><br><span class="line">		kubeclientset:     kubeclientset,</span><br><span class="line">		workflowclientset: workflowclientset,</span><br><span class="line">		workflowLister:    workflowInformer.Lister(),</span><br><span class="line">		workflowSynced:    workflowInformer.Informer().HasSynced,</span><br><span class="line">		workqueue:         workqueue.NewNamedRateLimitingQueue(workqueue.DefaultControllerRateLimiter(), <span class="string">"Workflow"</span>),</span><br><span class="line">		recorder:          recorder,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Set up an event handler for when Workflow resources change</span></span><br><span class="line">	workflowInformer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs&#123;</span><br><span class="line">		AddFunc:    controller.enqueueWorkflow,</span><br><span class="line">		UpdateFunc: controller.enqueueWorkflowForUpdate,</span><br><span class="line">		DeleteFunc: controller.enqueueWorkflowForDelete,</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> controller</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在此处开始controller的业务</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Controller)</span> <span class="title">Run</span><span class="params">(stopCh &lt;-<span class="keyword">chan</span> <span class="keyword">struct</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">	<span class="keyword">defer</span> runtime.HandleCrash()</span><br><span class="line">	<span class="keyword">defer</span> c.workqueue.ShutDown()</span><br><span class="line"></span><br><span class="line">	glog.Infof(<span class="string">"starting HA PBRC billing system workflow operator"</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> !cache.WaitForCacheSync(stopCh, c.workflowSynced) &#123;</span><br><span class="line">		_ = fmt.Errorf(<span class="string">"failed to wait for caches to sync"</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">go</span> wait.Until(c.runWorker, time.Second, stopCh)</span><br><span class="line"></span><br><span class="line">	&lt;-stopCh</span><br><span class="line">	glog.Infof(<span class="string">"HA PBRC billing system workflow operator has stopped"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Controller)</span> <span class="title">runWorker</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> c.processNextWorkItem() &#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 取数据处理</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Controller)</span> <span class="title">processNextWorkItem</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	key, shutdown := c.workqueue.Get()</span><br><span class="line">	<span class="keyword">if</span> shutdown &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> c.workqueue.Done(key)</span><br><span class="line"></span><br><span class="line">	glog.V(<span class="number">10</span>).Infof(<span class="string">"operator queue length is :%v"</span>, c.workqueue.Len())</span><br><span class="line"></span><br><span class="line">	err := c.syncHandler(key.(<span class="keyword">string</span>))</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	runtime.HandleError(err)</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Controller)</span> <span class="title">syncHandler</span><span class="params">(key <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	<span class="comment">// Convert the namespace/name string into a distinct namespace and name</span></span><br><span class="line">	namespace, name, err := cache.SplitMetaNamespaceKey(key)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 从local cache 中获取对应的workflow</span></span><br><span class="line">	workflow, err := c.workflowLister.Workflows(namespace).Get(name)</span><br><span class="line">	<span class="keyword">if</span> errors.IsNotFound(err) &#123;</span><br><span class="line">		glog.Errorf(<span class="string">"Workflow resource named %s has been deleted in %s"</span>, name, namespace)</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 获取默认配置</span></span><br><span class="line">	defaultConsumerThreadSize, err := c.getDefaultConsumerThreadSize(workflow)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		glog.Errorf(<span class="string">"Failed get default consumer.thread.size from workflow.properties, error message is %s"</span>, err)</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 新建workflow 相关业务逻辑</span></span><br><span class="line">	<span class="comment">// 省略……</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据先放入缓存，再入队列</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Controller)</span> <span class="title">enqueueWorkflow</span><span class="params">(obj <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">	<span class="comment">// 将对象放入缓存</span></span><br><span class="line">	key, err := cache.MetaNamespaceKeyFunc(obj)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		runtime.HandleError(err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 将key放入队列</span></span><br><span class="line">	c.workqueue.AddRateLimited(key)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除操作</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Controller)</span> <span class="title">enqueueWorkflowForDelete</span><span class="params">(obj <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">	<span class="comment">// 从缓存中删除指定对象</span></span><br><span class="line">	_, err := cache.DeletionHandlingMetaNamespaceKeyFunc(obj)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		runtime.HandleError(err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	workflow := obj.(*workflowoperatorv1.Workflow)</span><br><span class="line">	<span class="comment">// 删除StatefulSet</span></span><br><span class="line">	<span class="keyword">if</span> err := c.deleteStsAndPVC(workflow); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		glog.V(<span class="number">10</span>).Infof(<span class="string">"delete statefulSet error : %s"</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 更新操作</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Controller)</span> <span class="title">enqueueWorkflowForUpdate</span><span class="params">(oldObj, newObj <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">	oldWorkflow := oldObj.(*workflowoperatorv1.Workflow).DeepCopy()</span><br><span class="line">	newWorkflow := newObj.(*workflowoperatorv1.Workflow).DeepCopy()</span><br><span class="line">	glog.V(<span class="number">10</span>).Infof(<span class="string">"updating Workflow %s"</span>, oldWorkflow)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 全部相同</span></span><br><span class="line">	<span class="keyword">if</span> reflect.DeepEqual(oldWorkflow.Spec, newWorkflow.Spec) &#123;</span><br><span class="line">		glog.V(<span class="number">10</span>).Infof(<span class="string">"old workflow equal new workflow, nothing will happen"</span>)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// HPA不相同，其他地方相同</span></span><br><span class="line">	<span class="keyword">if</span> !reflect.DeepEqual(oldWorkflow.Spec.Hpa, newWorkflow.Spec.Hpa) &#123;</span><br><span class="line">		oldWorkflow.Spec.Hpa = <span class="literal">nil</span></span><br><span class="line">		newWorkflow.Spec.Hpa = <span class="literal">nil</span></span><br><span class="line">		<span class="keyword">if</span> reflect.DeepEqual(oldWorkflow.Spec, newWorkflow.Spec) &#123;</span><br><span class="line">			glog.Infof(<span class="string">"update hpa policy of %s in %s, from %v to %v"</span>, newWorkflow.Name, newWorkflow.Namespace, oldWorkflow.Spec.Hpa, newWorkflow.Spec.Hpa)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	c.enqueueWorkflowForDelete(oldObj.(*workflowoperatorv1.Workflow))</span><br><span class="line">	c.enqueueWorkflow(newObj.(*workflowoperatorv1.Workflow))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="核心代码分析"><a href="#核心代码分析" class="headerlink" title="核心代码分析"></a>核心代码分析</h3><p>自动生成的代码所提供的API：<br><img src="/.io//a.jpg" alt="client-go框架图"></p>
+<h3 id="核心代码分析"><a href="#核心代码分析" class="headerlink" title="核心代码分析"></a>核心代码分析</h3><p>自动生成的代码所提供的API：</p>
+<p><img src="/2020/01/kubernetes-operator/a.jpg" alt="client-go框架"></p>
 <h3 id="部署测试"><a href="#部署测试" class="headerlink" title="部署测试"></a>部署测试</h3>
-      
-    </div>
-    
-    
-    
-
-<div>
-  
-    <div>
-    
-        <div style="text-align:center;color: #555;font-size:14px;">-------------The End-------------</div>
-    
-</div>
-
-  
-</div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/kubernetes/" rel="tag"><i class="fa fa-tag"></i> kubernetes</a>
-          
-            <a href="/tags/operator/" rel="tag"><i class="fa fa-tag"></i> operator</a>
-          
-            <a href="/tags/go/" rel="tag"><i class="fa fa-tag"></i> go</a>
-          
         </div>
-      
 
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/11/Stream%E6%B5%81/" rel="next" title="Stream流">
-                <i class="fa fa-chevron-left"></i> Stream流
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/images/avatar.jpg"
-                alt="Vicebery" />
-            
-              <p class="site-author-name" itemprop="name">Vicebery</p>
-              <p class="site-description motion-element" itemprop="description">stay hungry, stay young</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/%20%7C%7C%20archive">
-              
-                  <span class="site-state-item-count">29</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">40</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/vicebery" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://www.zhihu.com/people/vicebery/activities" target="_blank" title="知乎">
-                      
-                        <i class="fa fa-fw fa-gittip"></i>知乎</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://douban.com/people/vicebery" target="_blank" title="豆瓣">
-                      
-                        <i class="fa fa-fw fa-heart-o"></i>豆瓣</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="mailto:vicebery@gmail.com" target="_blank" title="E-Mail">
-                      
-                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://plus.google.com/u/0/109399728266375769175" target="_blank" title="Google">
-                      
-                        <i class="fa fa-fw fa-google"></i>Google</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://twitter.com/vicebery" target="_blank" title="Twitter">
-                      
-                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
-                  </span>
-                
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/kubernetes/"># kubernetes</a>
+                    
+                        <a href="/tags/operator/"># operator</a>
+                    
+                        <a href="/tags/go/"># go</a>
+                    
+                        
+                </span>
             </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#operator开发实践"><span class="nav-number">1.</span> <span class="nav-text">operator开发实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#operator的概念"><span class="nav-number">1.1.</span> <span class="nav-text">operator的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例实践"><span class="nav-number">1.2.</span> <span class="nav-text">案例实践</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发环境"><span class="nav-number">1.3.</span> <span class="nav-text">开发环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主要步骤"><span class="nav-number">1.4.</span> <span class="nav-text">主要步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建CRD"><span class="nav-number">1.4.1.</span> <span class="nav-text">创建CRD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成代码"><span class="nav-number">1.4.2.</span> <span class="nav-text">生成代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写controller"><span class="nav-number">1.4.3.</span> <span class="nav-text">编写controller</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核心代码分析"><span class="nav-number">1.4.4.</span> <span class="nav-text">核心代码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署测试"><span class="nav-number">1.4.5.</span> <span class="nav-text">部署测试</span></a></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
         </section>
-      <!--/noindex-->
-      
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/11/Stream%E6%B5%81/">Stream流</a>
+            
+        </section>
 
-      
 
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Vicebery</span>
-
-  
+    </article>
 </div>
 
-
-
-
-
-
-
-
-  <div class="footer-custom"><a target="_blank" href="https://github.com/vicebery">Github</a></div>
-
-
-        
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Vicebery | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
 </body>
 </html>

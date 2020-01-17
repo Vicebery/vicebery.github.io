@@ -1,389 +1,209 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <meta name="author" content="Vicebery">
 
 
+    <meta name="subtitle" content="thinking && coding && dreaming">
 
 
+    <meta name="description" content="stay hungry, stay young">
 
 
 
+<title>云计算基础知识整理 | Vicebery&#39;blog</title>
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
 
 
+    <link rel="icon" href="/images/avatar.jpg">
 
 
 
 
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
 
 
 
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
 
 
 
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/avatar.jpg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Docker,Kubernetes," />
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="云计算原理和PaaS原理云计算的基本原理是，通过使计算分布在大量的分布式计算机上，而非本地计算机或远程服务器中，企业数据中心的运行将更与互联网相似。这使得企业能够将资源切换到需要的应用上，根据需求访问计算机和存储系统。 云计算是一种资源的服务模式，该模式可以实现随时随地，便捷按需地从可配置计算资源共享池中获取所需的资源，资源能够快速供应并释放，大大减少了资源管理工作开销，你甚至可以再也不用理会那些">
-<meta property="og:type" content="article">
-<meta property="og:title" content="云计算基础知识整理">
-<meta property="og:url" content="https://vicebery.github.io/2019/01/docker-kubernetes/index.html">
-<meta property="og:site_name" content="Vicebery&#39;blog">
-<meta property="og:description" content="云计算原理和PaaS原理云计算的基本原理是，通过使计算分布在大量的分布式计算机上，而非本地计算机或远程服务器中，企业数据中心的运行将更与互联网相似。这使得企业能够将资源切换到需要的应用上，根据需求访问计算机和存储系统。 云计算是一种资源的服务模式，该模式可以实现随时随地，便捷按需地从可配置计算资源共享池中获取所需的资源，资源能够快速供应并释放，大大减少了资源管理工作开销，你甚至可以再也不用理会那些">
-<meta property="article:published_time" content="2019-01-15T22:22:38.000Z">
-<meta property="article:modified_time" content="2019-01-15T14:24:18.425Z">
-<meta property="article:author" content="Vicebery">
-<meta property="article:tag" content="Docker">
-<meta property="article:tag" content="Kubernetes">
-<meta name="twitter:card" content="summary">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="https://vicebery.github.io/2019/01/docker-kubernetes/"/>
-
-
-
-
-
-  <title>云计算基础知识整理 | Vicebery'blog</title>
-  
-
-
-
-
-
-
+    
+    
+        
+    
 
 
 <meta name="generator" content="Hexo 4.2.0"></head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Vicebery'blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle">thinking && coding && dreaming</p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/%20" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/%20" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/%20" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/%20" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/%20" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://vicebery.github.io/2019/01/docker-kubernetes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Vicebery">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Vicebery'blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">云计算基础知识整理</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-16T06:22:38+08:00">
-                2019-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index">
-                    <span itemprop="name">学习记录</span>
-                  </a>
-                </span>
-
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Vicebery&#39;s Blog</a></div>
+            <div class="menu navbar-right">
                 
+                    <a class="menu-item" href="/archives">Posts</a>
                 
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
+                    <a class="menu-item" href="/category">Categories</a>
                 
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
+                    <a class="menu-item" href="/tag">Tags</a>
                 
-                  <span class="post-meta-item-text">字数统计&#58;</span>
+                    <a class="menu-item" href="/about">About</a>
                 
-                <span title="字数统计">
-                  6.4k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  22
-                </span>
-              
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
             </div>
-          
-
-          
 
         </div>
-      </header>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Vicebery&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
     
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">云计算基础知识整理</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Vicebery</a>
+                    
 
-      
-      
+                    
+                        <span class="post-time">
+                        Date: <a href="#">January 15, 2019&nbsp;&nbsp;22:22:38</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">学习记录</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
 
-      
-        <h2 id="云计算原理和PaaS原理"><a href="#云计算原理和PaaS原理" class="headerlink" title="云计算原理和PaaS原理"></a>云计算原理和PaaS原理</h2><p><strong>云计算的基本原理是</strong>，通过使计算分布在大量的分布式计算机上，而非本地计算机或远程服务器中，企业数据中心的运行将更与互联网相似。这使得企业能够将资源切换到需要的应用上，根据需求访问计算机和存储系统。</p>
+        <div class="post-content">
+            <h2 id="云计算原理和PaaS原理"><a href="#云计算原理和PaaS原理" class="headerlink" title="云计算原理和PaaS原理"></a>云计算原理和PaaS原理</h2><p><strong>云计算的基本原理是</strong>，通过使计算分布在大量的分布式计算机上，而非本地计算机或远程服务器中，企业数据中心的运行将更与互联网相似。这使得企业能够将资源切换到需要的应用上，根据需求访问计算机和存储系统。</p>
 <p>云计算是一种资源的服务模式，该模式可以实现随时随地，便捷按需地从可配置计算资源共享池中获取所需的资源，资源能够快速供应并释放，大大减少了资源管理工作开销，你甚至可以再也不用理会那些令人头痛的传统服务供应商了。</p>
 <p>经典云计算架构包括三层服务：</p>
 <ul>
@@ -762,443 +582,48 @@
 <li>实施中体现为，受业务驱动，不断迭代</li>
 </ul>
 
-      
-    </div>
-    
-    
-    
-
-<div>
-  
-    <div>
-    
-        <div style="text-align:center;color: #555;font-size:14px;">-------------The End-------------</div>
-    
-</div>
-
-  
-</div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag"></i> Docker</a>
-          
-            <a href="/tags/Kubernetes/" rel="tag"><i class="fa fa-tag"></i> Kubernetes</a>
-          
         </div>
-      
 
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/11/java-float/" rel="next" title="关于Java中的浮点数">
-                <i class="fa fa-chevron-left"></i> 关于Java中的浮点数
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/Java-Collections/" rel="prev" title="Java容器">
-                Java容器 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/images/avatar.jpg"
-                alt="Vicebery" />
-            
-              <p class="site-author-name" itemprop="name">Vicebery</p>
-              <p class="site-description motion-element" itemprop="description">stay hungry, stay young</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/%20%7C%7C%20archive">
-              
-                  <span class="site-state-item-count">29</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">40</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/vicebery" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://www.zhihu.com/people/vicebery/activities" target="_blank" title="知乎">
-                      
-                        <i class="fa fa-fw fa-gittip"></i>知乎</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://douban.com/people/vicebery" target="_blank" title="豆瓣">
-                      
-                        <i class="fa fa-fw fa-heart-o"></i>豆瓣</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="mailto:vicebery@gmail.com" target="_blank" title="E-Mail">
-                      
-                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://plus.google.com/u/0/109399728266375769175" target="_blank" title="Google">
-                      
-                        <i class="fa fa-fw fa-google"></i>Google</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://twitter.com/vicebery" target="_blank" title="Twitter">
-                      
-                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
-                  </span>
-                
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Docker/"># Docker</a>
+                    
+                        <a href="/tags/Kubernetes/"># Kubernetes</a>
+                    
+                        
+                </span>
             </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#云计算原理和PaaS原理"><span class="nav-number">1.</span> <span class="nav-text">云计算原理和PaaS原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker基本原理"><span class="nav-number">2.</span> <span class="nav-text">Docker基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-number">2.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#带来的优势"><span class="nav-number">2.2.</span> <span class="nav-text">带来的优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker与虚拟机"><span class="nav-number">2.3.</span> <span class="nav-text">Docker与虚拟机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker的三个基本元素"><span class="nav-number">2.4.</span> <span class="nav-text">Docker的三个基本元素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker架构"><span class="nav-number">3.</span> <span class="nav-text">Docker架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要模块"><span class="nav-number">3.1.</span> <span class="nav-text">主要模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker-client"><span class="nav-number">3.1.1.</span> <span class="nav-text">Docker client</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker-daemon"><span class="nav-number">3.1.2.</span> <span class="nav-text">Docker daemon</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#graph"><span class="nav-number">3.1.3.</span> <span class="nav-text">graph</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GraphDB"><span class="nav-number">3.1.4.</span> <span class="nav-text">GraphDB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#driver"><span class="nav-number">3.1.5.</span> <span class="nav-text">driver</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#namespace资源隔离"><span class="nav-number">3.2.</span> <span class="nav-text">namespace资源隔离</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UTS-namespace"><span class="nav-number">3.2.1.</span> <span class="nav-text">UTS namespace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IPC-namespace"><span class="nav-number">3.2.2.</span> <span class="nav-text">IPC namespace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PID-namespace"><span class="nav-number">3.2.3.</span> <span class="nav-text">PID namespace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mount-namespace"><span class="nav-number">3.2.4.</span> <span class="nav-text">mount namespace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#network-namespace"><span class="nav-number">3.2.5.</span> <span class="nav-text">network namespace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#user-namespace"><span class="nav-number">3.2.6.</span> <span class="nav-text">user namespace</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cgroups资源限制"><span class="nav-number">3.3.</span> <span class="nav-text">cgroups资源限制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cgroups定义"><span class="nav-number">3.3.1.</span> <span class="nav-text">cgroups定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主要作用："><span class="nav-number">3.3.2.</span> <span class="nav-text">主要作用：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cgroups术语表"><span class="nav-number">3.3.3.</span> <span class="nav-text">cgroups术语表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cgroups组织结构与基本原则"><span class="nav-number">3.3.4.</span> <span class="nav-text">cgroups组织结构与基本原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cgroup子系统"><span class="nav-number">3.3.5.</span> <span class="nav-text">cgroup子系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cgroup工作原理"><span class="nav-number">3.3.6.</span> <span class="nav-text">cgroup工作原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker核心原理"><span class="nav-number">4.</span> <span class="nav-text">Docker核心原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker镜像"><span class="nav-number">5.</span> <span class="nav-text">Docker镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker数据管理"><span class="nav-number">6.</span> <span class="nav-text">Docker数据管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker网络"><span class="nav-number">7.</span> <span class="nav-text">Docker网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker常用命令"><span class="nav-number">8.</span> <span class="nav-text">Docker常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dockerfile"><span class="nav-number">8.1.</span> <span class="nav-text">Dockerfile</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubernetes"><span class="nav-number">9.</span> <span class="nav-text">Kubernetes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kubernetes的节点"><span class="nav-number">9.1.</span> <span class="nav-text">Kubernetes的节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Master节点"><span class="nav-number">9.1.1.</span> <span class="nav-text">Master节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node节点"><span class="nav-number">9.1.2.</span> <span class="nav-text">Node节点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pod"><span class="nav-number">9.2.</span> <span class="nav-text">Pod</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为啥要引入Pod？"><span class="nav-number">9.2.1.</span> <span class="nav-text">为啥要引入Pod？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Label"><span class="nav-number">9.2.2.</span> <span class="nav-text">Label</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Pod资源限制"><span class="nav-number">9.2.3.</span> <span class="nav-text">Pod资源限制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service"><span class="nav-number">9.3.</span> <span class="nav-text">Service</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何访问服务"><span class="nav-number">9.3.1.</span> <span class="nav-text">如何访问服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#service的自发现机制"><span class="nav-number">9.3.2.</span> <span class="nav-text">service的自发现机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#volume"><span class="nav-number">9.4.</span> <span class="nav-text">volume</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Kubernetes的volume类型"><span class="nav-number">9.4.1.</span> <span class="nav-text">Kubernetes的volume类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HPA"><span class="nav-number">9.5.</span> <span class="nav-text">HPA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scheduler"><span class="nav-number">9.6.</span> <span class="nav-text">Scheduler</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定向调度"><span class="nav-number">9.6.1.</span> <span class="nav-text">定向调度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#亲和性调度"><span class="nav-number">9.6.2.</span> <span class="nav-text">亲和性调度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特定场景调度–Deamon-Set"><span class="nav-number">9.6.3.</span> <span class="nav-text">特定场景调度–Deamon Set</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#批处理调度"><span class="nav-number">9.6.4.</span> <span class="nav-text">批处理调度</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kubelet"><span class="nav-number">9.7.</span> <span class="nav-text">kubelet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CRI–Container-Runtime-Interface"><span class="nav-number">9.8.</span> <span class="nav-text">CRI–Container Runtime Interface</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络模型"><span class="nav-number">9.9.</span> <span class="nav-text">网络模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CNM—-Container-Network-Model"><span class="nav-number">9.9.1.</span> <span class="nav-text">CNM—-Container Network Model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CNI—-Container-Network-Interface"><span class="nav-number">9.9.2.</span> <span class="nav-text">CNI—-Container Network Interface</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Flannel"><span class="nav-number">9.9.3.</span> <span class="nav-text">Flannel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Calico"><span class="nav-number">9.9.4.</span> <span class="nav-text">Calico</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kubernetes的设计原则"><span class="nav-number">9.10.</span> <span class="nav-text">Kubernetes的设计原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的存储模式"><span class="nav-number">9.11.</span> <span class="nav-text">常见的存储模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的监控工具"><span class="nav-number">9.12.</span> <span class="nav-text">常见的监控工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全链路监控原理"><span class="nav-number">9.13.</span> <span class="nav-text">全链路监控原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prometheus特点"><span class="nav-number">9.14.</span> <span class="nav-text">Prometheus特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Devops"><span class="nav-number">10.</span> <span class="nav-text">Devops</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微服务"><span class="nav-number">11.</span> <span class="nav-text">微服务</span></a></li></ol></div>
-            
-
-          </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
         </section>
-      <!--/noindex-->
-      
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2019/03/Java-Collections/">Java容器</a>
+            
+            
+            <a class="next" rel="next" href="/2018/11/java-float/">关于Java中的浮点数</a>
+            
+        </section>
 
-      
 
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Vicebery</span>
-
-  
+    </article>
 </div>
 
-
-
-
-
-
-
-
-  <div class="footer-custom"><a target="_blank" href="https://github.com/vicebery">Github</a></div>
-
-
-        
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Vicebery | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
 </body>
 </html>
