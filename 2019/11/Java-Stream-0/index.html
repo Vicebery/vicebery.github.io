@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Vicebery">
+
+
+    <meta name="subtitle" content="thinking && coding && dreaming">
+
+
+    <meta name="description" content="stay hungry, stay young">
+
+
+
+<title>Stream流 | Vicebery&#39;blog</title>
+
+
+
+    <link rel="icon" href="/images/avatar.jpg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Vicebery&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Vicebery&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Stream流</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Vicebery</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 15, 2019&nbsp;&nbsp;8:14:54</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">学习记录</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h2><p>使用<code>stream().filter</code>的过滤特性，可以很方便过滤掉集合中某种特性的元素。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Map&lt;String, List&lt;Cluster&gt;&gt; groupCluster(Boolean isEnable) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        List&lt;Cluster&gt; clusters = clusterCacheManager.listCluster();</span><br><span class="line">        clusters.add(clusterCacheManager.getPlatformCluster());</span><br><span class="line">        <span class="keyword">if</span> (isEnable != <span class="keyword">null</span>) &#123;</span><br><span class="line">            clusters = clusters.stream().filter(cluster -&gt; cluster.getIsEnable() == isEnable).collect(Collectors.toList());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> clusters.stream().collect(Collectors.groupingBy(Cluster::getDataCenter));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>过滤掉<code>cluster</code>对象集合中<code>cluster</code>对象属性<code>cluster.getIsEnable() ！= isEnable</code>的对象，并将最终结果按照不同数据中心进行分类。</p>
+<h2 id="groupingBy"><a href="#groupingBy" class="headerlink" title="groupingBy"></a>groupingBy</h2><p><code>groupingBy</code>能实现分组并统计的功能。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">List&lt;String&gt; items =</span><br><span class="line">        Arrays.asList(<span class="string">"apple"</span>, <span class="string">"apple"</span>, <span class="string">"banana"</span>,</span><br><span class="line">                <span class="string">"apple"</span>, <span class="string">"orange"</span>, <span class="string">"banana"</span>, <span class="string">"papaya"</span>);</span><br><span class="line"></span><br><span class="line">Map&lt;String, Long&gt; result =</span><br><span class="line">        items.stream().collect(</span><br><span class="line">                Collectors.groupingBy(</span><br><span class="line">                        Function.identity(), Collectors.counting()</span><br><span class="line">                )</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">System.out.println(result);</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出结果如下：</span></span><br><span class="line">&#123;papaya=<span class="number">1</span>, orange=<span class="number">1</span>, banana=<span class="number">2</span>, apple=<span class="number">3</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="distinct"><a href="#distinct" class="headerlink" title="distinct"></a>distinct</h2><p><code>distinct()</code>是<code>Stream</code>接口的方法。<code>distinct()</code>使用<code>hashCode()</code>和<code>equals()</code>方法来获取不同的元素。因此，我们的类必须实现<code>hashCode()</code>和<code>equals()</code>方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;RoleUser&gt; roleUserList = list(<span class="keyword">new</span> QueryWrapper&lt;RoleUser&gt;().eq(RoleUser.Fields.projectId, projectId));</span><br><span class="line">        <span class="comment">// 获取用户名，去重</span></span><br><span class="line">List&lt;String&gt; lRoleUser = roleUserList.stream().map(RoleUser::getUsername).distinct().collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+<h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><p>使用<code>stream().map()</code>，可以将对象转换为其他对象</p>
+<p>将Strings列表转换为大写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; alpha = Arrays.asList(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>);</span><br><span class="line"></span><br><span class="line">List&lt;String&gt; collect = alpha.stream().map(String::toUpperCase).collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line">System.out.println(collect); <span class="comment">//[A, B, C, D]</span></span><br></pre></td></tr></table></figure>
+
+<p>对象列表 - &gt;字符串列表：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Staff</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> BigDecimal salary;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">List&lt;Staff&gt; staff = Arrays.asList(</span><br><span class="line">                <span class="keyword">new</span> Staff(<span class="string">"diya"</span>, <span class="number">19</span>, <span class="keyword">new</span> BigDecimal(<span class="number">10000</span>)),</span><br><span class="line">                <span class="keyword">new</span> Staff(<span class="string">"jack"</span>, <span class="number">21</span>, <span class="keyword">new</span> BigDecimal(<span class="number">20000</span>)),</span><br><span class="line">                <span class="keyword">new</span> Staff(<span class="string">"caper"</span>, <span class="number">22</span>, <span class="keyword">new</span> BigDecimal(<span class="number">30000</span>))</span><br><span class="line">        );</span><br><span class="line">        </span><br><span class="line">List&lt;String&gt; collect = staff.stream().map(x -&gt; x.getName()).collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line">System.out.println(collect); <span class="comment">//[diya, jack, caper]</span></span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Java/"># Java</a>
+                    
+                        <a href="/tags/Stream/"># Stream</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/01/kubernetes-operator/">operator开发实践</a>
+            
+            
+            <a class="next" rel="next" href="/2019/10/java-1/">Java基础知识整理</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Vicebery | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
