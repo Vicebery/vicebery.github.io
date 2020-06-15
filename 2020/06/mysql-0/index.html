@@ -203,7 +203,46 @@
         </header>
 
         <div class="post-content">
-            <h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="主键索引，二级索引"><a href="#主键索引，二级索引" class="headerlink" title="主键索引，二级索引"></a>主键索引，二级索引</h3><p>主键索引是在主键列上建立的索引，二级索引可以理解为在非主键列上建立的索引，二级索引包括唯一索引、普通索引、前缀索引。</p>
+            <h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>一个事务是可以被看作一个单元的一系列SQL语句的集合。</p>
+<h3 id="事务的四大特性：ACID"><a href="#事务的四大特性：ACID" class="headerlink" title="事务的四大特性：ACID"></a>事务的四大特性：ACID</h3><h4 id="Atomacity-原子性"><a href="#Atomacity-原子性" class="headerlink" title="Atomacity 原子性"></a>Atomacity 原子性</h4><p>事务必须是原子工作单元；对于其数据修改，要么全都执行，要么全都不执行。通常，与某个事务关联的操作具有共同的目标，并且是相互依赖的。如果系统只执行这些操作的一个子集，则可能会破坏事务的总体目标。原子性消除了系统处理操作子集的可能性。</p>
+<h4 id="Consistency-一致性"><a href="#Consistency-一致性" class="headerlink" title="Consistency 一致性"></a>Consistency 一致性</h4><p>事务将数据库从一种一致状态转变为下一种一致状态。也就是说，事务在完成时，必须使所有的数据都保持一致状态（各种 constraint 不被破坏）。</p>
+<h4 id="Isolation-隔离性"><a href="#Isolation-隔离性" class="headerlink" title="Isolation 隔离性"></a>Isolation 隔离性</h4><p>由并发事务所作的修改必须与任何其它并发事务所作的修改隔离。事务查看数据时数据所处的状态，要么是另一并发事务修改它之前的状态，要么是另一事务修改它之后的状态，事务不会查看中间状态的数据。换句话说，一个事务的影响在该事务提交前对其他事务都不可见。</p>
+<h4 id="Durability-持久性"><a href="#Durability-持久性" class="headerlink" title="Durability 持久性"></a>Durability 持久性</h4><p>事务完成之后，它对于系统的影响是永久性的。该修改即使出现致命的系统故障也将一直保持。</p>
+<h2 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h2><p>如果不对数据库进行并发控制，可能会产生异常情况：</p>
+<ol>
+<li>脏读（Dirty Read）<br>当一个事务读取另一个事务尚未提交的修改时，产生脏读。</li>
+<li>不可重复读 （Nonrepeatable Read）<br>一个事务对同一行数据重复读取两次，但是却得到了不同的结果。同一查询在同一事务中多次进行，由于其他提交事务所做的修改或删除，每次返回不同的结果集，此时发生不可重复读。</li>
+<li>幻读 （Phantom Read）<br>事务在操作过程中进行两次查询，第二次查询的结果包含了第一次查询中未出现的数据。这是因为在两次查询过程中有另外一个事务插入数据造成的。当对某行执行插入或删除操作，而该行属于某个事务正在读取的行的范围时，会发生幻像读问题。</li>
+<li>丢失修改（Lost Update）<br>第一类：当两个事务更新相同的数据源，如果第一个事务被提交，第二个却被撤销，那么连同第一个事务做的更新也被撤销。<br>第二类：有两个并发事务同时读取同一行数据，然后其中一个对它进行修改提交，而另一个也进行了修改提交。这就会造成第一次写操作失效。</li>
+</ol>
+<p>为了兼顾并发效率和异常控制，在标准SQL规范中，定义了4个事务隔离级别：</p>
+<ol>
+<li>读未提交（Read Uncommitted）<br>即使一个更新语句没有提交，但别的事务可以读到这个改变。<br>Read Uncommitted允许脏读。</li>
+<li>读已提交 （Read Committed）<br>只能读到已提交的数据。Oracle、Sql Server 默认都是该级别。<br>Read Commited 不允许脏读，但会出现非重复读。</li>
+<li>可重复读（Repeatable Read）<br>在同一个事务里面先后执行同一个查询语句的时候，得到的结果是一样的。MySQL的InnoDB引擎使用的这个级别。<br>Repeatable Read 不允许脏读，不允许非重复读，MySQL/InnoDB通过MVCC解决了幻象读问题。</li>
+<li>可序列化（Serializable）<br>串行读，事务执行的时候不允许别的事务并发执行。完全串行化的读，每次读都需要获得表级共享锁，读写相互都会阻塞。<br>Serializable 不允许脏读，不允许非重复读，不允许幻读。</li>
+</ol>
+<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><h3 id="共享锁"><a href="#共享锁" class="headerlink" title="共享锁"></a>共享锁</h3><p>共享 (S) 锁允许并发事务读取 (SELECT) 一个资源。资源上存在共享 (S) 锁时，任何其它事务都不能修改数据。一旦已经读取数据，便立即释放资源上的共享 (S) 锁，除非将事务隔离级别设置为可重复读或更高级别，或者在事务生存周期内用锁定提示保留共享 (S) 锁。  </p>
+<h3 id="排它锁"><a href="#排它锁" class="headerlink" title="排它锁"></a>排它锁</h3><p>排它 (X) 锁可以防止并发事务对资源进行访问。其它事务不能读取或修改排它 (X) 锁锁定的数据。  </p>
+<h3 id="gap锁"><a href="#gap锁" class="headerlink" title="gap锁"></a>gap锁</h3><h3 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h3><p><a href="https://blog.csdn.net/weixin_43705457/article/details/104849943" target="_blank" rel="noopener">避免幻读 : next-key锁与MVCC</a></p>
+<h3 id="各种隔离级别的具体实现–加锁"><a href="#各种隔离级别的具体实现–加锁" class="headerlink" title="各种隔离级别的具体实现–加锁"></a>各种隔离级别的具体实现–加锁</h3><h4 id="读未提交"><a href="#读未提交" class="headerlink" title="读未提交"></a>读未提交</h4><ul>
+<li>事务在读数据的时候并未对数据加锁；</li>
+<li>事务在修改数据的时候只对数据增加行级共享锁。</li>
+</ul>
+<h4 id="读已提交"><a href="#读已提交" class="headerlink" title="读已提交"></a>读已提交</h4><ul>
+<li>事务对当前被读取的数据加行级共享锁（当读到时才加锁），一旦读完该行，立即释放该行级共享锁；</li>
+<li>事务在更新某数据的瞬间（就是发生更新的瞬间），必须先对其加行级排他锁，直到事务结束才释放。</li>
+</ul>
+<h4 id="可重复读"><a href="#可重复读" class="headerlink" title="可重复读"></a>可重复读</h4><ul>
+<li>事务在读取某数据的瞬间（就是开始读取的瞬间），必须先对其加行级共享锁，直到事务结束才释放；</li>
+<li>事务在更新某数据的瞬间（就是发生更新的瞬间），必须先对其加行级排他锁，直到事务结束才释放。</li>
+</ul>
+<h4 id="可序列化"><a href="#可序列化" class="headerlink" title="可序列化"></a>可序列化</h4><ul>
+<li>事务在读取数据时，必须先对其加表级共享锁 ，直到事务结束才释放；</li>
+<li>事务在更新数据时，必须先对其加表级排他锁 ，直到事务结束才释放。</li>
+</ul>
+<p><a href="http://blog.sae.sina.com.cn/archives/2127" target="_blank" rel="noopener">MySQL 加锁处理分析：锁与隔离级别</a></p>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="主键索引，二级索引"><a href="#主键索引，二级索引" class="headerlink" title="主键索引，二级索引"></a>主键索引，二级索引</h3><p>主键索引是在主键列上建立的索引，二级索引可以理解为在非主键列上建立的索引，二级索引包括唯一索引、普通索引、前缀索引。</p>
 <h3 id="聚簇索引和非聚簇索引"><a href="#聚簇索引和非聚簇索引" class="headerlink" title="聚簇索引和非聚簇索引"></a>聚簇索引和非聚簇索引</h3><p>聚集索引与非聚集索引的区别是：叶节点是否存放一整行记录。</p>
 <p>聚簇索引的特点是存储数据的顺序和索引顺序一致，一般情况下主键会默认创建聚簇索引，且一张表只允许存在一个聚簇索引。</p>
 <p><code>MySQL</code>的<code>InnoDB</code>引擎中的主键索引就是使用聚簇索引的方式存储数据，而<code>MyISAM</code> 不管是主键索引，还是二级索引使用的都是非聚簇索引。</p>
@@ -217,6 +256,7 @@
 <li><code>.myi</code> 即<code>my index</code>，索引文件</li>
 </ul>
 <p><code>MyISAM</code>引擎每次索引查询都要读取两个文件（多次<code>I/O</code>）。理论上非聚簇索引比聚簇索引要慢，但这样想法是片面的。</p>
+<p><a href="https://www.cnblogs.com/snake23/p/11068132.html" target="_blank" rel="noopener">MyISAM与InnoDB 各方面比较</a></p>
 <h3 id="聚簇索引的优缺点"><a href="#聚簇索引的优缺点" class="headerlink" title="聚簇索引的优缺点"></a>聚簇索引的优缺点</h3><p>优点：</p>
 <ol>
 <li>当你需要取出一定范围内的数据时，用聚簇索引也比用非聚簇索引好。</li>
@@ -243,7 +283,7 @@
 <p>一般的查找树，并没有很好地用到这个功能，于是，设计出了<code>B-Tree</code>，<code>B-Tree</code>这种扁平的结构利用磁盘预读功能，能很好地减少磁盘IO次数。</p>
 <p>平衡二叉树，相比于B-Tree来书，高度更深，由于逻辑上很近的节点（比如父子节点）物理上可能很远，无法利用局部性（磁盘预读），因此会比B-Tree多了很多次的磁盘IO，性能自然就差些。</p>
 <p><code>B-Tree</code>每个节点可以存储多个关键字，它将节点大小设置为磁盘页的大小，充分利用了磁盘预读功能。每次读取磁盘页时就会读取一整个节点。由于其深度小，故磁盘IO次数会较少，更多地是在读取到内存中的页中进行查找。虽然<code>B-Tree</code>查询的次数不比平衡二叉树的次数少，但是相比起磁盘IO速度，内存中比较的耗时基本可以忽略不计。</p>
-<h3 id="B-Tree"><a href="#B-Tree" class="headerlink" title="B-Tree"></a>B-Tree</h3><h3 id="B-Tree——比B-Tree更适合作为索引的结构"><a href="#B-Tree——比B-Tree更适合作为索引的结构" class="headerlink" title="B+Tree——比B-Tree更适合作为索引的结构"></a>B+Tree——比B-Tree更适合作为索引的结构</h3><h3 id="最左匹配原则"><a href="#最左匹配原则" class="headerlink" title="最左匹配原则"></a>最左匹配原则</h3>
+
         </div>
 
         
@@ -255,7 +295,9 @@
                     
                         <a href="/tags/MySQL/"># MySQL</a>
                     
-                        <a href="/tags/%E7%B4%A2%E5%BC%95/"># 索引</a>
+                        <a href="/tags/Index/"># Index</a>
+                    
+                        <a href="/tags/ACID/"># ACID</a>
                     
                         
                 </span>
