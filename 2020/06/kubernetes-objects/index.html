@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Vicebery">
+
+
+    <meta name="subtitle" content="thinking && coding && dreaming">
+
+
+    <meta name="description" content="stay hungry, stay young">
+
+
+
+<title>了解Kubernetes中的资源类型 | Vicebery&#39;blog</title>
+
+
+
+    <link rel="icon" href="/images/avatar.jpg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Vicebery&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Vicebery&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">了解Kubernetes中的资源类型</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Vicebery</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 15, 2020&nbsp;&nbsp;18:36:30</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">学习记录</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Object-in-Kubernetes"><a href="#Object-in-Kubernetes" class="headerlink" title="Object in Kubernetes"></a>Object in Kubernetes</h2><p>在 Kubernetes 系统中，Kubernetes 对象 是持久化的条目。Kubernetes 使用这些条目去表示整个集群的状态。特别地，它们描述了如下信息：</p>
+<ul>
+<li>什么容器化应用在运行（以及在哪个 Node 上）</li>
+<li>可以被应用使用的资源</li>
+<li>关于应用如何表现的策略，比如重启策略、升级策略，以及容错策略</li>
+</ul>
+<p>简单地可分为以下几类：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>名称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>资源对象</td>
+<td>Pod、ReplicaSet、ReplicationController、Deployment、StatefulSet、DaemonSet、Job、CronJob、HorizontalPodAutoscaling、Node、Namespace、Service、Ingress、Label、CustomResourceDefinition</td>
+</tr>
+<tr>
+<td>存储对象</td>
+<td>Volume、PersistentVolume、Secret、ConfigMap</td>
+</tr>
+<tr>
+<td>策略对象</td>
+<td>SecurityContext、ResourceQuota、LimitRange</td>
+</tr>
+<tr>
+<td>身份对象</td>
+<td>ServiceAccount、Role、ClusterRole</td>
+</tr>
+</tbody></table>
+<h2 id="Pod"><a href="#Pod" class="headerlink" title="Pod"></a>Pod</h2><p>Pod 是 Kubernetes 集群中能够被创建和管理的最小部署单元，一个Pod里面可以运行多个容器。每个Pod会被分配一个唯一的IP地址，里面的所有容器共享这个网络空间（IP地址以及端口），Pod内部通信使用<code>localhost</code>，外部通信，则需使用Pod的IP和端口。</p>
+<p>Pod的生成基于Namespace和Cgroup，Namespace用于进程之间的隔离，Cgroup用于控制进程资源的使用；Namespace由hostname、PID、filesystem、network、IPC组成。</p>
+<p><code>Kubernetes</code>初始化一个Pod时会先启动一个叫<code>Pause</code>的容器，然后再启动用户自定义的业务容器。<code>Pause</code>容器的作用： 扮演<br><code>PID 1</code>的角色，处理僵尸进程；在Pod里为其他容器共享Linux namespace的基础。</p>
+<p>Pod的资源使用，申请CPU和内存：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">resources:</span><br><span class="line">  requests:</span><br><span class="line">    memory: 1Gi</span><br><span class="line">    cpu: 50m</span><br><span class="line">  limits:</span><br><span class="line">    memory: 2Gi</span><br><span class="line">    cpu: 100m</span><br></pre></td></tr></table></figure>
+<p>在YAML里定义CPU和内存的使用量和限制，如果容器达到了CPU的限定值，就会开始限制，容器性能会下降，但不会终止和退出。如果容器使用内存资源达到了上限，就会OOM，造成内存溢出，容器就会终止和退出。</p>
+<p><a href="https://www.escapelife.site/posts/1b2fd738.html#!" target="_blank" rel="noopener">Pod实现原理、网络通信</a></p>
+<p> <a href="https://fatsheep9146.github.io/2018/07/22/kubelet%E5%88%9B%E5%BB%BAPod%E6%B5%81%E7%A8%8B%E8%A7%A3%E6%9E%90/" target="_blank" rel="noopener">创建Pod的过程剖析</a></p>
+<p> <a href="https://cloud.tencent.com/developer/article/1583670" target="_blank" rel="noopener">kubernetes 中 Qos</a></p>
+<p>很多资源对象是在Pod的基础上衍生而来，通过设定各种部署、调度策略来管理pod，以此满足更复杂、更常见的应用场景，下面对这些更常用的资源对象进行介绍。</p>
+<h3 id="ReplicaSet"><a href="#ReplicaSet" class="headerlink" title="ReplicaSet"></a>ReplicaSet</h3><p>ReplicaSet 主要的作用是维持一组 Pod 副本的运行，它的主要作用就是保证一定数量的 Pod 能够在集群中正常运行，它会持续监听这些 Pod 的运行状态，在 Pod 发生故障重启数量减少时重新运行新的 Pod 副本。</p>
+<h3 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h3><p>Deployment 提供了一种对 Pod 和 ReplicaSet 的管理方式，每一个 Deployment 都对应集群中的一次部署，是非常常见的 Kubernetes 对象。用来替代以前的 ReplicationController 来方便的管理应用。</p>
+<p>典型的应用场景：  </p>
+<ul>
+<li>定义Deployment 来创建 Pod 和 ReplicaSet</li>
+<li>滚动升级和回滚应用</li>
+<li>扩容和缩容</li>
+<li>暂停和继续 Deployment</li>
+</ul>
+<h3 id="StatelfulSet"><a href="#StatelfulSet" class="headerlink" title="StatelfulSet"></a>StatelfulSet</h3><p> Statefulset区别于Deployment，Deployment用于部署无状态服务，StatefulSet用来部署有状态服务。</p>
+<p> 部署的应用满足以下一个或多个部署需求，则建议使用StatefulSet：</p>
+<ul>
+<li>稳定的、唯一的网络标识。</li>
+<li>稳定的、持久的存储。</li>
+<li>有序的、优雅的部署和伸缩。</li>
+<li>有序的、优雅的删除和停止。</li>
+<li>有序的、自动的滚动更新。</li>
+</ul>
+<p>StatefulSet对应Pod的存储最好通过StorageClass来动态创建：每个Pod都会根据StatefulSet中定义的VolumeClaimTemplate来创建一个对应的PVC，然后PVC通过StorageClass自动创建对应的PV，并挂载给Pod。所以这种方式，需要你事先创建好对应的StorageClass。当然，你也可以通过预先由管理员手动创建好对应的PV，只要能保证自动创建的PVC能和这些PV匹配上。</p>
+<p><a href="https://www.cnblogs.com/yanh0606/p/11269142.html" target="_blank" rel="noopener">PV的动态创建和静态创建</a></p>
+<p>删除或者收缩 StatefulSet 并不会删除它关联的存储卷。这样做是为了保证数据安全，它通常比自动清除 StatefulSet 所有相关的资源更有价值。</p>
+<p>volumeClaimTemplates 将通过 PersistentVolumes 驱动提供的 PersistentVolumes 来提供稳定的存储。</p>
+<p> Kubernetes 为每个 VolumeClaimTemplate 创建一个 PersistentVolume。当 Pod 或者 StatefulSet 被删除时，与 PersistentVolumeClaims 相关联的 PersistentVolume 并不会被删除，PersistentVolumeClaims 也不会被删除</p>
+<h3 id="DaemonSet"><a href="#DaemonSet" class="headerlink" title="DaemonSet"></a>DaemonSet</h3><p>DaemonSet 确保全部（或者一些）Node 上运行一个 Pod 的副本。当有 Node 加入集群时，也会为他们新增一个 Pod 。当有 Node 从集群移除时，这些 Pod 也会被回收。删除 DaemonSet 将会删除它创建的所有 Pod。常用来部署一些集群的日志、监控或者其他系统管理应用。</p>
+<h3 id="Job-和-CronJob"><a href="#Job-和-CronJob" class="headerlink" title="Job 和 CronJob"></a>Job 和 CronJob</h3><p><code>Job</code> 和 <code>CronJob</code> 两个资源分别提供了一次性任务和定时任务。</p>
+<p><code>Job</code>负责批量处理短暂的一次性任务 (<code>short lived one-off tasks</code>)，即仅执行一次的任务，它保证批处理任务的一个或多个Pod成功结束。</p>
+<p><code>CronJob</code>即定时任务，就类似于<code>Linux</code>系统的<code>crontab</code>，在指定的时间周期运行指定的任务。</p>
+<h2 id="HPA"><a href="#HPA" class="headerlink" title="HPA"></a>HPA</h2><p>Pod 水平自动伸缩（<code>Horizontal Pod Autoscaler</code>），可以基于CPU利用率自动伸缩 <code>replication controller</code>、<code>deployment</code>和 <code>replicaset</code> 中的 pod 数量，（除了 CPU 利用率）也可以 基于其他应程序提供的度量指标<code>custom metrics</code>。 pod 自动缩放不适用于无法缩放的对象，比如 <code>DaemonSets</code>。HPA 通过监控分析一些控制器控制的所有 Pod 的负载变化情况来确定是否需要调整 Pod 的副本数量。</p>
+<p>通过 <code>kubectl autoscale</code> 命令来创建一个 HPA 资源对象，<code>HPA Controller</code>默认30s轮询一次（可通过 <code>kube-controller-manager</code> 的<code>--horizontal-pod-autoscaler-sync-period</code> 参数进行设置），查询指定的资源中的 Pod 资源使用率，并且与创建时设定的值和指标做对比，从而实现自动伸缩的功能。</p>
+<h2 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h2><p>每一个 Kubernetes 的 Service 都是一组 Pod 的逻辑集合和访问方式的抽象，我也可以把 Service 加上的一组 Pod 称作是一个微服务。</p>
+<p><a href="https://draveness.me/kubernetes-service/" target="_blank" rel="noopener">Service的实现原理</a></p>
+<h2 id="Volume"><a href="#Volume" class="headerlink" title="Volume"></a>Volume</h2><p>卷(Volume)中的数据的生命周期，与 <code>volume</code> 背后是由哪种存储方式提供强相关，这与<a href="https://kubernetes.io/zh/docs/concepts/storage/volumes/" target="_blank" rel="noopener">官方文档</a>中介绍<code>【Kubernetes 卷具有明确的生命周期——与包裹它的 Pod 相同】</code>有所差别，原因是新的版本提供了更丰富更实用的方式来持久化数据。</p>
+<p><code>Kubernetes</code> 可以支持许多类型的卷，Pod 也能同时使用任意数量的卷。</p>
+<p>Volume 的常见类型：</p>
+<ul>
+<li>ConfigMap</li>
+<li>emptyDir</li>
+<li>hostPath</li>
+<li>local</li>
+<li>nfs</li>
+<li>persistentVolumeClaim</li>
+<li>secret</li>
+</ul>
+<p>下面简单介绍下其中的几种：</p>
+<ul>
+<li>configmap：常用于为业务提供启动配置文件，这种小文件读取的需求；特点是只读，并且生命周期独立于 pod，即 pod 消失 configmap 仍旧存在</li>
+<li>emptyDir：常用于同一个 pod 中的多个 container 进行少量文件的数据共享；特点是可读写，但是读写性能有限（取决于 kubelet 业务数据盘背后采用什么存储），并且没有 quota 限制，生命周期和 pod 完全一致，pod 被销毁，emptyDir 也会被删除</li>
+<li>hostPath: 常用于 pod 希望访问主机上的某一个路径的场景，特点是可读写，生命周期独立于 pod</li>
+<li>persistentVolumeClaim：最新的一种让 pod 申请 volume 存储的形式，pod 可以通过创建一个 persistentVolumeClaim 对象来指明自己对这块 volume 存储的需求，比如大小，存储类型（比如 nfs，ceph rbd），生命周期完全独立于 pod。</li>
+</ul>
+<p><code>persistentVolumeClaim</code>是很常用的一种方式，当<code>Volume</code> 的类型为<code>persistentVolumeClaim</code> 时，<code>persistentVolumeClaim</code>所申请的 <code>PersistentVolume</code> 的生命周期与Pod 不同，即使Pod被删除，<code>persistentVolumeClaim</code>和<code>PersistentVolume</code>也不会被删除，这也体现了数据的<strong>持久化</strong>。</p>
+
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Kubernetes/"># Kubernetes</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/06/mysql-0/">MySQL相关笔记</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Vicebery | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

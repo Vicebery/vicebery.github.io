@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Vicebery">
+
+
+    <meta name="subtitle" content="thinking && coding && dreaming">
+
+
+    <meta name="description" content="stay hungry, stay young">
+
+
+
+<title>MySQL相关笔记 | Vicebery&#39;blog</title>
+
+
+
+    <link rel="icon" href="/images/avatar.jpg">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Vicebery&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Vicebery&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">MySQL相关笔记</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Vicebery</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 10, 2020&nbsp;&nbsp;10:11:29</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">学习记录</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="主键索引，二级索引"><a href="#主键索引，二级索引" class="headerlink" title="主键索引，二级索引"></a>主键索引，二级索引</h3><p>主键索引是在主键列上建立的索引，二级索引可以理解为在非主键列上建立的索引，二级索引包括唯一索引、普通索引、前缀索引。</p>
+<h3 id="聚簇索引和非聚簇索引"><a href="#聚簇索引和非聚簇索引" class="headerlink" title="聚簇索引和非聚簇索引"></a>聚簇索引和非聚簇索引</h3><p>聚集索引与非聚集索引的区别是：叶节点是否存放一整行记录。</p>
+<p>聚簇索引的特点是存储数据的顺序和索引顺序一致，一般情况下主键会默认创建聚簇索引，且一张表只允许存在一个聚簇索引。</p>
+<p><code>MySQL</code>的<code>InnoDB</code>引擎中的主键索引就是使用聚簇索引的方式存储数据，而<code>MyISAM</code> 不管是主键索引，还是二级索引使用的都是非聚簇索引。</p>
+<p><code>InnoDB</code>引擎每次通过二级索引查找数据时，首先找到的是索引列的值以及对应的主键，如果我们要找的信息在这个二级索引列中没有存储（不是覆盖索引，或者说我们查找的不是主键），那么就还要通过主键索引去定位到对应的行，因为<code>InnoDB</code>中的主键索引存储了该行记录的所有信息，大多时候都需要通过二级索引+主键索引这两个索引合作完成查询。</p>
+<p>从这里来看，聚簇索引对于主键的依赖性很高，主键如果是在表中间插入而不是在表末尾按照顺序插入的话，将可能导致页分裂，继而导致严重的性能问题，这也是为什么一般建议，对于InnoDB中的表，定义一个自增的ID列作为主键（与业务无关联）。</p>
+<p><code>InnoDB</code>存储引擎管理主要基于两个文件：表空间数据文件和日志文件。<br><code>InnoDB</code>存储它的表＆索引在一个表空间中，表空间可以包含数个文件</p>
+<p><code>MyISAM</code>引擎的二级索引叶子节点存放的是列值与行号的组合，叶子节点中保存的是数据的<strong>物理地址</strong>，通过物理地址我们就可以直接找到信息。所以可以看出<code>MyISAM</code>的主键索引和二级索引没有任何区别，主键索引仅仅只是一个叫做<code>PRIMARY</code>的唯一、非空的索引，且<code>MyISAM</code>引擎中可以不设主键。</p>
+<p>MyISAM引擎的文件：</p>
+<ul>
+<li><code>.myd</code> 即 <code>my data</code>，表数据文件</li>
+<li><code>.myi</code> 即<code>my index</code>，索引文件</li>
+</ul>
+<p><code>MyISAM</code>引擎每次索引查询都要读取两个文件（多次<code>I/O</code>）。理论上非聚簇索引比聚簇索引要慢，但这样想法是片面的。</p>
+<h3 id="聚簇索引的优缺点"><a href="#聚簇索引的优缺点" class="headerlink" title="聚簇索引的优缺点"></a>聚簇索引的优缺点</h3><p>优点：</p>
+<ol>
+<li>当你需要取出一定范围内的数据时，用聚簇索引也比用非聚簇索引好。</li>
+<li>当通过聚簇索引查找目标数据时理论上比非聚簇索引要快，因为非聚簇索引定位到对应主键时还要多一次目标记录寻址,即多一次<code>I/O</code>。</li>
+<li>使用覆盖索引扫描的查询可以直接使用页节点中的主键值。</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>插入速度严重依赖于插入顺序，按照主键的顺序插入是最快的方式，否则将会出现页分裂，严重影响性能。</li>
+<li>更新主键的代价很高，因为将会导致被更新的行移动。因此，对于<code>InnoDB</code>表，我们一般定义主键为不可更新。</li>
+<li>二级索引访问需要两次索引查找，第一次找到主键值，第二次根据主键值找到行数据。二级索引的叶节点存储的是主键值，而不是行指针（非聚簇索引存储的是指针或者说是地址），这是为了减少当出现行移动或数据页分裂时二级索引的维护工作，但会让二级索引占用更多的空间。</li>
+<li>采用聚簇索引插入新值比采用非聚簇索引插入新值的速度要慢很多，因为插入要保证主键不能重复，判断主键不能重复，采用的方式在不同的索引下面会有很大的性能差距，聚簇索引遍历所有的叶子节点，非聚簇索引也判断所有的叶子节点，但是聚簇索引的叶子节点除了带有主键还有记录值，记录的大小往往比主键要大的多。这样就会导致聚簇索引在判定新记录携带的主键是否重复时进行昂贵的<code>I/O</code>代价。</li>
+</ol>
+<p>对比聚簇索引的优缺点，很容易发现非聚簇索引的优缺点。</p>
+<h3 id="常见索引"><a href="#常见索引" class="headerlink" title="常见索引"></a>常见索引</h3><p>在MySQL中，按照数据结构划分的话，主要有四种类型的索引，分别为：<code>B-Tree</code>索引，<code>Hash</code>索引，<code>Fulltext</code>索引(<code>MyISAM</code> 表)和<code>R-Tree</code>索引</p>
+<p>主要介绍两种，<code>B-Tree</code>索引，<code>Hash</code>索引</p>
+<ul>
+<li>Inodb存储引擎 默认是 <code>B+Tree</code>索引</li>
+<li>MyISAM 存储引擎 默认是<code>Fulltext</code>索引；</li>
+</ul>
+<p><code>B+Tree</code>索引是<code>B-Tree</code>索引的升级版</p>
+<h3 id="为什么采用-B-Tree-作为索引的数据结构？"><a href="#为什么采用-B-Tree-作为索引的数据结构？" class="headerlink" title="为什么采用 B-Tree 作为索引的数据结构？"></a>为什么采用 <code>B-Tree</code> 作为索引的数据结构？</h3><p>索引是在基于数据库表创建的，它包含一个表中某些列的值以及记录对应的地址，并且把这些值存储在一个数据结构中，索引是存放在磁盘中的。每次查询，数据库系统都会将索引读取到内存中进行处理，而索引一般很大，只能分页读取到内存中，而寻址到我们想要的页，这个过程（磁盘IO）是非常耗时的，因此减少磁盘IO次数就非常有必要。</p>
+<p>磁盘有个一个预读功能，每次IO都会读取到一页时，会连带着读取后面几页（一般是3页）的内容，不管我们是否需要，<em>根据局部性原理可知，我们大概率会用到后面的页</em>。</p>
+<p>一般的查找树，并没有很好地用到这个功能，于是，设计出了<code>B-Tree</code>，<code>B-Tree</code>这种扁平的结构利用磁盘预读功能，能很好地减少磁盘IO次数。</p>
+<p>平衡二叉树，相比于B-Tree来书，高度更深，由于逻辑上很近的节点（比如父子节点）物理上可能很远，无法利用局部性（磁盘预读），因此会比B-Tree多了很多次的磁盘IO，性能自然就差些。</p>
+<p><code>B-Tree</code>每个节点可以存储多个关键字，它将节点大小设置为磁盘页的大小，充分利用了磁盘预读功能。每次读取磁盘页时就会读取一整个节点。由于其深度小，故磁盘IO次数会较少，更多地是在读取到内存中的页中进行查找。虽然<code>B-Tree</code>查询的次数不比平衡二叉树的次数少，但是相比起磁盘IO速度，内存中比较的耗时基本可以忽略不计。</p>
+<h3 id="B-Tree"><a href="#B-Tree" class="headerlink" title="B-Tree"></a>B-Tree</h3><h3 id="B-Tree——比B-Tree更适合作为索引的结构"><a href="#B-Tree——比B-Tree更适合作为索引的结构" class="headerlink" title="B+Tree——比B-Tree更适合作为索引的结构"></a>B+Tree——比B-Tree更适合作为索引的结构</h3><h3 id="最左匹配原则"><a href="#最左匹配原则" class="headerlink" title="最左匹配原则"></a>最左匹配原则</h3>
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/MySQL/"># MySQL</a>
+                    
+                        <a href="/tags/%E7%B4%A2%E5%BC%95/"># 索引</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/06/kubernetes-objects/">了解Kubernetes中的资源类型</a>
+            
+            
+            <a class="next" rel="next" href="/2020/06/linux-cmd/">Linux命令边学边记</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Vicebery | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
