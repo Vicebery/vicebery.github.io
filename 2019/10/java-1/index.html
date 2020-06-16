@@ -206,7 +206,35 @@
             <p>对Java的一些基础知识进行整理，持续更新……</p>
 <hr>
 <h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>Java中，一共有8种基本类型，其中有4种整型、2种浮点类型、1种用于表示Unicode编码的字符单元的字符类型char和一种用于表示真值的boolean。</p>
-<h4 id="整型："><a href="#整型：" class="headerlink" title="整型："></a>整型：</h4><p>int  4字节  -2147483648<del>2147483647（大约21亿）<br>short 2字节  -32768</del>32767<br>long 8字节  -9223372036854775808<del>9223372036854775807（大约922亿亿）<br>byte 1字节 -128</del>127  </p>
+<h4 id="整型："><a href="#整型：" class="headerlink" title="整型："></a>整型：</h4><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>大小</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>int</td>
+<td>4字节</td>
+<td>-2147483648~2147483647（大约21亿）</td>
+</tr>
+<tr>
+<td>short</td>
+<td>2字节</td>
+<td>-32768~32767</td>
+</tr>
+<tr>
+<td>long</td>
+<td>8字节</td>
+<td>-9223372036854775808~9223372036854775807（大约922亿亿）</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>1字节</td>
+<td>-128~127</td>
+</tr>
+</tbody></table>
 <h4 id="浮点类型："><a href="#浮点类型：" class="headerlink" title="浮点类型："></a>浮点类型：</h4><p>float 4字节 大约+-3.4E+38F(有效位数为6~7位)<br>double 8字节 大约+-1.79E+308(有效位数为15位)  </p>
 <p>用于表示溢出和出错情况的三个特殊的浮点值：  </p>
 <ul>
