@@ -242,9 +242,10 @@
 <ol>
 <li>快照读(snapshot read)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">简单的select操作</span><br></pre></td></tr></table></figure></li>
 <li>当前读(current read)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select ... lock in share mode</span><br><span class="line">select ... for update</span><br><span class="line">insert</span><br><span class="line">update</span><br><span class="line">delete</span><br></pre></td></tr></table></figure>
-<h2 id="各种隔离级别的具体实现–加锁"><a href="#各种隔离级别的具体实现–加锁" class="headerlink" title="各种隔离级别的具体实现–加锁"></a>各种隔离级别的具体实现–加锁</h2><h3 id="读未提交"><a href="#读未提交" class="headerlink" title="读未提交"></a>读未提交</h3></li>
+
+</li>
 </ol>
-<ul>
+<h2 id="各种隔离级别的具体实现–加锁"><a href="#各种隔离级别的具体实现–加锁" class="headerlink" title="各种隔离级别的具体实现–加锁"></a>各种隔离级别的具体实现–加锁</h2><h3 id="读未提交"><a href="#读未提交" class="headerlink" title="读未提交"></a>读未提交</h3><ul>
 <li>事务在读数据的时候并未对数据加锁；</li>
 <li>事务在修改数据的时候只对数据增加行级共享锁。</li>
 </ul>
