@@ -203,11 +203,11 @@
         </header>
 
         <div class="post-content">
-            <h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>一个事务是可以被看作一个单元的一系列SQL语句的集合。</p>
-<h3 id="事务的四大特性：ACID"><a href="#事务的四大特性：ACID" class="headerlink" title="事务的四大特性：ACID"></a>事务的四大特性：ACID</h3><h4 id="Atomacity-原子性"><a href="#Atomacity-原子性" class="headerlink" title="Atomacity 原子性"></a>Atomacity 原子性</h4><p>事务必须是原子工作单元；对于其数据修改，要么全都执行，要么全都不执行。通常，与某个事务关联的操作具有共同的目标，并且是相互依赖的。如果系统只执行这些操作的一个子集，则可能会破坏事务的总体目标。原子性消除了系统处理操作子集的可能性。</p>
-<h4 id="Consistency-一致性"><a href="#Consistency-一致性" class="headerlink" title="Consistency 一致性"></a>Consistency 一致性</h4><p>事务将数据库从一种一致状态转变为下一种一致状态。也就是说，事务在完成时，必须使所有的数据都保持一致状态（各种 constraint 不被破坏）。</p>
-<h4 id="Isolation-隔离性"><a href="#Isolation-隔离性" class="headerlink" title="Isolation 隔离性"></a>Isolation 隔离性</h4><p>由并发事务所作的修改必须与任何其它并发事务所作的修改隔离。事务查看数据时数据所处的状态，要么是另一并发事务修改它之前的状态，要么是另一事务修改它之后的状态，事务不会查看中间状态的数据。换句话说，一个事务的影响在该事务提交前对其他事务都不可见。</p>
-<h4 id="Durability-持久性"><a href="#Durability-持久性" class="headerlink" title="Durability 持久性"></a>Durability 持久性</h4><p>事务完成之后，它对于系统的影响是永久性的。该修改即使出现致命的系统故障也将一直保持。</p>
+            <h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><p>一个事务是可以被看作一个单元的一系列SQL语句的集合。</p>
+<h2 id="事务的四大特性：ACID"><a href="#事务的四大特性：ACID" class="headerlink" title="事务的四大特性：ACID"></a>事务的四大特性：ACID</h2><h3 id="Atomacity-原子性"><a href="#Atomacity-原子性" class="headerlink" title="Atomacity 原子性"></a>Atomacity 原子性</h3><p>事务必须是原子工作单元；对于其数据修改，要么全都执行，要么全都不执行。通常，与某个事务关联的操作具有共同的目标，并且是相互依赖的。如果系统只执行这些操作的一个子集，则可能会破坏事务的总体目标。原子性消除了系统处理操作子集的可能性。</p>
+<h3 id="Consistency-一致性"><a href="#Consistency-一致性" class="headerlink" title="Consistency 一致性"></a>Consistency 一致性</h3><p>事务将数据库从一种一致状态转变为下一种一致状态。也就是说，事务在完成时，必须使所有的数据都保持一致状态（各种 constraint 不被破坏）。</p>
+<h3 id="Isolation-隔离性"><a href="#Isolation-隔离性" class="headerlink" title="Isolation 隔离性"></a>Isolation 隔离性</h3><p>由并发事务所作的修改必须与任何其它并发事务所作的修改隔离。事务查看数据时数据所处的状态，要么是另一并发事务修改它之前的状态，要么是另一事务修改它之后的状态，事务不会查看中间状态的数据。换句话说，一个事务的影响在该事务提交前对其他事务都不可见。</p>
+<h3 id="Durability-持久性"><a href="#Durability-持久性" class="headerlink" title="Durability 持久性"></a>Durability 持久性</h3><p>事务完成之后，它对于系统的影响是永久性的。该修改即使出现致命的系统故障也将一直保持。</p>
 <h2 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h2><p>如果不对数据库进行并发控制，可能会产生异常情况：</p>
 <ol>
 <li>脏读（Dirty Read）<br>当一个事务读取另一个事务尚未提交的修改时，产生脏读。</li>
@@ -219,31 +219,50 @@
 <ol>
 <li>读未提交（Read Uncommitted）<br>即使一个更新语句没有提交，但别的事务可以读到这个改变。<br>Read Uncommitted允许脏读。</li>
 <li>读已提交 （Read Committed）<br>只能读到已提交的数据。Oracle、Sql Server 默认都是该级别。<br>Read Commited 不允许脏读，但会出现非重复读。</li>
-<li>可重复读（Repeatable Read）<br>在同一个事务里面先后执行同一个查询语句的时候，得到的结果是一样的。MySQL的InnoDB引擎使用的这个级别。<br>Repeatable Read 不允许脏读，不允许非重复读，MySQL/InnoDB通过MVCC解决了幻象读问题。</li>
+<li>可重复读（Repeatable Read）<br>在同一个事务里面先后执行同一个查询语句的时候，得到的结果是一样的。MySQL的InnoDB引擎使用的这个级别。<br>Repeatable Read 不允许脏读，不允许非重复读，<font color="red">MySQL/InnoDB通过MVCC和 Next-Key Lock解决了幻象读问题。</font></li>
 <li>可序列化（Serializable）<br>串行读，事务执行的时候不允许别的事务并发执行。完全串行化的读，每次读都需要获得表级共享锁，读写相互都会阻塞。<br>Serializable 不允许脏读，不允许非重复读，不允许幻读。</li>
 </ol>
-<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><h3 id="共享锁"><a href="#共享锁" class="headerlink" title="共享锁"></a>共享锁</h3><p>共享 (S) 锁允许并发事务读取 (SELECT) 一个资源。资源上存在共享 (S) 锁时，任何其它事务都不能修改数据。一旦已经读取数据，便立即释放资源上的共享 (S) 锁，除非将事务隔离级别设置为可重复读或更高级别，或者在事务生存周期内用锁定提示保留共享 (S) 锁。  </p>
-<h3 id="排它锁"><a href="#排它锁" class="headerlink" title="排它锁"></a>排它锁</h3><p>排它 (X) 锁可以防止并发事务对资源进行访问。其它事务不能读取或修改排它 (X) 锁锁定的数据。  </p>
-<h3 id="gap锁"><a href="#gap锁" class="headerlink" title="gap锁"></a>gap锁</h3><h3 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h3><p><a href="https://blog.csdn.net/weixin_43705457/article/details/104849943" target="_blank" rel="noopener">避免幻读 : next-key锁与MVCC</a></p>
-<h3 id="各种隔离级别的具体实现–加锁"><a href="#各种隔离级别的具体实现–加锁" class="headerlink" title="各种隔离级别的具体实现–加锁"></a>各种隔离级别的具体实现–加锁</h3><h4 id="读未提交"><a href="#读未提交" class="headerlink" title="读未提交"></a>读未提交</h4><ul>
+<h1 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h1><p>按照锁定的范围，可分为行锁、表锁。<br>InnoDB只有在通过索引条件检索数据时使用行级锁，否则使用表锁。<font color="red" face="STCAIYUN">行级锁都是基于索引的，如果一条SQL语句用不到索引是不会使用行级锁的，会使用表级锁。</font></p>
+<p>InnoDB有三种行锁的算法：</p>
+<ol>
+<li>Record Lock：单个行记录上的锁。</li>
+<li>Gap Lock：间隙锁，锁定一个范围，但不包括记录本身。GAP锁的目的，是为了防止同一事务的两次当前读，出现幻读的情况。</li>
+<li>Next-Key Lock：1+2，锁定一个范围，并且锁定记录本身。对于行的查询，都是采用该方法，主要目的是解决幻读的问题。</li>
+</ol>
+<p>Record Lock分为行级共享锁、行级排它锁。</p>
+<h2 id="共享锁"><a href="#共享锁" class="headerlink" title="共享锁"></a>共享锁</h2><p>共享 (S) 锁允许并发事务读取 (SELECT) 一个资源。资源上存在共享 (S) 锁时，任何其它事务都不能修改数据。一旦已经读取数据，便立即释放资源上的共享 (S) 锁，除非将事务隔离级别设置为可重复读或更高级别，或者在事务生存周期内用锁定提示保留共享 (S) 锁。  </p>
+<h2 id="排它锁"><a href="#排它锁" class="headerlink" title="排它锁"></a>排它锁</h2><p>排它 (X) 锁可以防止并发事务对资源进行访问。其它事务不能读取或修改排它 (X) 锁锁定的数据。  </p>
+<h2 id="gap锁"><a href="#gap锁" class="headerlink" title="gap锁"></a>gap锁</h2><p>间隙锁，锁定的不是当前行，而是当前行的上一个索引区间和下一个索引区间。</p>
+<h2 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h2><p><a href="https://blog.csdn.net/weixin_43705457/article/details/104849943" target="_blank" rel="noopener">避免幻读 : next-key锁与MVCC</a></p>
+<p><a href="https://juejin.im/post/5cd8283ae51d453a907b4b29" target="_blank" rel="noopener">MVCC+Next-key Locks解决幻读</a></p>
+<p><font color="red" face="STCAIYUN">在隔离级别为RR时,MySQL已经可以避免脏读和重复读,<del>但还是无法避免幻读</del>,新版本MySQL采用next-key锁与MVCC(多版本并发控制)来避免幻读</font>，详情请见<br><a href="https://blog.csdn.net/luzhensmart/article/details/88134189" target="_blank" rel="noopener">InnoDB的MVCC如何解决不可重复读和快照读的幻读,当前读用next-key解决幻读</a></p>
+<h2 id="快照读和当前读"><a href="#快照读和当前读" class="headerlink" title="快照读和当前读"></a>快照读和当前读</h2><p><code>Innodb</code>的默认事务隔离级别是<code>RR</code>（可重复读）。它的实现技术是<code>mvcc</code>。基于版本的控制协议。</p>
+<p>快照读：读取的是记录数据的可见版本（可能是过期的数据），不用加锁</p>
+<p>当前读： 读取的是记录数据的最新版本，并且当前读返回的记录都会加上锁，保证其他事务不会再并发的修改这条记录。</p>
+<ol>
+<li>快照读(snapshot read)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">简单的select操作</span><br></pre></td></tr></table></figure></li>
+<li>当前读(current read)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select ... lock in share mode</span><br><span class="line">select ... for update</span><br><span class="line">insert</span><br><span class="line">update</span><br><span class="line">delete</span><br></pre></td></tr></table></figure>
+<h2 id="各种隔离级别的具体实现–加锁"><a href="#各种隔离级别的具体实现–加锁" class="headerlink" title="各种隔离级别的具体实现–加锁"></a>各种隔离级别的具体实现–加锁</h2><h3 id="读未提交"><a href="#读未提交" class="headerlink" title="读未提交"></a>读未提交</h3></li>
+</ol>
+<ul>
 <li>事务在读数据的时候并未对数据加锁；</li>
 <li>事务在修改数据的时候只对数据增加行级共享锁。</li>
 </ul>
-<h4 id="读已提交"><a href="#读已提交" class="headerlink" title="读已提交"></a>读已提交</h4><ul>
+<h3 id="读已提交"><a href="#读已提交" class="headerlink" title="读已提交"></a>读已提交</h3><ul>
 <li>事务对当前被读取的数据加行级共享锁（当读到时才加锁），一旦读完该行，立即释放该行级共享锁；</li>
 <li>事务在更新某数据的瞬间（就是发生更新的瞬间），必须先对其加行级排他锁，直到事务结束才释放。</li>
 </ul>
-<h4 id="可重复读"><a href="#可重复读" class="headerlink" title="可重复读"></a>可重复读</h4><ul>
+<h3 id="可重复读"><a href="#可重复读" class="headerlink" title="可重复读"></a>可重复读</h3><ul>
 <li>事务在读取某数据的瞬间（就是开始读取的瞬间），必须先对其加行级共享锁，直到事务结束才释放；</li>
 <li>事务在更新某数据的瞬间（就是发生更新的瞬间），必须先对其加行级排他锁，直到事务结束才释放。</li>
 </ul>
-<h4 id="可序列化"><a href="#可序列化" class="headerlink" title="可序列化"></a>可序列化</h4><ul>
+<h3 id="可序列化"><a href="#可序列化" class="headerlink" title="可序列化"></a>可序列化</h3><ul>
 <li>事务在读取数据时，必须先对其加表级共享锁 ，直到事务结束才释放；</li>
 <li>事务在更新数据时，必须先对其加表级排他锁 ，直到事务结束才释放。</li>
 </ul>
 <p><a href="http://blog.sae.sina.com.cn/archives/2127" target="_blank" rel="noopener">MySQL 加锁处理分析：锁与隔离级别</a></p>
-<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="主键索引，二级索引"><a href="#主键索引，二级索引" class="headerlink" title="主键索引，二级索引"></a>主键索引，二级索引</h3><p>主键索引是在主键列上建立的索引，二级索引可以理解为在非主键列上建立的索引，二级索引包括唯一索引、普通索引、前缀索引。</p>
-<h3 id="聚簇索引和非聚簇索引"><a href="#聚簇索引和非聚簇索引" class="headerlink" title="聚簇索引和非聚簇索引"></a>聚簇索引和非聚簇索引</h3><p>聚集索引与非聚集索引的区别是：叶节点是否存放一整行记录。</p>
+<h1 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h1><h2 id="主键索引，二级索引"><a href="#主键索引，二级索引" class="headerlink" title="主键索引，二级索引"></a>主键索引，二级索引</h2><p>主键索引是在主键列上建立的索引，二级索引可以理解为在非主键列上建立的索引，二级索引包括唯一索引、普通索引、前缀索引。</p>
+<h2 id="聚簇索引和非聚簇索引"><a href="#聚簇索引和非聚簇索引" class="headerlink" title="聚簇索引和非聚簇索引"></a>聚簇索引和非聚簇索引</h2><p>聚集索引与非聚集索引的区别是：叶节点是否存放一整行记录。</p>
 <p>聚簇索引的特点是存储数据的顺序和索引顺序一致，一般情况下主键会默认创建聚簇索引，且一张表只允许存在一个聚簇索引。</p>
 <p><code>MySQL</code>的<code>InnoDB</code>引擎中的主键索引就是使用聚簇索引的方式存储数据，而<code>MyISAM</code> 不管是主键索引，还是二级索引使用的都是非聚簇索引。</p>
 <p><code>InnoDB</code>引擎每次通过二级索引查找数据时，首先找到的是索引列的值以及对应的主键，如果我们要找的信息在这个二级索引列中没有存储（不是覆盖索引，或者说我们查找的不是主键），那么就还要通过主键索引去定位到对应的行，因为<code>InnoDB</code>中的主键索引存储了该行记录的所有信息，大多时候都需要通过二级索引+主键索引这两个索引合作完成查询。</p>
@@ -257,7 +276,7 @@
 </ul>
 <p><code>MyISAM</code>引擎每次索引查询都要读取两个文件（多次<code>I/O</code>）。理论上非聚簇索引比聚簇索引要慢，但这样想法是片面的。</p>
 <p><a href="https://www.cnblogs.com/snake23/p/11068132.html" target="_blank" rel="noopener">MyISAM与InnoDB 各方面比较</a></p>
-<h3 id="聚簇索引的优缺点"><a href="#聚簇索引的优缺点" class="headerlink" title="聚簇索引的优缺点"></a>聚簇索引的优缺点</h3><p>优点：</p>
+<h2 id="聚簇索引的优缺点"><a href="#聚簇索引的优缺点" class="headerlink" title="聚簇索引的优缺点"></a>聚簇索引的优缺点</h2><p>优点：</p>
 <ol>
 <li>当你需要取出一定范围内的数据时，用聚簇索引也比用非聚簇索引好。</li>
 <li>当通过聚簇索引查找目标数据时理论上比非聚簇索引要快，因为非聚簇索引定位到对应主键时还要多一次目标记录寻址,即多一次<code>I/O</code>。</li>
@@ -271,18 +290,49 @@
 <li>采用聚簇索引插入新值比采用非聚簇索引插入新值的速度要慢很多，因为插入要保证主键不能重复，判断主键不能重复，采用的方式在不同的索引下面会有很大的性能差距，聚簇索引遍历所有的叶子节点，非聚簇索引也判断所有的叶子节点，但是聚簇索引的叶子节点除了带有主键还有记录值，记录的大小往往比主键要大的多。这样就会导致聚簇索引在判定新记录携带的主键是否重复时进行昂贵的<code>I/O</code>代价。</li>
 </ol>
 <p>对比聚簇索引的优缺点，很容易发现非聚簇索引的优缺点。</p>
-<h3 id="常见索引"><a href="#常见索引" class="headerlink" title="常见索引"></a>常见索引</h3><p>在MySQL中，按照数据结构划分的话，主要有四种类型的索引，分别为：<code>B-Tree</code>索引，<code>Hash</code>索引，<code>Fulltext</code>索引(<code>MyISAM</code> 表)和<code>R-Tree</code>索引</p>
+<h2 id="常见索引"><a href="#常见索引" class="headerlink" title="常见索引"></a>常见索引</h2><p>在MySQL中，按照数据结构划分的话，主要有四种类型的索引，分别为：<code>B-Tree</code>索引，<code>Hash</code>索引，<code>Fulltext</code>索引(<code>MyISAM</code> 表)和<code>R-Tree</code>索引</p>
 <p>主要介绍两种，<code>B-Tree</code>索引，<code>Hash</code>索引</p>
 <ul>
 <li>Inodb存储引擎 默认是 <code>B+Tree</code>索引</li>
 <li>MyISAM 存储引擎 默认是<code>Fulltext</code>索引；</li>
 </ul>
 <p><code>B+Tree</code>索引是<code>B-Tree</code>索引的升级版</p>
-<h3 id="为什么采用-B-Tree-作为索引的数据结构？"><a href="#为什么采用-B-Tree-作为索引的数据结构？" class="headerlink" title="为什么采用 B-Tree 作为索引的数据结构？"></a>为什么采用 <code>B-Tree</code> 作为索引的数据结构？</h3><p>索引是在基于数据库表创建的，它包含一个表中某些列的值以及记录对应的地址，并且把这些值存储在一个数据结构中，索引是存放在磁盘中的。每次查询，数据库系统都会将索引读取到内存中进行处理，而索引一般很大，只能分页读取到内存中，而寻址到我们想要的页，这个过程（磁盘IO）是非常耗时的，因此减少磁盘IO次数就非常有必要。</p>
+<h2 id="为什么采用-B-Tree-作为索引的数据结构？"><a href="#为什么采用-B-Tree-作为索引的数据结构？" class="headerlink" title="为什么采用 B-Tree 作为索引的数据结构？"></a>为什么采用 <code>B-Tree</code> 作为索引的数据结构？</h2><p>索引是在基于数据库表创建的，它包含一个表中某些列的值以及记录对应的地址，并且把这些值存储在一个数据结构中，索引是存放在磁盘中的。每次查询，数据库系统都会将索引读取到内存中进行处理，而索引一般很大，只能分页读取到内存中，而寻址到我们想要的页，这个过程（磁盘IO）是非常耗时的，因此减少磁盘IO次数就非常有必要。</p>
 <p>磁盘有个一个预读功能，每次IO都会读取到一页时，会连带着读取后面几页（一般是3页）的内容，不管我们是否需要，<em>根据局部性原理可知，我们大概率会用到后面的页</em>。</p>
 <p>一般的查找树，并没有很好地用到这个功能，于是，设计出了<code>B-Tree</code>，<code>B-Tree</code>这种扁平的结构利用磁盘预读功能，能很好地减少磁盘IO次数。</p>
 <p>平衡二叉树，相比于B-Tree来书，高度更深，由于逻辑上很近的节点（比如父子节点）物理上可能很远，无法利用局部性（磁盘预读），因此会比B-Tree多了很多次的磁盘IO，性能自然就差些。</p>
 <p><code>B-Tree</code>每个节点可以存储多个关键字，它将节点大小设置为磁盘页的大小，充分利用了磁盘预读功能。每次读取磁盘页时就会读取一整个节点。由于其深度小，故磁盘IO次数会较少，更多地是在读取到内存中的页中进行查找。虽然<code>B-Tree</code>查询的次数不比平衡二叉树的次数少，但是相比起磁盘IO速度，内存中比较的耗时基本可以忽略不计。</p>
+<h2 id="B-Tree"><a href="#B-Tree" class="headerlink" title="B-Tree"></a>B-Tree</h2><p>B树是一种多路自平衡搜索树，它类似普通的二叉树，但是B书允许每个节点有更多的子节点。</p>
+<p>一颗 m 阶<code>B-tree</code>包括以下5条特性：</p>
+<ul>
+<li>每个节点最多有 m 个子节点</li>
+<li>除根节点和叶子节点，其它每个节点至少有 [m/2] （向上取整的意思）个子节点</li>
+<li>若根节点不是叶子节点，则其至少有2个子节点</li>
+<li>所有NULL节点到根节点的高度都一样</li>
+<li>除根节点外，其它节点都包含 n 个key，其中 <code>[m/2] -1 &lt;= n &lt;= m-1</code></li>
+</ul>
+<p><img src="https://pic2.zhimg.com/v2-2c2264cc1c6c603dfeca4f84a2575901_r.jpg" alt="B-Tree"></p>
+<h2 id="B-Tree——比B-Tree更适合作为索引的结构"><a href="#B-Tree——比B-Tree更适合作为索引的结构" class="headerlink" title="B+Tree——比B-Tree更适合作为索引的结构"></a>B+Tree——比B-Tree更适合作为索引的结构</h2><p>与<code>B-Tree</code>相比，有两点不同：</p>
+<ol>
+<li>在 B-Tree中一个含有n个子树的节点有n-1个关键字(key)。而在 B+Tree中一个含有n个子树的节点有n个关键字(key)。多出的一个key是因为 B+Tree的节点会存储该节点的子树中最小的key。</li>
+<li>B-Tree的每个节点都包含了关键字(key)以及指向包含这些关键字记录的指针。而 B+Tree在叶子节点中存储了所有的关键字信息，以及指向包含这些关键字记录的指针。而且这些叶子节点构成一个有序链表，即每个叶子节点会有一个指针指向其兄弟节点。在非叶子节点中只存储了关键字信息。</li>
+</ol>
+<p><img src="https://pic1.zhimg.com/v2-bde60c8f3451da0e630630281498a1e0_r.jpg" alt="B+Tree"></p>
+<h2 id="最左匹配原则"><a href="#最左匹配原则" class="headerlink" title="最左匹配原则"></a>最左匹配原则</h2><p>最左前缀匹配原则是联合索引的一个概念，当我们创建一个联合索引的时候，例如：创建三个字段的索引 <code>index(a,b,c)</code>，相当于创建三个索引：<code>index(a)  index(a,b)  index(a,b,c)</code>，因此没必要再去创建<code>index(a)</code>。用 <code>where b=? 和 where b=? and c=? 和 where a=? and c=?</code>是不能使用到索引的。不能不用第一个字段，不能中断。这就是 MySQL 联合索引的最左匹配原则。</p>
+<blockquote>
+<p>全值匹配我最爱，最左前缀要遵守<br>带头大哥不能死，中间兄弟不能断<br>索引列上少计算，范围之后全失效<br>LIKE符号写最右，覆盖索引不写星<br>不等空值还有or，索引失效要少用<br>var引号不能丢，SQL高级也不难<br>分组之前必排序，一定要上索引啊</p>
+</blockquote>
+<h2 id="索引的使用"><a href="#索引的使用" class="headerlink" title="索引的使用"></a>索引的使用</h2><p>索引容易失效的几个注意点</p>
+<ol>
+<li>不在索引列上做任何的操作（计算、函数、类型转换），会导致索引失效而转向全表扫描 </li>
+<li>组合索引中，如果中间某个字段使用了范围条件，则右边的列索引失效 </li>
+<li>尽量使用覆盖索引（索引列和查询列一致），减少使用select * </li>
+<li>mysql在使用不等于（！= 或者&lt;&gt;）的时候，无法使用索引列会导致全表扫描 </li>
+<li>is null ，is not null 也无法使用索引 </li>
+<li>like通配符必须放在索引列的右边，否则索引失效，编程全表扫描 </li>
+<li>字符串不加单引号索引失效 </li>
+<li>少用or，用它连接索引会失效</li>
+</ol>
 
         </div>
 
