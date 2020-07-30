@@ -235,7 +235,10 @@
 <h2 id="gap锁"><a href="#gap锁" class="headerlink" title="gap锁"></a>gap锁</h2><p>间隙锁，锁定的不是当前行，而是当前行的上一个索引区间和下一个索引区间。</p>
 <h2 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h2><p><a href="https://blog.csdn.net/weixin_43705457/article/details/104849943" target="_blank" rel="noopener">避免幻读 : next-key锁与MVCC</a></p>
 <p><a href="https://juejin.im/post/5cd8283ae51d453a907b4b29" target="_blank" rel="noopener">MVCC+Next-key Locks解决幻读</a></p>
-<p><font color="red" face="STCAIYUN">在隔离级别为RR时,MySQL已经可以避免脏读和重复读,<del>但还是无法避免幻读</del>,新版本MySQL采用next-key锁与MVCC(多版本并发控制)来避免幻读</font>，详情请见<br><a href="https://blog.csdn.net/luzhensmart/article/details/88134189" target="_blank" rel="noopener">InnoDB的MVCC如何解决不可重复读和快照读的幻读,当前读用next-key解决幻读</a></p>
+<p><font color="red" face="STCAIYUN">在隔离级别为RR时,MySQL已经可以避免脏读和重复读,但还是无法完全避免幻读,新版本MySQL采用next-key锁与MVCC(多版本并发控制)来避免部分场景下的幻读</font>，详情请见<br><a href="https://blog.csdn.net/luzhensmart/article/details/88134189" target="_blank" rel="noopener">InnoDB的MVCC如何解决不可重复读和快照读的幻读,当前读用next-key解决幻读</a></p>
+<p>事实上，MVCC并不能完美解决幻读，特别是当一个事务中同时存在快照读和当前读时。而在实际场景中，这种事务是很常见的。</p>
+<p><a href="https://blog.csdn.net/weixin_42907817/article/details/107121470" target="_blank" rel="noopener">InnoDB并不能完全解决幻读问题</a></p>
+<p>一旦事务A的修改操作覆盖到了其他事务插入的“幻行”，那么在下次select（快照读）的时候，也会把这行数据一起查出来。当然，如果事务A一直使用当前读，那么就不会出现这种情况，因为在当前读下next-key会阻塞其他事务的插入。</p>
 <h2 id="快照读和当前读"><a href="#快照读和当前读" class="headerlink" title="快照读和当前读"></a>快照读和当前读</h2><p><code>Innodb</code>的默认事务隔离级别是<code>RR</code>（可重复读）。它的实现技术是<code>mvcc</code>。基于版本的控制协议。</p>
 <p>快照读：读取的是记录数据的可见版本（可能是过期的数据），不用加锁</p>
 <p>当前读： 读取的是记录数据的最新版本，并且当前读返回的记录都会加上锁，保证其他事务不会再并发的修改这条记录。</p>
@@ -333,6 +336,17 @@
 <li>like通配符必须放在索引列的右边，否则索引失效，编程全表扫描 </li>
 <li>字符串不加单引号索引失效 </li>
 <li>少用or，用它连接索引会失效</li>
+</ol>
+<h2 id="数据库优化"><a href="#数据库优化" class="headerlink" title="数据库优化"></a>数据库优化</h2><p>Q: 单表数据太多，如何设计存储方案、优化？  </p>
+<p>一般建议：MySQL单表小于2G，记录数小于1千万。当行的字段较多时，可能记录数到百万级别就变得很慢了。<br>针对这种单表较大的情况，应从以下几方面进行考虑：  </p>
+<ol>
+<li>优化SQL语句和索引；</li>
+<li>加缓存，redis；</li>
+<li>以上都做了，但仍然很慢，考虑做主从复制，读写分离(InnoDB写，MyISAM读)；</li>
+<li>考虑做分区，MySQL自带分区表。一般可考虑按天分区，或者固定范围的分区，比如时间范围，按照数字大小（年龄／编号）进行区间划分；</li>
+<li>垂直拆分，将大系统拆分为分布式系统（一个个小系统）;</li>
+<li>水平拆分（一般不推荐）</li>
+<li>放弃MySQL，选择另一种数据库NewSQL，如TiDB。</li>
 </ol>
 
         </div>
