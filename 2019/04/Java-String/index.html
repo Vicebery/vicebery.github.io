@@ -247,6 +247,12 @@
 <h2 id="hashcode方法"><a href="#hashcode方法" class="headerlink" title="hashcode方法"></a>hashcode方法</h2><p>散列码是由对象导出的一个整数值，hashCode方法定义在Object类中，故每个对象都有一个默认的散列码，其值为对象的存储地址。</p>
 <p>字符串的散列码是由内容导出的，因此String new出两个相同字符串其对象拥有相同的散列码，StringBuffer new出两个相同字符串却拥有不同散列码，是因为在StringBuffer类中没有定义hashCode方法，它的散列码是由Object类的默认hashCode方法导出的对象存储地址。</p>
 <p>String类和八大包装类都是重写了equals和hashcode方法，因此equals比较的是两个对象的value值是否相等，如果没有重写equals方法，那么比较的将是对象的引用是否指向同一块内存地址。</p>
+<p>JDK中 <code>hashcode</code> 方法的规定：  </p>
+<ul>
+<li>在 Java 应用程序执行期间，在对同一对象多次调用 hashCode 方法时，必须一致地返回相同的整数，前提是将对象进行 equals 比较时所用的信息没有被修改。从某一应用程序的一次执行到同一应用程序的另一次执行，该整数无需保持一致。</li>
+<li>如果根据 equals(Object) 方法，两个对象是相等的，那么对这两个对象中的每个对象调用 hashCode 方法都必须生成相同的整数结果。</li>
+<li>如果根据 equals(java.lang.Object) 方法，两个对象不相等，那么对这两个对象中的任一对象上调用 hashCode方法不 要求一定生成不同的整数结果。但是，程序员应该意识到，为不相等的对象生成不同整数结果可以提高哈希表的性能。</li>
+</ul>
 <h1 id="关于“-”与equals"><a href="#关于“-”与equals" class="headerlink" title="关于“==”与equals"></a>关于“==”与equals</h1><p>对于基本数据类型的比较，只能用“==”，因为基本数据类型没有equals方法，equals方法是Object类下的一个方法，如果不重写这个方法的话，那么用equals判断两个对象是否相等与“==”没有区别，本质上都是在比较引用指向的内存地址。</p>
 <p>但，Java中重写了包装类和String类的equals方法和hashcode方法，使得equals方法的功能变成了比较对象的值而不是对象的地址，这更符合现实逻辑（现实中我们不会关心对象存储在哪个地址上）。</p>
 <p>前面提到JVM会使用String Pool来来优化存储字符串，事实上在Integer类中也有一些优化：</p>
