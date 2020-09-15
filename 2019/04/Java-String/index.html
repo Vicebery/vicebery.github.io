@@ -235,6 +235,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String str = <span class="keyword">new</span> String(<span class="string">"hello"</span>);<span class="comment">//会创建多少个对象？</span></span><br></pre></td></tr></table></figure>
 <p>使用new来创建String对象，首先会在常量池中查找是否有“hello”对象，没有就新建一个，然后会在堆中new一个String（“hello”）对象。</p>
 <p><a href="https://segmentfault.com/a/1190000009888357" target="_blank" rel="noopener">String的存储问题</a></p>
+<p><a href="https://www.kancloud.cn/digest/rainnnbow-javabase/136297" target="_blank" rel="noopener">String放入运行时常量池的时机与String.intern()方法解惑</a></p>
 <h1 id="Object类的两个方法"><a href="#Object类的两个方法" class="headerlink" title="Object类的两个方法"></a>Object类的两个方法</h1><h2 id="equals方法"><a href="#equals方法" class="headerlink" title="equals方法"></a>equals方法</h2><p>Object类中的equals方法用于检测一个对象是否等于另一个对象。这个方法将判断两个对象是否具有相同的引用。</p>
 <p>五种特性：</p>
 <ul>
