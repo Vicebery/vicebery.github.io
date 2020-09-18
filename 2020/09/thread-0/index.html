@@ -315,7 +315,9 @@
 <h2 id="锁优化"><a href="#锁优化" class="headerlink" title="锁优化"></a>锁优化</h2><h3 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h3><p>挂起线程和恢复线程的操作都需要转入内核态中完成，这些操作很消耗资源。 一般地，共享数据的锁定状态只会持续很短的一段时间，为了这段时间去挂起和恢复线程并不值得。现代多核CPU能让多个线程并行执行，我们就可以让后面请求锁的那个线程“稍等一下”，但不放弃处理器的执行时间，看看持有锁的线程是否很快就会释放锁。为了让线程等待，我们只需让线程执行一个忙循环（自旋），这就是所谓的自旋锁。</p>
 <h3 id="锁消除"><a href="#锁消除" class="headerlink" title="锁消除"></a>锁消除</h3><p>锁消除是指虚拟机即时编译器在运行时，对一些代码上要求同步，但是被检测到不可能存在共享数据竞争的锁进行消除。</p>
 <h3 id="锁粗化"><a href="#锁粗化" class="headerlink" title="锁粗化"></a>锁粗化</h3><p>如果虚拟机探测到有这样一串零碎的操作都对同一个对象加锁，将会把加锁同步的范围扩展（粗化）到整个操作序列的外部。</p>
-<h3 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h3><p><a href="https://tech.meituan.com/2018/11/15/java-lock.html" target="_blank" rel="noopener">Java 的 锁 介绍</a></p>
+<h3 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h3><p>偏向锁的目的是消除数据在无竞争情况下的同步原语。</p>
+<h3 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h3><p>在无竞争的情况下使用CAS操作去消除同步使用的互斥量。如果有两条以上的线程争用同一个锁，那轻量级锁就不再有效，要膨胀为重量级锁。两个线程争用同步资源时，没有获取资源的线程自旋等待锁释放，获取到资源（轻量级锁）的线程使用CAS操作来</p>
+<p><a href="https://tech.meituan.com/2018/11/15/java-lock.html" target="_blank" rel="noopener">Java 的 锁 介绍</a></p>
 <h1 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h1>
         </div>
 
