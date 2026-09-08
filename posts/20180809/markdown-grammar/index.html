@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Markdown语法笔记｜vicebery"><meta name="theme-color" content="#f6f3ed"><link rel="icon" href="/avatar.jpeg"><link rel="canonical" href="https://vicebery.github.io/posts/20180809/markdown-grammar/"><link rel="alternate" hreflang="zh-CN" href="https://vicebery.github.io/"><link rel="alternate" hreflang="en" href="https://vicebery.github.io/en/writing/"><link rel="alternate" hreflang="x-default" href="https://vicebery.github.io/"><title>Markdown语法笔记 · vicebery</title><link rel="stylesheet" href="/_astro/_slug_.CzoBhStN.css"></head> <body> <header class="site-header"> <div class="shell nav-shell"> <a class="wordmark" href="/">vicebery<span>.</span></a> <nav class="main-nav" aria-label="主导航"> <a href="/">首页</a> <a href="/writing/">写作</a> <a href="/about/">关于</a> </nav> <div class="language-switcher" aria-label="Language selection"> <a href="/" class="language-link active" data-locale-switch="zh-cn" aria-current="page">中文</a> <span aria-hidden="true">/</span> <a href="/en/writing/" class="language-link" data-locale-switch="en">EN</a> </div> <script type="module">document.querySelectorAll("[data-locale-switch]").forEach(e=>{e.addEventListener("click",()=>{const t=e.getAttribute("data-locale-switch");t&&localStorage.setItem("vicebery.locale",t)})});</script> </div> </header> <main>  <article class="article shell narrow"> <header class="article-header"> <p class="eyebrow">学习记录</p> <h1>Markdown语法笔记</h1> <time datetime="2018-08-09T13:46:49.000Z">2018年8月9日</time> <ul class="tag-list article-tags" aria-label="Tags"> <li>Markdown</li> </ul> </header> <div class="prose"><hr>
+<p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.zhimg.com%2Fv2-45e8fd517c0481f4961ab1e1e1abc5a6_1440w.jpg%3Fsource%3D172ae18b&#x26;refer=http%3A%2F%2Fpic1.zhimg.com&#x26;app=2002&#x26;size=f9999,10000&#x26;q=a80&#x26;n=0&#x26;g=0n&#x26;fmt=jpeg?sec=1648652881&#x26;t=d56e5122a7b1d4e32703de752ce0730c" alt="图片链接已失效"></p>
+<p>本文记录Markdown的一些常用语法。</p>
+<h2 id="插入图片">插入图片</h2>
+<p>题图上图片插入格式如下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>![图片链接已失效](https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.zhimg.com%2Fv2-45e8fd517c0481f4961ab1e1e1abc5a6_1440w.jpg%3Fsource%3D172ae18b&#x26;refer=http%3A%2F%2Fpic1.zhimg.com&#x26;app=2002&#x26;size=f9999,10000&#x26;q=a80&#x26;n=0&#x26;g=0n&#x26;fmt=jpeg?sec=1648652881&#x26;t=d56e5122a7b1d4e32703de752ce0730c)</span></span></code></pre>
+<hr>
+<h2 id="行内缩进和换行">行内缩进和换行</h2>
+<h3 id="缩进">缩进</h3>
+<p>  不管是在段首还是在文章中间，都可以用以下几种方式实现word写作中的“空格”，也就算缩进。<br>
+  半方大的空白<code>&#x26;ensp;</code>或<code>&#x26;#8194</code>;<br>
+  全方大的空白<code>&#x26;emsp;</code>或<code>&#x26;#8195</code>;<br>
+  不断行的空白格<code>&#x26;nbsp;</code>或<code>&#x26;#160</code>;</p>
+<h3 id="换行">换行</h3>
+<p>markdown语法中，在编辑时，文字中间空了一行，显示在网页上就是这两段文字被一行隔开<br>但有时，我们不需要两段文字有那么大的空隙，仅仅只是需要重起一行，有几种方法可以实现：<br></p>
+<ol>
+<li>当想要重起一行时，按下两个空格，再按<em>Enter</em></li>
+<li>使用 &#x3C;br>标签<br>
+<em>注：我这里的br标签使用了转义符<code>&#x26;#60;</code>和<code>&#x26;#62;</code>，分别显示小于号和大于号</em></li>
+</ol>
+<hr>
+<h2 id="关于文字">关于文字</h2>
+<h3 id="字体颜色以及大小">字体颜色以及大小</h3>
+<p>在文档中的进行如下编辑</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#FDAEB7;font-style:italic">font</span><span style="color:#B392F0"> color</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">#0ff9ff</span><span style="color:#B392F0"> size</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">2</span><span style="color:#B392F0"> face</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"黑体"</span><span style="color:#E1E4E8">>调整字体颜色可以内嵌html语法&#x3C;/</span><span style="color:#FDAEB7;font-style:italic">font</span><span style="color:#E1E4E8">>  </span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#FDAEB7;font-style:italic">font</span><span style="color:#B392F0"> color</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">#055900</span><span style="color:#B392F0"> size</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">4</span><span style="color:#B392F0"> face</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"微软雅黑"</span><span style="color:#E1E4E8">>调整字体颜色可以内嵌html语法&#x3C;/</span><span style="color:#FDAEB7;font-style:italic">font</span><span style="color:#E1E4E8">>  </span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#FDAEB7;font-style:italic">font</span><span style="color:#B392F0"> color</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">#0ff90f</span><span style="color:#B392F0"> size</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">5</span><span style="color:#B392F0"> face</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"STCAIYUN"</span><span style="color:#E1E4E8">>调整字体颜色可以内嵌html语法&#x3C;/</span><span style="color:#FDAEB7;font-style:italic">font</span><span style="color:#E1E4E8">></span></span></code></pre>
+<p>网页实际显示如下：</p>
+<p><font color="#0ff9ff" size="2" face="黑体">调整字体颜色可以内嵌html语法</font><br>
+<font color="#055900" size="4" face="微软雅黑">调整字体颜色可以内嵌html语法</font><br>
+<font color="#0ff90f" size="5" face="STCAIYUN">调整字体颜色可以内嵌html语法</font></p>
+<h3 id="黑体与斜体">黑体与斜体</h3>
+<p>对个别字进行强调时需要用到<strong>黑体</strong>或者<em>斜体</em><br>
+<code>**黑体**</code> : 想要某部分字显示黑体效果，用两个<code>*</code>把那部分字体包裹起来<br>
+<code>*斜体*</code> : 同样地，斜体效果是用一个<code>*</code>将需要施加斜体效果的字包裹起来</p>
+<hr>
+<h2 id="代码注释">代码注释</h2>
+<h4 id="单行注释">单行注释</h4>
+<p><code>单行代码注释用</code> 	´这个字符不知道怎么转义，因此无法显示出来，就在键盘数字键‘1’左边，<em>Tab</em>键上面。</p>
+<h4 id="多行注释">多行注释</h4>
+<p>多行代码注释也用单行注释的那个键，敲三次，紧接着写下编程语言类别，比如<em>C、python</em>，然后换行，写代码段，代码写完后，再敲三次，把整个代码段包裹起来。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>int main()</span></span>
+<span class="line"><span>{</span></span>
+<span class="line"><span>	printf("hello workd!");</span></span>
+<span class="line"><span>    return 0;</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<hr>
+<h2 id="列表">列表</h2>
+<p><a href="https://vicebery.github.io">我的博客</a>主要包含以下几方面内容：</p>
+<blockquote>
+<ul>
+<li>学习记录</li>
+<li>读书札记</li>
+<li>人生体悟</li>
+<li>随笔</li>
+</ul>
+</blockquote>
+<p>以上显示的语法如下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>> * 学习记录</span></span>
+<span class="line"><span>> * 读书札记</span></span>
+<span class="line"><span>> * 人生体悟</span></span>
+<span class="line"><span>> * 随笔</span></span></code></pre>
+<h3 id="制作-todo-列表">制作<code> Todo 列表</code></h3>
+<p>文本编辑如下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>- [ ] 学习记录</span></span>
+<span class="line"><span>- [ ] 读书札记</span></span>
+<span class="line"><span>- [x] 人生体悟</span></span>
+<span class="line"><span>- [x] 随笔</span></span></code></pre>
+<p>文本实际显示如下：</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> 学习记录</li>
+<li class="task-list-item"><input type="checkbox" disabled> 读书札记</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> 人生体悟</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> 随笔</li>
+</ul>
+<hr>
+<p>作者 <a href="https://vicebery.github.io">@Vicebery</a><br>
+2018 年 8 月</p>
+<hr></div> <footer class="article-footer"> <a href="/writing/">← 返回文章归档</a> </footer> </article>  </main> <footer class="site-footer"> <div class="shell footer-inner"> <p>© 2017–2026 vicebery</p> <a href="/archives/">旧站归档</a> </div> </footer> </body></html>

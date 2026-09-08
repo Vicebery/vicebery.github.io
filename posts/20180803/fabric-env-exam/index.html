@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="fabric环境搭建以及实例运行｜vicebery"><meta name="theme-color" content="#f6f3ed"><link rel="icon" href="/avatar.jpeg"><link rel="canonical" href="https://vicebery.github.io/posts/20180803/fabric-env-exam/"><link rel="alternate" hreflang="zh-CN" href="https://vicebery.github.io/"><link rel="alternate" hreflang="en" href="https://vicebery.github.io/en/writing/"><link rel="alternate" hreflang="x-default" href="https://vicebery.github.io/"><title>fabric环境搭建以及实例运行 · vicebery</title><link rel="stylesheet" href="/_astro/_slug_.CzoBhStN.css"></head> <body> <header class="site-header"> <div class="shell nav-shell"> <a class="wordmark" href="/">vicebery<span>.</span></a> <nav class="main-nav" aria-label="主导航"> <a href="/">首页</a> <a href="/writing/">写作</a> <a href="/about/">关于</a> </nav> <div class="language-switcher" aria-label="Language selection"> <a href="/" class="language-link active" data-locale-switch="zh-cn" aria-current="page">中文</a> <span aria-hidden="true">/</span> <a href="/en/writing/" class="language-link" data-locale-switch="en">EN</a> </div> <script type="module">document.querySelectorAll("[data-locale-switch]").forEach(e=>{e.addEventListener("click",()=>{const t=e.getAttribute("data-locale-switch");t&&localStorage.setItem("vicebery.locale",t)})});</script> </div> </header> <main>  <article class="article shell narrow"> <header class="article-header"> <p class="eyebrow">学习记录</p> <h1>fabric环境搭建以及实例运行</h1> <time datetime="2018-08-03T13:49:07.000Z">2018年8月3日</time> <ul class="tag-list article-tags" aria-label="Tags"> <li>ubuntu</li><li>fabric</li> </ul> </header> <div class="prose"><h2 id="前言">前言</h2>
+<p>以下操作是在<code>ubuntu 18.04</code>上进行，网络使用SS代理，如不使用网络代理，操作过程中可能会出现各种问题。</p>
+<h2 id="先行步骤">先行步骤</h2>
+<p>具体请查看<a href="http://hyperledger-fabric.readthedocs.io/en/release-1.0/prereqs.html">官方文档介绍</a>，这里主要介绍两点：</p>
+<h3 id="安装go以及环境变量配置">安装go以及环境变量配置</h3>
+<p>建议直接命令安装 :<br>
+<code>sudo apt-get install golang</code></p>
+<p>安装好后设置环境变量，在主目录下新建一个文件夹“go”，作为你的工作空间。</p>
+<p>打开终端，编辑记录环境变量的文件：<br>
+<code>sudo vim /etc/profile</code><br>
+在文件最后添加：<br>
+<code>export GOPATH=$HOME/go</code><br>
+<code>export PATH=$PATH:$GOPATH/bin</code></p>
+<p>在系统下用命令安装不需要添加<code>GOROOT</code>，因为默认安装位置是<code>/usr/lib</code>，此路径已经被写入环境变量了。</p>
+<p>官方文档写的是编辑~/.bashrc这个文件，关于这个问题，网上也有很多版本，这篇<a href="https://www.cnblogs.com/love-snow/articles/7755660.html">博客</a>有相关介绍。</p>
+<p>安装好后，检验一下：<br>
+<code>sudo go env</code><br>
+若显示go的相关环境，则证明安装成功。</p>
+<h3 id="docker以及docker-compose的安装">docker以及docker-compose的安装</h3>
+<p>命令直接安装一般不会成功，这里参考<a href="https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/">清华大学镜像源安装</a>。</p>
+<p>按照以上网址的教程，依然出现问题：
+在导入信任docker的GPG公钥时，由于国内网络问题，docker官网不能正常访问，出现错误：
+<code>curl: (7) Failed to receive SOCKS4 connect request ack.</code><br>
+<code>gpg: 找不到有效的 OpenPGP 数据。</code></p>
+<p>于是在终端下设置临时代理：<br>
+<code>export https_proxy=socks5://127.0.0.1:1080</code></p>
+<p>显示<code>ok</code>，即导入成功。</p>
+<h2 id="fabric部署">fabric部署</h2>
+<h3 id="创建工作目录">创建工作目录</h3>
+<p>在你的<code>go</code>的工作空间中创建文件夹<br>
+<code>mkdir -p ~/go/src/github.com/hyperledger/</code></p>
+<h3 id="下载fabric源码">下载fabric源码</h3>
+<p>进入到刚刚创建的<code>hyperledger</code>文件夹，<code>git clone</code>源码 :<br>
+<code>cd ~/go/src/github.com/hyperledger</code><br>
+<code>git clone https://github.com/hyperledger/fabric.git</code></p>
+<p>如果<code>git clone</code>很慢，可以设置<code>git</code>的网络代理：<br>
+<code>git config --global http.proxy 'socks5://127.0.0.1:1080'</code><br>
+<code>git config --global https.proxy 'socks5://127.0.0.1:1080'</code></p>
+<h3 id="下载镜像文件">下载镜像文件</h3>
+<p>上一步会在<code>hyperledger</code>文件夹下创建一个新文件夹<code>fabric</code>，找到<code>fabric</code>文件夹里的<code>scripts</code>文件夹里的<code>bootstrap.sh</code>脚本，这个脚本就是下载相关镜像的，运行这个脚本：<br>
+<code>./bootstrap.sh</code></p>
+<p>如果由于网络问题下载不成功，建议先在终端设置代理：<br>
+<code>export http_proxy="socks5://127.0.0.1:1080"</code><br>
+<code>export https_proxy="socks5://127.0.0.1:1080"</code></p>
+<p>由于镜像文件有点多，可能需要花费一些时间。下载完成后会罗列出下载的docker镜像，有好几个竟然显示几个G，很疑惑这些文件在哪儿？去脚本文件查阅也没找出来</p>
+<p>在<code>scripts</code>文件夹下有个<code>fabric-samples</code>文件夹，在上一步完成后会出现一个<code>bin</code>文件夹，将这个文件夹复制到<code>fabric/examples</code>下</p>
+<h3 id="运行实例">运行实例</h3>
+<p>接下来运行实例：<code>e2e_cli</code>，在该文件夹下打开终端：<br>
+<code>./network_setup.sh up</code></p>
+<p>会输出一大堆东西，最后看到字符打印出“<code>END-E2E</code>”。</p>
+<p>关闭实例，按<code>Ctrl+c</code>重回终端输入：<br>
+<code>./network_setup.sh down</code></p></div> <footer class="article-footer"> <a href="/writing/">← 返回文章归档</a> </footer> </article>  </main> <footer class="site-footer"> <div class="shell footer-inner"> <p>© 2017–2026 vicebery</p> <a href="/archives/">旧站归档</a> </div> </footer> </body></html>

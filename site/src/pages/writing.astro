@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { getPublishedPosts } from '../lib/posts';
+
+const posts = await getPublishedPosts();
+---
+
+<BaseLayout title="写作 · vicebery" description="vicebery 的技术笔记与随笔归档。" enHref="/en/writing/">
+  <header class="page-header">
+    <div class="shell page-heading">
+      <p class="eyebrow">Writing</p>
+      <h1>写作与笔记</h1>
+      <p>从算法、Linux、Java 到 Kubernetes。这里保留过去的学习轨迹，也容纳未来值得记录的内容。</p>
+    </div>
+  </header>
+  <section class="writing-list shell">
+    <div class="post-grid">
+      {posts.map((post) => <PostCard post={post} />)}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,25 @@
+site/node_modules
+site/.astro/
+site/dist/
+.DS_Store
+* 2.*
+* 2
+site/public/2017/
+site/public/2018/
+site/public/2019/
+site/public/2020/
+site/public/archives/
+site/public/categories/
+site/public/category/
+site/public/css/
+site/public/fonts/
+site/public/guestbook/
+site/public/image/
+site/public/images/
+site/public/js/
+site/public/page/
+site/public/tag/
+site/public/tags/
+site/public/uploads/
+site/public/CNAME
+site/public/favicon.ico

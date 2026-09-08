@@ -1,3 +1,11 @@
-#my github blog
+# vicebery.github.io
 
-website: https://vicebery.cc
+The published static files live at the repository root for GitHub Pages.
+
+The Astro source is in [`site/`](site/). To update the site locally:
+
+1. Install dependencies in `site/`.
+2. Run `npm run build`.
+3. Copy `site/dist/` to the repository root and commit the resulting static files.
+
+The earlier static output remains at the repository root, so existing URLs stay available during the migration. `site/public/` contains only assets required by the Astro source.

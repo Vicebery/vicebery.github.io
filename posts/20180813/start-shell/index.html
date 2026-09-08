@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="初识shell｜vicebery"><meta name="theme-color" content="#f6f3ed"><link rel="icon" href="/avatar.jpeg"><link rel="canonical" href="https://vicebery.github.io/posts/20180813/start-shell/"><link rel="alternate" hreflang="zh-CN" href="https://vicebery.github.io/"><link rel="alternate" hreflang="en" href="https://vicebery.github.io/en/writing/"><link rel="alternate" hreflang="x-default" href="https://vicebery.github.io/"><title>初识shell · vicebery</title><link rel="stylesheet" href="/_astro/_slug_.CzoBhStN.css"></head> <body> <header class="site-header"> <div class="shell nav-shell"> <a class="wordmark" href="/">vicebery<span>.</span></a> <nav class="main-nav" aria-label="主导航"> <a href="/">首页</a> <a href="/writing/">写作</a> <a href="/about/">关于</a> </nav> <div class="language-switcher" aria-label="Language selection"> <a href="/" class="language-link active" data-locale-switch="zh-cn" aria-current="page">中文</a> <span aria-hidden="true">/</span> <a href="/en/writing/" class="language-link" data-locale-switch="en">EN</a> </div> <script type="module">document.querySelectorAll("[data-locale-switch]").forEach(e=>{e.addEventListener("click",()=>{const t=e.getAttribute("data-locale-switch");t&&localStorage.setItem("vicebery.locale",t)})});</script> </div> </header> <main>  <article class="article shell narrow"> <header class="article-header"> <p class="eyebrow">学习记录</p> <h1>初识shell</h1> <time datetime="2018-08-13T08:22:27.000Z">2018年8月13日</time> <ul class="tag-list article-tags" aria-label="Tags"> <li>Linux</li><li>shell</li><li>bash</li> </ul> </header> <div class="prose"><hr>
+<p>  shell，英文意为“壳”，在计算机领域，意为操作系统的最外面一层，用于人机交互。shell管理用户与操作系统之间的交互。shell提供一个用户操作系统的一个接口。广义的shell包括图形界面的软件。</p>
+<p>本文主要简略介绍一下命令行界面的shell。</p>
+<p>Linux中有许多shell，可以通过/etc/shells这个文件来查看自己系统里有多少可用的shell。笔者系统里<em>ubuntu 18.04</em>里有如下shell:</p>
+<blockquote>
+<ul>
+<li>/bin/sh    <em>(已经被/bin/bash所替代)</em></li>
+<li>/bin/bash   <em>(许多Linux平台内定的shell)</em></li>
+<li>/bin/rbash   <em>(受限的bash)</em></li>
+<li>/bin/dash   <em>(当前系统默认的shell)</em></li>
+</ul>
+</blockquote>
+<p>  在GNU/Linux操作系统中的/bin/sh本是bash的符号链接，但鉴于bash太过复杂，于是把bash从NetBSD移植到Linux并更名为dash。于是，在现在的Debian和ubuntu中，/bin/sh默认指向dash，dash可以看做是一个简化版的bash，它主要是为了执行脚本而出现的，而不是为了与内核交互，虽然功能相比bash要少很多，但它速度更快。</p>
+<p>bash的功能甚为强大，以下主要介绍以下bash这种shell。</p>
+<h2 id="shell的变量功能">shell的变量功能</h2>
+<h3 id="变量的显示与设置">变量的显示与设置</h3>
+<p>echo命令能直接显示出变量，方法为“echo <code>$</code>{变量名}”，例如，显示系统环境变量PATH:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">vicebery@vicebery-pc:~$</span><span style="color:#9ECBFF"> echo</span><span style="color:#E1E4E8"> $PATH</span></span>
+<span class="line"><span style="color:#B392F0">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin</span></span></code></pre>
+<br>
+变量设置直接“=”，例如，将fabric的工作目录设置为fabricwork，这样每次可以很快进入到其目录下:
+```bash
+vicebery@vicebery-pc:~$ echo $GOPATH
+/home/vicebery/go
+vicebery@vicebery-pc:~$ fabricwork="$GOPATH/src/github.com/hyperledger/fabric"
+vicebery@vicebery-pc:~$ echo $fabricwork
+/home/vicebery/go/src/github.com/hyperledger/fabric
+vicebery@vicebery-pc:~$ cd $fabricwork
+vicebery@vicebery-pc:~/go/src/github.com/hyperledger/fabric$ 
+```
+未设置之前，每次进入该目录要输入一大堆东西，设置后输入可以很方便就进入到该目录下。
+<p>取消变量的方法为使用“unset 变量名称”，例如，取消fabricwork的设置后，输出为空：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">vicebery@vicebery-pc:~$</span><span style="color:#9ECBFF"> unset</span><span style="color:#9ECBFF"> fabricwork</span></span>
+<span class="line"><span style="color:#B392F0">vicebery@vicebery-pc:~$</span><span style="color:#9ECBFF"> echo</span><span style="color:#E1E4E8"> $fabricwork</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">vicebery@vicebery-pc:~$</span><span style="color:#E1E4E8"> </span></span></code></pre>
+<h3 id="环境变量的功能">环境变量的功能</h3>
+<p>环境变量可以帮我们达到很多功能，包括主文件夹的变换、提示符的显示、执行文件查找的路径等，可以通过env和export这两个命令来查看自己系统里的环境变量。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">vicebery@vicebery-pc:~$</span><span style="color:#9ECBFF"> env</span></span>
+<span class="line"><span style="color:#E1E4E8">LOGNAME</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">vicebery</span></span>
+<span class="line"><span style="color:#E1E4E8">PWD</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">/home/vicebery</span></span>
+<span class="line"><span style="color:#E1E4E8">HOME</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">/home/vicebery</span></span>
+<span class="line"><span style="color:#E1E4E8">TERM</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">xterm-256color</span></span>
+<span class="line"><span style="color:#E1E4E8">SHELL</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">/bin/bash</span></span>
+<span class="line"><span style="color:#E1E4E8">PATH</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin</span></span>
+<span class="line"><span style="color:#E1E4E8">LC_IDENTIFICATION</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">zh_CN.UTF-8</span></span>
+<span class="line"><span style="color:#E1E4E8">GTK_IM_MODULE</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">fcitx</span></span>
+<span class="line"><span style="color:#E1E4E8">LC_TIME</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">zh_CN.UTF-8</span></span>
+<span class="line"><span style="color:#E1E4E8">_</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">/usr/bin/env</span></span></code></pre>
+<p>上面仅列出部分，其中：<br>
+<code>HOME</code>代表用户的主文件夹
+<code>PATH</code>是执行文件命令查找路径<br>
+<code>SHELL</code>是目前这个环境下使用的Shell是哪一个程序<br>
+<code>_</code>上例中的最后一行是上一次使用的命令的最后一个参数（或命令本身），本例中即为<code>env</code>。</p>
+<p><strong>用set查看所有变量</strong><br>
+所有变量是指包括环境变量和自定义变量以及一些与bash操作接口有关的变量。里面涉及到的变量相当多，这里不详细描述。</p>
+<h2 id="bash的环境配置文件">bash的环境配置文件</h2>
+<h3 id="login与non-login-shell">login与non-login shell</h3>
+<p>从语义上就可看出，二者之间的区别在于有没有登录。</p>
+<p><strong>login shell</strong>:  取得bash时需要完整的登录流程的，就称为login shell.<br>
+<strong>non-login shell</strong>:  取得bash接口的方法不需要重复登录的举动。</p>
+<p>一般来说，<strong>login shell</strong>只会读取两个配置文件：</p>
+<ol>
+<li><code>/etc/profile</code>:  这个系统整体的设置，不要轻易修改</li>
+<li><code>~/.bash_profile</code>或<code>~/.bash_login</code>或<code>~/.profile</code>:  属于用户个人设置，如果要修改自己的数据，就写入这里。</li>
+</ol>
+<p><strong>/etc/profile</strong><br>
+每个用户登录取得bash时一定会读取的配置文件。可以帮助所有用户设置整体环境。</p>
+<p><strong>~/.bash_profile</strong>   <em>(login shell才会读)</em><br>
+bash在读完了整体环境设置的/etc/profile并借此调用其他配置文件后，接下来则是会读取用户的个人配置文件。在login shell的bash环境中，所读取的个人偏好配置文件其实主要有三个，按照读取优先级依次是：</p>
+<ol>
+<li>~/.bash_profile</li>
+<li>~/.bash_login</li>
+<li>~/.profile</li>
+</ol>
+<p>实际上bash的login shell设置只会读取上面三个文件的其中一个，而读取的顺序则是依照上面的优先级顺序。</p>
+<p><strong>source</strong>:  读入环境配置文件的命令<br>
+前面说过/etc/profile与~/.bash_profile都是在取得login shell的时候才会读取的配置文件，那修改后如何让其不用注销再登录就生效呢？用source命令可以实现修改配置文件后立即生效。</p>
+<p>假设你已经修改了<code>/etc/profile</code>这个配置文件，想让其立即生效，输入以下命令即可：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#79B8FF">source</span><span style="color:#9ECBFF"> /etc/profile</span></span></code></pre>
+<p><strong>~/.bashrc</strong>  <em>(non-login shell 会读)</em><br>
+在非登录情况下取得bash操作接口的环境配置文件是<code>~/.bashrc</code>。</p></div> <footer class="article-footer"> <a href="/writing/">← 返回文章归档</a> </footer> </article>  </main> <footer class="site-footer"> <div class="shell footer-inner"> <p>© 2017–2026 vicebery</p> <a href="/archives/">旧站归档</a> </div> </footer> </body></html>

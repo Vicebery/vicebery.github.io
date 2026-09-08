@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="初识git"><meta name="theme-color" content="#f6f3ed"><link rel="icon" href="/avatar.jpeg"><link rel="canonical" href="https://vicebery.github.io/posts/20181024/learn-git-1/"><link rel="alternate" hreflang="zh-CN" href="https://vicebery.github.io/"><link rel="alternate" hreflang="en" href="https://vicebery.github.io/en/writing/"><link rel="alternate" hreflang="x-default" href="https://vicebery.github.io/"><title>初识git · vicebery</title><link rel="stylesheet" href="/_astro/_slug_.CzoBhStN.css"></head> <body> <header class="site-header"> <div class="shell nav-shell"> <a class="wordmark" href="/">vicebery<span>.</span></a> <nav class="main-nav" aria-label="主导航"> <a href="/">首页</a> <a href="/writing/">写作</a> <a href="/about/">关于</a> </nav> <div class="language-switcher" aria-label="Language selection"> <a href="/" class="language-link active" data-locale-switch="zh-cn" aria-current="page">中文</a> <span aria-hidden="true">/</span> <a href="/en/writing/" class="language-link" data-locale-switch="en">EN</a> </div> <script type="module">document.querySelectorAll("[data-locale-switch]").forEach(e=>{e.addEventListener("click",()=>{const t=e.getAttribute("data-locale-switch");t&&localStorage.setItem("vicebery.locale",t)})});</script> </div> </header> <main>  <article class="article shell narrow"> <header class="article-header"> <p class="eyebrow">学习记录</p> <h1>初识git</h1> <time datetime="2018-10-24T14:07:23.000Z">2018年10月24日</time> <ul class="tag-list article-tags" aria-label="Tags"> <li>git</li> </ul> </header> <div class="prose"><hr>
+<p>本文介绍在Linux下使用git的常用命令。</p>
+<h2 id="安装git">安装git</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">sudo</span><span style="color:#9ECBFF"> apt-get</span><span style="color:#9ECBFF"> install</span><span style="color:#9ECBFF"> git</span></span></code></pre>
+<h2 id="使用前的配置">使用前的配置</h2>
+<p>Git提供一个叫做<code>git config</code>的工具，专门来配置或读取相应的工作环境变量。这些变量可以存放在以下三个不同的地方：</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <code>/etc/gitconfig</code> 文件：系统中对所有用户都普遍适用的配置。若使用 <code>git config</code> 时用 <code>--system</code> 选项，读写的就是这个文件。</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <code>~/.gitconfig</code> 文件：用户目录下的配置文件只适用于该用户。若使用 <code>git config</code> 时用 <code>--global</code> 选项，读写的就是这个文件。</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> 当前项目的 Git 目录中的配置文件（也就是工作目录中的 <code>.git/config</code> 文件）：这里的配置仅仅针对当前项目有效。每一个级别的配置都会覆盖上层的相同配置，所以 <code>.git/config</code> 里的配置会覆盖 <code>/etc/gitconfig</code> 中的同名变量。</li>
+</ul>
+<h3 id="用户信息">用户信息</h3>
+<p>配置个人的用户名称和电子邮件地址，每次Git提交时都会引用这两条信息，以说明是谁提交了更新。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> git</span><span style="color:#9ECBFF"> config</span><span style="color:#79B8FF"> --global</span><span style="color:#9ECBFF"> user.name</span><span style="color:#9ECBFF"> "your name"</span></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> git</span><span style="color:#9ECBFF"> config</span><span style="color:#79B8FF"> --global</span><span style="color:#9ECBFF"> user.email</span><span style="color:#9ECBFF"> yourEmailName@gmail.com</span></span></code></pre>
+<p>配置文件位置选项：</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <code>--global</code> 使用全局配置文件</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <code>--system</code> 使用系统级配置文件</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <code>--local</code> 使用仓库级配置文件</li>
+</ul>
+<h3 id="网络代理">网络代理</h3>
+<p><code>git</code>有时会出现网络错误，需要配置网络代理。</p>
+<p>如果你已经开启了SS代理，那么可以进行如下配置就可以让终端下git也走SS代理。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#6A737D"># 设置代理</span></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> git</span><span style="color:#9ECBFF"> config</span><span style="color:#79B8FF"> --global</span><span style="color:#9ECBFF"> http.proxy</span><span style="color:#9ECBFF"> 'socks5://127.0.0.1:1080'</span></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> git</span><span style="color:#9ECBFF"> config</span><span style="color:#79B8FF"> --global</span><span style="color:#9ECBFF"> https.proxy</span><span style="color:#9ECBFF"> 'socks5://127.0.0.1:1080'</span></span>
+<span class="line"><span style="color:#6A737D"># 删除代理设置</span></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> git</span><span style="color:#9ECBFF"> config</span><span style="color:#79B8FF"> --global</span><span style="color:#79B8FF"> --unset</span><span style="color:#9ECBFF"> http.proxy</span></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> git</span><span style="color:#9ECBFF"> config</span><span style="color:#79B8FF"> --global</span><span style="color:#79B8FF"> --unset</span><span style="color:#9ECBFF"> https.proxy</span></span></code></pre>
+<p>如果本地还没开启SS代理，那么进行如下设置：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#6A737D"># 如果需要用户名密码的话：</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> config</span><span style="color:#79B8FF"> --global</span><span style="color:#9ECBFF"> http.proxy</span><span style="color:#9ECBFF"> http://user:password@socks5://127.0.0.1:8080</span><span style="color:#E1E4E8"> </span></span></code></pre>
+<h3 id="查看配置信息">查看配置信息</h3>
+<p>检查已有的配置信息，可用<code>git config --list</code>命令：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> git</span><span style="color:#9ECBFF"> config</span><span style="color:#79B8FF"> --list</span></span>
+<span class="line"><span style="color:#B392F0">http.proxy</span><span style="color:#9ECBFF">=socks5://127.0.0.1:1080</span></span>
+<span class="line"><span style="color:#B392F0">https.proxy</span><span style="color:#9ECBFF">=socks5://127.0.0.1:1080</span></span>
+<span class="line"><span style="color:#B392F0">user.name</span><span style="color:#9ECBFF">=vicebery</span></span>
+<span class="line"><span style="color:#B392F0">user.email</span><span style="color:#9ECBFF">=vicebery@163.com</span></span></code></pre>
+<h2 id="git基础">git基础</h2>
+<h3 id="取得项目的-git-仓库">取得项目的 Git 仓库</h3>
+<p>有两种取得 Git 项目仓库的方法。第一种是在现存的目录下，通过导入所有文件来创建新的 Git 仓库。第二种是从已有的 Git 仓库克隆出一个新的镜像仓库来。</p>
+<h4 id="在工作目录中初始化新仓库">在工作目录中初始化新仓库</h4>
+<p>对本地的某个项目使用Git管理，只需到此项目所在的目录，执行：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> git</span><span style="color:#9ECBFF"> init</span></span></code></pre>
+<p>初始化后，在当前目录下会出现一个.git的目录（默认隐藏），
+所有 Git 需要的数据和资源都存放在这个目录中。</p>
+<h4 id="从现有仓库克隆">从现有仓库克隆</h4>
+<p>如果想对某个开源项目出一份力，可以先把该项目的 Git 仓库复制一份出来，这就需要用到 <code>git clone</code> 命令。</p>
+<p>Git 收取的是项目历史的所有数据（每一个文件的每一个版本），服务器上有的数据克隆之后本地也都有了。</p>
+<p>克隆仓库的命令格式为 <code>git clone [url]</code></p>
+<h3 id="记录每次更新到仓库">记录每次更新到仓库</h3>
+<p>工作目录下面的所有文件都不外乎这两种状态：已跟踪或未跟踪。</p>
+<p>已跟踪的文件一段时间后可能有三种状态：unmodified、modified、staged，未跟踪的文件状态为：untracked</p>
+<h4 id="检查当前文件状态">检查当前文件状态</h4>
+<p>用<code>git status</code>命令来查看哪些文件当前的状态。</p>
+<p>在一个本地仓库目录下，执行该命令：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> git</span><span style="color:#9ECBFF"> status</span></span>
+<span class="line"><span style="color:#B392F0">位于分支</span><span style="color:#9ECBFF"> master</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">尚无提交</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">未跟踪的文件:</span></span>
+<span class="line"><span style="color:#B392F0">  （使用</span><span style="color:#9ECBFF"> "git add &#x3C;文件>..."</span><span style="color:#9ECBFF"> 以包含要提交的内容）</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">	hadoop-cluster-docker/</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">提交为空，但是存在尚未跟踪的文件（使用</span><span style="color:#9ECBFF"> "git add"</span><span style="color:#9ECBFF"> 建立跟踪）</span></span></code></pre>
+<h4 id="跟踪新文件">跟踪新文件</h4>
+<p>当项目添加了一个新文件时，用<code>git add</code>来开始跟踪它。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> git</span><span style="color:#9ECBFF"> add</span><span style="color:#9ECBFF"> newFileName</span></span></code></pre>
+<h4 id="暂存已修改文件">暂存已修改文件</h4>
+<p>文件修改后，运行<code>git status</code>会显示出 <code>Changes not staged for commit</code>项，暂存此次修改也是用<code>git add</code>命令。</p>
+<h4 id="移除文件">移除文件</h4>
+<p>要从 Git 中移除某个文件，就必须要从已跟踪文件清单中移除，如果只是简单地从工作目录中手工删除文件，运行 <code>git status</code> 时就会在 <code>Changes not staged for commit</code>部分（也就是未暂存清单）看到。用<code>git rm</code>命令来移除文件。</p>
+<h4 id="忽略某些文件">忽略某些文件</h4>
+<p>一般我们总会有些文件无需纳入 Git 的管理，也不希望它们总出现在未跟踪文件列表。我们可以创建一个名为 .gitignore 的文件，列出要忽略的文件模式。</p>
+<p>文件 .gitignore 的格式规范如下：</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> 所有空行或者以注释符号 ＃ 开头的行都会被 Git 忽略。</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> 可以使用标准的 glob 模式匹配。</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> 匹配模式最后跟反斜杠（/）说明要忽略的是目录。</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> 要忽略指定模式以外的文件或目录，可以在模式前加上惊叹号（!）取反。</li>
+</ul>
+<p>我们再看一个 .gitignore 文件的例子：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#6A737D"># 此为注释 – 将被 Git 忽略</span></span>
+<span class="line"><span style="color:#6A737D"># 忽略所有 .a 结尾的文件</span></span>
+<span class="line"><span style="color:#F97583">*</span><span style="color:#E1E4E8">.a</span></span>
+<span class="line"><span style="color:#6A737D"># 但 lib.a 除外</span></span>
+<span class="line"><span style="color:#F97583">!</span><span style="color:#B392F0">lib.a</span></span>
+<span class="line"><span style="color:#6A737D"># 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO</span></span>
+<span class="line"><span style="color:#B392F0">/TODO</span></span>
+<span class="line"><span style="color:#6A737D"># 忽略 build/ 目录下的所有文件</span></span>
+<span class="line"><span style="color:#B392F0">build/</span></span>
+<span class="line"><span style="color:#6A737D"># 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt</span></span>
+<span class="line"><span style="color:#B392F0">doc/*.txt</span></span>
+<span class="line"><span style="color:#6A737D"># 忽略 doc/ 目录下所有扩展名为 txt 的文件</span></span>
+<span class="line"><span style="color:#B392F0">doc/**/*.txt</span></span></code></pre>
+<h4 id="查看已暂存和未暂存的更新">查看已暂存和未暂存的更新</h4>
+<p>如果要查看文件具体修改了什么地方，可以用 git diff 命令。</p>
+<p>此命令比较的是工作目录中当前文件和暂存区域快照之间的差异，也就是修改之后还没有暂存起来的变化内容。</p>
+<h3 id="提交更新">提交更新</h3>
+<p>确认暂存区域已准备好可以提交了，运行提交命令<code>git commit</code>：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> git</span><span style="color:#9ECBFF"> commit</span></span></code></pre></div> <footer class="article-footer"> <a href="/writing/">← 返回文章归档</a> </footer> </article>  </main> <footer class="site-footer"> <div class="shell footer-inner"> <p>© 2017–2026 vicebery</p> <a href="/archives/">旧站归档</a> </div> </footer> </body></html>

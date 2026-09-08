@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Linux用户与文件基础｜vicebery"><meta name="theme-color" content="#f6f3ed"><link rel="icon" href="/avatar.jpeg"><link rel="canonical" href="https://vicebery.github.io/posts/20180808/linux-user-file/"><link rel="alternate" hreflang="zh-CN" href="https://vicebery.github.io/"><link rel="alternate" hreflang="en" href="https://vicebery.github.io/en/writing/"><link rel="alternate" hreflang="x-default" href="https://vicebery.github.io/"><title>Linux用户与文件基础 · vicebery</title><link rel="stylesheet" href="/_astro/_slug_.CzoBhStN.css"></head> <body> <header class="site-header"> <div class="shell nav-shell"> <a class="wordmark" href="/">vicebery<span>.</span></a> <nav class="main-nav" aria-label="主导航"> <a href="/">首页</a> <a href="/writing/">写作</a> <a href="/about/">关于</a> </nav> <div class="language-switcher" aria-label="Language selection"> <a href="/" class="language-link active" data-locale-switch="zh-cn" aria-current="page">中文</a> <span aria-hidden="true">/</span> <a href="/en/writing/" class="language-link" data-locale-switch="en">EN</a> </div> <script type="module">document.querySelectorAll("[data-locale-switch]").forEach(e=>{e.addEventListener("click",()=>{const t=e.getAttribute("data-locale-switch");t&&localStorage.setItem("vicebery.locale",t)})});</script> </div> </header> <main>  <article class="article shell narrow"> <header class="article-header"> <p class="eyebrow">学习记录</p> <h1>Linux用户与文件基础</h1> <time datetime="2018-08-08T13:25:52.000Z">2018年8月8日</time> <ul class="tag-list article-tags" aria-label="Tags"> <li>Linux</li> </ul> </header> <div class="prose"><hr>
+<h2 id="用户与用户组">用户与用户组</h2>
+<p>任何一个文件都具有“User、Group、Others”三种身份的个别权限。<br>
+<em>/etc/passwd</em>   记录所有的系统上的账号与一般身份用户，以及root的相关信息;<br>
+<em>/etc/shadow</em>   记录个人密码;<br>
+<em>/etc/group</em>   记录所有的组名;</p>
+<h2 id="改变文件属性与权限">改变文件属性与权限</h2>
+<p><code>chgrp</code>:   改变文件所属用户组<br>
+<code>chown</code>:   改变文件所有者<br>
+<code>chmod</code>:   改变文件的权限</p>
+<p><strong>数字类型改变文件权限</strong></p>
+<p>r:4<br>
+w:2   //让用户删除、更新、新建文件或目录<br>
+x:1   //在目录当中是与“能否进入该目录”</p>
+<p>eg: chmod [-R] xyz 文件或目录    //xyz为rwx属性数值的相加，-R为进行递归的持续更改，即连同子目录下的所有文件都会更改</p>
+<h2 id="目录配置">目录配置</h2>
+<p><strong>/根目录</strong>  与开机系统有关</p>
+<p><em>/bin</em>   放置在单用户维护模式下还能够被操作的命令，重要执行文件<br>
+<em>/boot</em>   开机与内核文件,放置grub引导装载程序<br>
+<em>/etc</em>   配置文件<br>
+<em>/lib</em>   开机时会用到的函数库，以及在/bin或/sbin下面的命令会调用的函数库<br>
+<em>/sbin</em>   重要的系统执行文件，开机过程中需要的，包括开机、修复、还原系统所需要的命令。某些服务器软件程序则一般放置在/usr/sbin中，而本机自行安装的软件所产生的系统执行文件，则放置在/usr/local/sbin中</p>
+<p>**/usr **  软件放置处，与软件安装/执行有关<br>
+<em>/usr/bin/</em>   绝大部分的用户可使用命令都放在这.(与/bin不同之处在于是否与开机过程相关)<br>
+<em>/usr/include/</em>   程序头文件与包含文件放置处<br>
+<em>/usr/lib/</em>   包含各应用软件的函数库、目标文件，以及不被一般用户惯用的执行文件或脚本。<br>
+<em>/usr/local/</em>   自行下载安装的软件建议安装的目录。<br>
+<em>/usr/sbin/</em>   非系统正常运行所需要的系统命令。<br>
+<em>/usr/share/</em>   放置共享文件<br>
+<em>/usr/src/</em>   放置源码</p>
+<p><strong>/var</strong>   主要针对常态性变动的文件，包括缓存、登陆文件以及某些软件运行所产生的文件。</p>
+<p><strong>/opt</strong>   第三方软件</p>
+<h2 id="目录与路径">目录与路径</h2>
+<h3 id="目录创建与切换">目录创建与切换</h3>
+<p>绝对路径：路径的写法由根目录/写起</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>cd /usr/bin</span></span></code></pre>
+<p>相对路径：从当前目录开始写起</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>cd usr/bin  </span></span>
+<span class="line"><span>cd ./usr/bin</span></span></code></pre>
+<p><code>.</code>  代表当前的目录，也可以使用<code>./</code>来表示<br>
+<code>.. </code>代表上一层目录，也可以用<code>../</code>来表示<br>
+<code>-</code> 代表前一个工作目录<br>
+<code>~</code> 代表“目前用户身份”所在的主文件夹</p>
+<p>处理目录的相关命令：<br>
+<code>cd</code>: 切换目录<br>
+<code>pwd</code>: 显示当前目录<br>
+<code>mkdir</code>: 新建一个新的目录<br>
+<code>rmdir</code>: 删除一个空的目录</p>
+<p>一些常见用法：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>mkdir -p github.com/hyperledger/fabric</span></span></code></pre>
+<p>加上<code>-p</code>这个参数，可以自行创建多层目录</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>mkdir -m 711 test</span></span></code></pre>
+<p>新建权限为rwx—x—x的目录</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>rm -r test</span></span></code></pre>
+<p>删除test目录下所有的文件</p>
+<h3 id="文件的复制移动与删除">文件的复制、移动与删除</h3>
+<h4 id="复制">复制</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>cp [-adfilprsu] 源文件 目标文件</span></span></code></pre>
+<p>常用参数：<br>
+-i  :  若目标文件已经存在，在覆盖时会先询问操作的进行<br>
+-r  :  递归持续复制，用户目录的复制</p>
+<p>一些常见用法：<br>
+复制/etc/目录下的所有内容到/tmp下<br>
+<code>cp /etc/ /tmp</code><br>
+或<code>cp -r /etc/ /tmp</code><br>
+一般源文件为目录时，需要用到<code>-r</code></p>
+<h4 id="移动">移动</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>mv [-fiu] source destination</span></span></code></pre>
+<p>参数：<br>
+-f  :  force强制的意思，若目标文件已存在，则直接覆盖<br>
+-i  :  若目标文件已存在，就会询问是否覆盖<br>
+-u  :  若目标文件已存在，且source比较新，才会更新</p>
+<h4 id="删除">删除</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>rm [-fir] 文件或目录</span></span></code></pre>
+<p>参数：<br>
+-f  :  强制删除，忽略不存在的文件，不出现警告信息<br>
+-i  :  删除前询问<br>
+-r  :  递归删除，删除目录文件夹，文件夹里的所有东西都会删除</p>
+<h2 id="文件权限以及属性">文件权限以及属性</h2>
+<p>查看文件默认权限：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>umask -S</span></span></code></pre>
+<p>新建文件：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>touch newfilename</span></span></code></pre>
+<p>查看文件类型：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>file /etc/profile</span></span></code></pre>
+<h2 id="linux磁盘与文件系统管理">Linux磁盘与文件系统管理</h2>
+<h3 id="文件压缩与打包">文件压缩与打包</h3>
+<p>以下是几种常见的压缩文件：</p>
+<p><code>*.Z</code>   compress程序压缩的文件<br>
+<code>*.gz</code>  gzip程序压缩的文件<br>
+<code>*.bz2</code>  bzip2程序压缩的文件<br>
+<code>*.tar</code>  tar程序打包的数据，并没有压缩过<br>
+<code>*.tar.gz</code>  tar程序打包的文件，其中经过gzip的压缩<br>
+<code>*.tar.bz2</code>  tar程序打包的文件，其中经过bzip2的压缩</p>
+<h4 id="gzip和zcat">gzip和zcat</h4>
+<p>gzip可以解开compress、zip和gzip等软件所压缩的文件。gzip所新建的压缩文件为<code>*.gz</code>的文件名。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>gzip [-cdtv`#`] 文件名 </span></span>
+<span class="line"><span>zcat 文件名.gz</span></span></code></pre>
+<p>参数：<br>
+-c  :  将压缩的数据输出到屏幕上，可通过数据流重定向来处理;<br>
+-d  :  解压缩的参数;<br>
+-t  :  可以用来检验一个压缩文件的一致性，看看文件有无错误;<br>
+-v  :  可以显示出原文件/压缩文件的压缩比等信息;<br>
+-#  :  压缩等级，-1最快，但是压缩比最差，-9最慢，但是压缩比最好，默认是-6.</p>
+<h4 id="bzip2和bzcat">bzip2和bzcat</h4>
+<p>bzip2比gzip提供更好的压缩比，且用法与其差不多。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>bzip2 [-cdkzv`#`] 文件名</span></span>
+<span class="line"><span>bzcat 文件名.bz2</span></span></code></pre>
+<p>参数：<br>
+-c  :  将压缩的数据输出到屏幕上，可通过数据流重定向来处理;<br>
+-d  :  解压缩的参数;<br>
+-k  :  保留原文件，而不会删除原始的文件;<br>
+-z  :  压缩的参数;<br>
+-v  :  可以显示出原文件/压缩文件的压缩比等信息;<br>
+-#  :  压缩等级，-1最快，但是压缩比最差，-9最慢，但是压缩比最好，默认是-6.</p>
+<h4 id="打包命令tar">打包命令：tar</h4>
+<p>打包与压缩的用法：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>tar [-j|-z] [cv] [-f 新建的文件名] filename</span></span></code></pre>
+<p>解压缩的用法：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>tar [-j|-z] [xv] [-f 新建的文件名] [-C 目录]</span></span></code></pre>
+<p>参数:<br>
+-c  :  新建打包文件，可搭配-v来查看过程中被打包的文件名;<br>
+-t  :  查看打包文件的内容含有哪些文件名，重点在查看文件名;<br>
+-x  :  解打包或压缩的功能，可以搭配-C在特定目录解开;<br>
+-j  :  通过bzip2的支持进行压缩/解压缩，此时文件名最好为<code>*.tar.bz2</code>;<br>
+-z  :  通过gzip的支持进行压缩/解压缩，此时文件名最好为<code>*.tar.gz</code>;<br>
+-v  :  在压缩/解压缩过程中，将正在处理的文件名显示出来;<br>
+-f filename  :  -f 后面要接被处理的文件名，建议-f
+单独写一个参数;<br>
+-C 目录  :  在特定目录解压缩</p></div> <footer class="article-footer"> <a href="/writing/">← 返回文章归档</a> </footer> </article>  </main> <footer class="site-footer"> <div class="shell footer-inner"> <p>© 2017–2026 vicebery</p> <a href="/archives/">旧站归档</a> </div> </footer> </body></html>

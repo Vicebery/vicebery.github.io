@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Java Collections 概览｜vicebery"><meta name="theme-color" content="#f6f3ed"><link rel="icon" href="/avatar.jpeg"><link rel="canonical" href="https://vicebery.github.io/posts/20190327/java-collections/"><link rel="alternate" hreflang="zh-CN" href="https://vicebery.github.io/"><link rel="alternate" hreflang="en" href="https://vicebery.github.io/en/writing/"><link rel="alternate" hreflang="x-default" href="https://vicebery.github.io/"><title>Java Collections 概览 · vicebery</title><link rel="stylesheet" href="/_astro/_slug_.CzoBhStN.css"></head> <body> <header class="site-header"> <div class="shell nav-shell"> <a class="wordmark" href="/">vicebery<span>.</span></a> <nav class="main-nav" aria-label="主导航"> <a href="/">首页</a> <a href="/writing/">写作</a> <a href="/about/">关于</a> </nav> <div class="language-switcher" aria-label="Language selection"> <a href="/" class="language-link active" data-locale-switch="zh-cn" aria-current="page">中文</a> <span aria-hidden="true">/</span> <a href="/en/writing/" class="language-link" data-locale-switch="en">EN</a> </div> <script type="module">document.querySelectorAll("[data-locale-switch]").forEach(e=>{e.addEventListener("click",()=>{const t=e.getAttribute("data-locale-switch");t&&localStorage.setItem("vicebery.locale",t)})});</script> </div> </header> <main>  <article class="article shell narrow"> <header class="article-header"> <p class="eyebrow">学习记录</p> <h1>Java Collections 概览</h1> <time datetime="2019-03-27T01:19:16.000Z">2019年3月27日</time> <ul class="tag-list article-tags" aria-label="Tags"> <li>java</li><li>Collections</li> </ul> </header> <div class="prose"><hr>
+<h2 id="总体框架">总体框架</h2>
+<p>Java容器是Java提供的工具包，包含了常用的数据结构：集合、链表、队列、栈、数组、映射等。Java容器工具包位置是java.util.*</p>
+<p>Java集合主要可以划分为4个部分：</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> List列表</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Set集合</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> Map映射</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> 工具类（Iterator迭代器、Enumeration枚举类、Arrays和Collections）</li>
+</ul>
+<p>主要有三大接口Collection、Map、Iterator</p>
+<p><strong>Collection</strong>接口是一个高度抽象出来的集合，它包含了集合的基本操作和属性。主要有List接口和Set接口两个分支</p>
+<p>List是一个逻辑上有序（区别于元素有序—从大到小，从小到大）的队列，每一个元素都有它的索引，第一个元素的索引值是0，第二个是1……<br>
+List的实现类有LinkedList，ArrayList，Vector，Stack</p>
+<p>Set是一个不允许有重复元素的集合。<br>
+Set的实现类有HashSet，TreeSet。HashSet依赖于HashMap</p>
+<p><strong>Map</strong>是一个映射接口，即Key-value键值对。AbstractMap是个抽象类，它实现了Map接口中的大部分API。而HashMap，TreeMap，WeakHashMap都是继承自AbstractMap。</p>
+<p><strong>Iterator</strong>是遍历集合的工具，即我们通常通过Iterator迭代器来遍历集合。我们说Collection依赖于Iterator，是因为Collection的实现类都要实现iterator()函数，返回一个Iterator对象。</p>
+<p>ListIterator是专门为遍历List而存在的。</p>
+<h3 id="工具类">工具类</h3>
+<h4 id="arrays-类">Arrays 类</h4>
+<p>java.util.Arrays 类能方便地操作数组，它提供的所有方法都是静态的。</p>
+<p>具有以下功能：</p>
+<ul>
+<li>给数组赋值：通过 fill 方法。</li>
+<li>对数组排序：通过 sort 方法,按升序。</li>
+<li>比较数组：通过 equals 方法比较数组中元素值是否相等。</li>
+<li>查找数组元素：通过 binarySearch 方法能对排序好的数组进行二分查找法操作。</li>
+</ul>
+<h4 id="collections类">Collections类</h4>
+<p>常见方法：</p>
+<p>1，对list进行二分查找：</p>
+<p>前提该集合一定要有序。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>int binarySearch(list,key);</span></span>
+<span class="line"><span>//必须根据元素自然顺序对列表进行升级排序</span></span>
+<span class="line"><span>//要求list 集合中的元素都是Comparable 的子类。</span></span>
+<span class="line"><span>int binarySearch(list,key,Comparator);</span></span></code></pre>
+<p>2，对list集合进行排序。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>sort(list); </span></span>
+<span class="line"><span>//对list进行排序,其实使用的事list容器中的对象的compareTo方法</span></span>
+<span class="line"><span>sort(list,comaprator);</span></span>
+<span class="line"><span>//按照指定比较器进行排序</span></span></code></pre>
+<p>3，对集合取最大值或者最小值。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>max(Collection)</span></span>
+<span class="line"><span>max(Collection,comparator)</span></span>
+<span class="line"><span>min(Collection)</span></span>
+<span class="line"><span>min(Collection,comparator)</span></span></code></pre>
+<p>4，对list集合进行反转。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>reverse(list);</span></span></code></pre>
+<p>5，对比较方式进行强行逆转。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Comparator reverseOrder();</span></span>
+<span class="line"><span>Comparator reverseOrder(Comparator);</span></span></code></pre>
+<p>6，对list集合中的元素进行位置的置换。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>swap(list,x,y);</span></span></code></pre>
+<p>7，对list集合进行元素的替换。如果被替换的元素不存在，那么原集合不变。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>replaceAll(list,old,new);</span></span></code></pre>
+<p>8，可以将不同步的集合变成同步的集合。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Set synchronizedSet(Set&#x3C;T> s)</span></span>
+<span class="line"><span>Map synchronizedMap(Map&#x3C;K,V> m)</span></span>
+<span class="line"><span>List synchronizedList(List&#x3C;T> list)</span></span></code></pre>
+<p>如果想要将集合变数组：</p>
+<p>可以使用Collection 中的toArray 方法。注意：是Collection不是Collections工具类
+传入指定的类型数组即可，该数组的长度最好为集合的size。</p>
+<h2 id="具体的集合">具体的集合</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>集合类型</th><th>描述</th></tr></thead><tbody><tr><td>ArrayList</td><td>一种可以动态增长和缩减的索引序列</td></tr><tr><td>LinkedList</td><td>一种可以在任何位置进行高效地插入和删除操作的有序序列</td></tr><tr><td>ArrayDeque</td><td>一种用循环数组实现的双端队列</td></tr><tr><td>HashSet</td><td>一种没有重复元素的无序集合</td></tr><tr><td>TreeSet</td><td>一种有序集</td></tr><tr><td>EnumSet</td><td>一种包含枚举类型值的集</td></tr><tr><td>LinkedHashSet</td><td>一种可以记住元素插入次序的集</td></tr><tr><td>PriorityQueue</td><td>一种允许高效删除最小元素的集合</td></tr><tr><td>HashMap</td><td>一种存储键/值关联的数据结构</td></tr><tr><td>TreeMap</td><td>一种键值有序排列的映射表</td></tr><tr><td>EnumMap</td><td>一种键值属于枚举类型的映射表</td></tr><tr><td>LinkedHashMap</td><td>一种可以记住键/值项添加次序的映射表</td></tr><tr><td>WeakHashMap</td><td>一种其值无用武之地后可以被垃圾回收器回收的映射表</td></tr><tr><td>IdentityHashMap</td><td>一种用==而不是用equals比较键值的映射表</td></tr></tbody></table></div> <footer class="article-footer"> <a href="/writing/">← 返回文章归档</a> </footer> </article>  </main> <footer class="site-footer"> <div class="shell footer-inner"> <p>© 2017–2026 vicebery</p> <a href="/archives/">旧站归档</a> </div> </footer> </body></html>

@@ -1,0 +1,26 @@
+---
+import type { Post } from '../lib/posts';
+import { displayDate, postUrl } from '../lib/posts';
+
+interface Props {
+  post: Post;
+  locale?: 'zh-CN' | 'en';
+}
+
+const { post, locale = 'zh-CN' } = Astro.props;
+const category = post.data.categories[0];
+---
+
+<article class="post-card">
+  <div class="post-card-meta">
+    <time datetime={post.data.date.toISOString()}>{displayDate(post.data.date, locale)}</time>
+    {category && <span>{category}</span>}
+  </div>
+  <h3><a href={postUrl(post)}>{post.data.title}</a></h3>
+  {post.data.description && <p>{post.data.description}</p>}
+  {post.data.tags.length > 0 && (
+    <ul class="tag-list" aria-label="Tags">
+      {post.data.tags.slice(0, 4).map((tag) => <li>{tag}</li>)}
+    </ul>
+  )}
+</article>

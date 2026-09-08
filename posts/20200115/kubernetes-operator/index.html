@@ -1,0 +1,658 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="k8s的operator开发实践"><meta name="theme-color" content="#f6f3ed"><link rel="icon" href="/avatar.jpeg"><link rel="canonical" href="https://vicebery.github.io/posts/20200115/kubernetes-operator/"><link rel="alternate" hreflang="zh-CN" href="https://vicebery.github.io/"><link rel="alternate" hreflang="en" href="https://vicebery.github.io/en/writing/"><link rel="alternate" hreflang="x-default" href="https://vicebery.github.io/"><title>operator开发实践 · vicebery</title><link rel="stylesheet" href="/_astro/_slug_.CzoBhStN.css"></head> <body> <header class="site-header"> <div class="shell nav-shell"> <a class="wordmark" href="/">vicebery<span>.</span></a> <nav class="main-nav" aria-label="主导航"> <a href="/">首页</a> <a href="/writing/">写作</a> <a href="/about/">关于</a> </nav> <div class="language-switcher" aria-label="Language selection"> <a href="/" class="language-link active" data-locale-switch="zh-cn" aria-current="page">中文</a> <span aria-hidden="true">/</span> <a href="/en/writing/" class="language-link" data-locale-switch="en">EN</a> </div> <script type="module">document.querySelectorAll("[data-locale-switch]").forEach(e=>{e.addEventListener("click",()=>{const t=e.getAttribute("data-locale-switch");t&&localStorage.setItem("vicebery.locale",t)})});</script> </div> </header> <main>  <article class="article shell narrow"> <header class="article-header"> <p class="eyebrow">学习记录</p> <h1>operator开发实践</h1> <time datetime="2020-01-15T05:51:52.000Z">2020年1月15日</time> <ul class="tag-list article-tags" aria-label="Tags"> <li>Kubernetes</li><li>k8s</li><li>operator</li><li>go</li> </ul> </header> <div class="prose"><hr>
+<h2 id="operator的概念">operator的概念</h2>
+<p>kubernetes对于无状态应用能够很好地调度处理，对于有状态的应用提供了一个<a href="https://kubernetes.io/zh/docs/concepts/workloads/controllers/statefulset/"><code>Statefulset</code></a>来处理，但<code>Statefulset</code>对于有状态应用的支持相当有限，稍微复杂一点的有状态应用就支持不了，为了对实际生产中的各种复杂应用提供更好的支持，我们需要创建一个自定义的控制器对Kubernetes API进行拓展，这种面向特定应用的控制器我们称之为<code>Operator</code>。</p>
+<p><code>Operator</code>一般包含对<code>Kubernetes</code>内置资源、用户自定义资源的调度，用户自定义资源本质上也是<code>Kubernetes</code>内置资源的一个包装和拓展，因此这个<code>controller</code>本质上还是对<code>kubernetes</code>内置资源的调度，不同于<code>Kubernetes API</code>提供的配置、管理，<code>controller</code>给用户的自由度更高，能根据用户自己的需求来调度各种资源以满足更多复杂的业务场景。</p>
+<p>Operator基于两个Kubernetes的核心概念： 资源和控制器，从技术上来讲，就是通过CRD和controller来实现。CRD用来定义一些我们的调度逻辑所需的参数，并接收参数，controller根据接收到的参数来进行相应的调度逻辑。</p>
+<p>Operator一般以单一Deployment的形式进行部署，作为集群中的一个Pod来运行。Operator运行起来后，会实例化一个我们编写好的controller，该controller会监听、调度CRD资源以及内置资源，以此来达到我们的运维需求。</p>
+<p><a href="https://segmentfault.com/a/1190000017856615">operator的发展历程</a></p>
+<h2 id="案例实践">案例实践</h2>
+<p>下面将以一个实际开发中的案例来介绍一下operator的开发过程。</p>
+<p>在该案例中，业务系统每次启动都会根据Oracle数据库中的一个表来初始化一个工作流队列，工作队列启动停止会有一定顺序，并且也会触发数据库里的一些操作，我们需要做的是按照时间来调度启动的工作流数量。具体业务不详述了，我们着重关注下operator开发的一些通用步骤。</p>
+<p>主要有生成框架代码，编写controller代码两大块。</p>
+<h2 id="开发环境">开发环境</h2>
+<p>建议在linux下开发，因为最终operator开发好后的运行环境是在kubernetes集群中，集群运行在Linux上。另外开发过程中也会有一些依赖区分系统环境的（比如：此项目中的oracle驱动oci8），如果在window下开发，最终编译时还得改回来。</p>
+<p>前期没有使用IDE，后面发现controller代码还是挺多的，如果不用IDE，效率很低，因此使用goland来开发。</p>
+<p>此次开发是在<code>Ubuntu 18.04.1</code>上，需要事先安装好golang、git，golang建议版本在<code>1.12</code>以上，支持<code>go module</code>，依赖包管理会方便很多。</p>
+<h2 id="主要步骤">主要步骤</h2>
+<h3 id="创建crd">创建CRD</h3>
+<p>首先，在kubernetes集群下，创建我们自定义的资源，就和pod、deployment资源一样，建好后我们可以新建删除。但这时的新建删除并没有执行我们想要的操作，需要controller来实现。</p>
+<p>创建一个<code>crd.yaml</code>文件，内容如下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">apiVersion</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">apiextensions.k8s.io/v1beta1</span></span>
+<span class="line"><span style="color:#85E89D">kind</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">CustomResourceDefinition</span></span>
+<span class="line"><span style="color:#85E89D">metadata</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#6A737D">  # metadata.name的内容是由"复数名.分组名"构成，如下，workflows是复数名，vicebery.cn是分组名</span></span>
+<span class="line"><span style="color:#85E89D">  name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">workflows.vicebery.cn</span></span>
+<span class="line"><span style="color:#85E89D">spec</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#6A737D">  # 分组名，在REST API中也会用到的，格式是: /apis/分组名/CRD版本，后面controller也会用到，注意保持一致</span></span>
+<span class="line"><span style="color:#85E89D">  group</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">vicebery.cn</span></span>
+<span class="line"><span style="color:#85E89D">  versions</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">v1</span></span>
+<span class="line"><span style="color:#85E89D">      served</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#85E89D">      storage</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#6A737D">  # 范围是属于namespace的</span></span>
+<span class="line"><span style="color:#85E89D">  scope</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Namespaced</span></span>
+<span class="line"><span style="color:#85E89D">  names</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">    plural</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">workflows</span></span>
+<span class="line"><span style="color:#85E89D">    singular</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">workflow</span></span>
+<span class="line"><span style="color:#6A737D">    # 类型名</span></span>
+<span class="line"><span style="color:#85E89D">    kind</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Workflow</span></span>
+<span class="line"><span style="color:#6A737D">    # 简称，就像service的简称是svc</span></span>
+<span class="line"><span style="color:#85E89D">    shortNames</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">      - </span><span style="color:#9ECBFF">wkf</span></span></code></pre>
+<p>在当前文件的目录下使用命令行创建新的资源类型：<code>kubectl create -f crd.yaml</code></p>
+<p>该步骤会在kubernetes集群中生成一个新的资源类型，在controller的代码中会监听该资源的状态，根据其属性来做出相应的调整。下面开始controller的编写。</p>
+<h3 id="生成代码">生成代码</h3>
+<p>在正式编写controller的业务代码之前，需要先根据我们自定义的资源类型生成一些脚手架代码，这些代码给我们提供了监听、调度自定义资源的接口，我们可以直接使用，有了这些代码，我们可以将更多的精力放在业务逻辑上。</p>
+<p>在<code>$GOPATH/src/</code>下创建一个目录<code>billing-system-workflow-operator</code>，在该目录下，执行命令<code>mkdir -p pkg/apis/workflowoperator</code>
+创建三层目录；</p>
+<p>在<code>workflowoperator</code>目录下创建文件<code>register.go</code>，文件内容如下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> workflowoperator</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#79B8FF">	GroupName</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "vicebery.cn"</span></span>
+<span class="line"><span style="color:#79B8FF">	Version</span><span style="color:#F97583">   =</span><span style="color:#9ECBFF"> "v1"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>在<code>workflowoperator</code>目录下创建下创建目录<code>v1</code>，在<code>v1</code>目录下创建<code>doc.go</code>，文件内容如下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#6A737D">// +k8s:deepcopy-gen=package</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// +groupName=vicebery.cn</span></span>
+<span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> v1</span></span></code></pre>
+<p>在<code>v1</code>目录下新建<code>register.go</code>，文件内容如下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> v1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">	metav1 </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">k8s.io/apimachinery/pkg/apis/meta/v1</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">k8s.io/apimachinery/pkg/runtime</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">k8s.io/apimachinery/pkg/runtime/schema</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	register </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">vicebery.cn/billing-system-workflow-operator/pkg/apis/workflowoperator</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> SchemeGroupVersion </span><span style="color:#F97583">=</span><span style="color:#B392F0"> schema</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">GroupVersion</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">	Group:   register.GroupName,</span></span>
+<span class="line"><span style="color:#E1E4E8">	Version: register.Version,</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">	SchemeBuilder </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> runtime.</span><span style="color:#B392F0">NewSchemeBuilder</span><span style="color:#E1E4E8">(addKnownTypes)</span></span>
+<span class="line"><span style="color:#E1E4E8">	AddToScheme   </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> SchemeBuilder.AddToScheme</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> Resource</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">resource</span><span style="color:#F97583"> string</span><span style="color:#E1E4E8">) </span><span style="color:#B392F0">schema</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">GroupResource</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">	return</span><span style="color:#E1E4E8"> SchemeGroupVersion.</span><span style="color:#B392F0">WithResource</span><span style="color:#E1E4E8">(resource).</span><span style="color:#B392F0">GroupResource</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> Kind</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">kind</span><span style="color:#F97583"> string</span><span style="color:#E1E4E8">) </span><span style="color:#B392F0">schema</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">GroupKind</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">	return</span><span style="color:#E1E4E8"> SchemeGroupVersion.</span><span style="color:#B392F0">WithKind</span><span style="color:#E1E4E8">(kind).</span><span style="color:#B392F0">GroupKind</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> addKnownTypes</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">scheme</span><span style="color:#F97583"> *</span><span style="color:#B392F0">runtime</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Scheme</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">error</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">	scheme.</span><span style="color:#B392F0">AddKnownTypes</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">		SchemeGroupVersion,</span></span>
+<span class="line"><span style="color:#F97583">		&#x26;</span><span style="color:#B392F0">Workflow</span><span style="color:#E1E4E8">{},</span></span>
+<span class="line"><span style="color:#F97583">		&#x26;</span><span style="color:#B392F0">WorkflowList</span><span style="color:#E1E4E8">{},</span></span>
+<span class="line"><span style="color:#E1E4E8">	)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">	// register the type in the scheme</span></span>
+<span class="line"><span style="color:#E1E4E8">	metav1.</span><span style="color:#B392F0">AddToGroupVersion</span><span style="color:#E1E4E8">(scheme, SchemeGroupVersion)</span></span>
+<span class="line"><span style="color:#F97583">	return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>在<code>v1</code>目录下新建<code>types.go</code>，里面定义了 <code>Workflow</code> 对象的具体内容，按照实际的业务需求来：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> v1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">	v1 </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">k8s.io/api/core/v1</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">k8s.io/apimachinery/pkg/api/resource</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">	metav1 </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">k8s.io/apimachinery/pkg/apis/meta/v1</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// +genclient</span></span>
+<span class="line"><span style="color:#6A737D">// +genclient:noStatus</span></span>
+<span class="line"><span style="color:#6A737D">// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Workflow</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">	metav1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">TypeMeta</span><span style="color:#9ECBFF">   `json:",inline"`</span></span>
+<span class="line"><span style="color:#B392F0">	metav1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">ObjectMeta</span><span style="color:#9ECBFF"> `json:"metadata,omitempty"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Spec              </span><span style="color:#B392F0">WorkflowSpec</span><span style="color:#9ECBFF">   `json:"spec,omitempty"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Status            </span><span style="color:#B392F0">WorkflowStatus</span><span style="color:#9ECBFF"> `json:"status, omitempty"`</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> WorkflowSpec</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">	Database         </span><span style="color:#B392F0">Database</span><span style="color:#9ECBFF">                  `json:"database" protobuf:"bytes,1,name=database"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Replicas         </span><span style="color:#F97583">*int32</span><span style="color:#9ECBFF">                    `json:"replicas" protobuf:"varint,2,opt,name=replicas"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Hpa              []</span><span style="color:#B392F0">Hpa</span><span style="color:#9ECBFF">                     `json:"hpa,omitempty" protobuf:"bytes,3,rep,name=hpa"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	InitImage        </span><span style="color:#F97583">string</span><span style="color:#9ECBFF">                    `json:"initImage" protobuf:"bytes,4,name=initImage"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Image            </span><span style="color:#F97583">string</span><span style="color:#9ECBFF">                    `json:"image" protobuf:"bytes,5,name=image"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	ImagePullPolicy  </span><span style="color:#B392F0">v1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">PullPolicy</span><span style="color:#9ECBFF">             `json:"imagePullPolicy,omitempty" protobuf:"bytes,6,opt,name=imagePullPolicy"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	ImagePullSecrets []</span><span style="color:#B392F0">v1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">LocalObjectReference</span><span style="color:#9ECBFF"> `json:"imagePullSecrets,omitempty" patchStrategy:"merge" patchMergeKey:"name" protobuf:"bytes,7,rep,name=imagePullSecrets"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Ports            []</span><span style="color:#B392F0">v1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">ContainerPort</span><span style="color:#9ECBFF">        `json:"ports,omitempty" protobuf:"bytes,8,rep,name=ports"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	EnvFrom          []</span><span style="color:#B392F0">v1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">EnvFromSource</span><span style="color:#9ECBFF">        `json:"envFrom,omitempty" protobuf:"bytes,9,rep,name=envFrom"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Env              []</span><span style="color:#B392F0">v1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">EnvVar</span><span style="color:#9ECBFF">               `json:"env,omitempty" patchStrategy:"merge" patchMergeKey:"name" protobuf:"bytes,10,rep,name=env"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Resources        </span><span style="color:#B392F0">v1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">ResourceRequirements</span><span style="color:#9ECBFF">   `json:"resources,omitempty" protobuf:"bytes,11,opt,name=resources"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Config           </span><span style="color:#B392F0">Config</span><span style="color:#9ECBFF">                    `json:"config,omitempty" protobuf:"bytes,12,opt,name=config"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	HealthCheck      </span><span style="color:#B392F0">HealthCheck</span><span style="color:#9ECBFF">               `json:"healthCheck,omitempty" protobuf:"bytes,13,opt,name=healthCheck"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Storage          </span><span style="color:#B392F0">Storage</span><span style="color:#9ECBFF">                   `json:"storage,omitempty" protobuf:"bytes,14,opt,name=storage"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Server           </span><span style="color:#F97583">int</span><span style="color:#9ECBFF">                       `json:"server" protobuf:"bytes,15,name=server"`</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> WorkflowStatus</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">	LastScheduleTime </span><span style="color:#F97583">*</span><span style="color:#B392F0">metav1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Time</span><span style="color:#9ECBFF"> `json:"lastScheduleTime,omitempty" protobuf:"bytes,1,opt,name=lastScheduleTime"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	CurrentReplicas  </span><span style="color:#F97583">*int32</span><span style="color:#9ECBFF">       `json:"currentReplicas" protobuf:"varint,2,opt,name=currentReplicas"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	ScheduleReason   </span><span style="color:#F97583">string</span><span style="color:#9ECBFF">       `json:"scheduleReason" protobuf:"bytes,3,name=scheduleReason"`</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Database</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">	Url         </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `json:"url" protobuf:"bytes,1,name=url"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	SecretsName </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `json:"secretName" protobuf:"bytes,2,name=secretsName"`</span></span>
+<span class="line"><span style="color:#6A737D">	// TODO 入文档</span></span>
+<span class="line"><span style="color:#E1E4E8">	Procedure []</span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `json:"proc" protobuf:"bytes,3,name=proc"`</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Hpa</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">	Cron     </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `json:"cron,omitempty" protobuf:"bytes,1,name=cron"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Replicas </span><span style="color:#F97583">int32</span><span style="color:#9ECBFF">  `json:"replicas,omitempty" protobuf:"varint,2,name=replicas"`</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Config</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">	ConfigTemplate </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `json:"configTemplate,omitempty" protobuf:"bytes,1,name=configTemplate"`</span></span>
+<span class="line"><span style="color:#6A737D">	// TODO 入文档</span></span>
+<span class="line"><span style="color:#E1E4E8">	Path     </span><span style="color:#F97583">string</span><span style="color:#9ECBFF">     `json:"path, omitempty" protobuf:"bytes,2,name=path"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Override []</span><span style="color:#B392F0">Override</span><span style="color:#9ECBFF"> `json:"override,omitempty" protobuf:"bytes,3,rep,name=override"`</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Override</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">	Index </span><span style="color:#F97583">uint16</span><span style="color:#9ECBFF"> `json:"index,omitempty" protobuf:"varint,1,name=index"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Filed </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `json:"filed,omitempty" protobuf:"bytes,2,name=filed"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Value </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `json:"value,omitempty" protobuf:"bytes,3,name=value"`</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> HealthCheck</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">	ReadinessProbe </span><span style="color:#F97583">*</span><span style="color:#B392F0">v1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Probe</span><span style="color:#9ECBFF"> `json:"readinessProbe,omitempty" protobuf:"bytes,1,name=readinessProbe"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	LivenessProbe  </span><span style="color:#F97583">*</span><span style="color:#B392F0">v1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Probe</span><span style="color:#9ECBFF"> `json:"livenessProbe,omitempty" protobuf:"bytes,2,name=livenessProbe"`</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Storage</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">	StorageClassName </span><span style="color:#F97583">*</span><span style="color:#F97583">string</span><span style="color:#9ECBFF">           `json:"storageClassName,omitempty" protobuf:"bytes,1,opt,name=storageClassName"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	StorageResource  </span><span style="color:#B392F0">resource</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Quantity</span><span style="color:#9ECBFF"> `json:"storageResource,omitempty" protobuf:"bytes,2,opt,name=storageResource"`</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// WorkflowList is a list of Workflow resources</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> WorkflowList</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">	metav1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">TypeMeta</span><span style="color:#9ECBFF"> `json:",inline"`</span></span>
+<span class="line"><span style="color:#B392F0">	metav1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">ListMeta</span><span style="color:#9ECBFF"> `json:"metadata"`</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	Items []</span><span style="color:#B392F0">Workflow</span><span style="color:#9ECBFF"> `json:"items"`</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p>以上文件都建好后，在<code>$GOPATH/src/vicebery.cn/billing-system-workflow-operator/pkg</code>使用<code>tree</code>命令，结构如下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">tree</span></span>
+<span class="line"><span style="color:#79B8FF">.</span></span>
+<span class="line"><span style="color:#B392F0">├──</span><span style="color:#9ECBFF"> apis</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> └──</span><span style="color:#9ECBFF"> workflowoperator</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF">     ├──</span><span style="color:#9ECBFF"> register.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF">     └──</span><span style="color:#9ECBFF"> v1</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF">         ├──</span><span style="color:#9ECBFF"> doc.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF">         ├──</span><span style="color:#9ECBFF"> register.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF">         └──</span><span style="color:#9ECBFF"> types.go</span></span></code></pre>
+<p>接下来，我们使用<a href="https://github.com/kubernetes/apimachinery">apimachinery</a>和<a href="https://github.com/kubernetes/code-generator">code-generator</a>来生成代码，这里需要特别注意<strong>版本对应</strong>的问题，根据<strong>目标集群版本</strong>来选择对应的版本。</p>
+<p>为了避免后续版本依赖管理混乱，我们使用<code>go mod</code>来管理依赖</p>
+<p>初始化模块：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#79B8FF">cd</span><span style="color:#E1E4E8"> $GOPATH</span><span style="color:#9ECBFF">/src/vicebery.cn/billing-system-workflow-operator</span></span>
+<span class="line"><span style="color:#B392F0">go</span><span style="color:#9ECBFF"> mod</span><span style="color:#9ECBFF"> init</span><span style="color:#9ECBFF"> vicebery.cn/billing-system-workflow-operator</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 执行完后在当前目录生成go.mod文件，该文件记录着当前使用的依赖包及对应版本</span></span></code></pre>
+<p>拉取依赖(注意版本对应问题)，执行生成代码的脚步：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#79B8FF">cd</span><span style="color:#E1E4E8"> $GOPATH</span><span style="color:#9ECBFF">/src/vicebery.cn/billing-system-workflow-operator</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#E1E4E8">&#x26;&#x26; </span><span style="color:#B392F0">go</span><span style="color:#9ECBFF"> get</span><span style="color:#9ECBFF"> k8s.io/apimachinery/pkg/apis/meta/v1@release-1.12</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#E1E4E8">&#x26;&#x26; </span><span style="color:#B392F0">go</span><span style="color:#9ECBFF"> get</span><span style="color:#9ECBFF"> k8s.io/code-generator/...@release-1.12</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#E1E4E8">&#x26;&#x26; </span><span style="color:#79B8FF">cd</span><span style="color:#E1E4E8"> $GOPATH</span><span style="color:#9ECBFF">/src/k8s.io/code-generator</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#E1E4E8">./generate-groups.sh </span><span style="color:#9ECBFF">all</span><span style="color:#9ECBFF"> vicebery.cn/billing-system-workflow-operator/pkg/client</span><span style="color:#9ECBFF"> vicebery.cn/billing-system-workflow-operator/pkg/apis</span><span style="color:#9ECBFF"> workflowoperator:v1</span></span></code></pre>
+<p>执行完代码生成脚步后，会在终端看到相应的打印信息：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">Generating</span><span style="color:#9ECBFF"> deepcopy</span><span style="color:#9ECBFF"> funcs</span></span>
+<span class="line"><span style="color:#B392F0">Generating</span><span style="color:#9ECBFF"> clientset</span><span style="color:#9ECBFF"> for</span><span style="color:#9ECBFF"> workflowoperator:v1</span><span style="color:#9ECBFF"> at</span><span style="color:#9ECBFF"> vicebery.cn/billing-system-workflow-operator/pkg/client/clientset</span></span>
+<span class="line"><span style="color:#B392F0">Generating</span><span style="color:#9ECBFF"> listers</span><span style="color:#9ECBFF"> for</span><span style="color:#9ECBFF"> workflowoperator:v1</span><span style="color:#9ECBFF"> at</span><span style="color:#9ECBFF"> vicebery.cn/billing-system-workflow-operator/pkg/client/listers</span></span>
+<span class="line"><span style="color:#B392F0">Generating</span><span style="color:#9ECBFF"> informers</span><span style="color:#9ECBFF"> for</span><span style="color:#9ECBFF"> workflowoperator:v1</span><span style="color:#9ECBFF"> at</span><span style="color:#9ECBFF"> vicebery.cn/billing-system-workflow-operator/pkg/client/informers</span></span></code></pre>
+<p>再次用<code>tree</code>查看文件结构，发现自动生成了很多文件：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">vicebery@vicebery-pc:~/go/src/vicebery.cn/billing-system-workflow-operator/pkg$</span></span>
+<span class="line"><span style="color:#B392F0">tree</span></span>
+<span class="line"><span style="color:#79B8FF">.</span></span>
+<span class="line"><span style="color:#B392F0">├──</span><span style="color:#9ECBFF"> apis</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> └──</span><span style="color:#9ECBFF"> workflowoperator</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF">     ├──</span><span style="color:#9ECBFF"> register.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF">     └──</span><span style="color:#9ECBFF"> v1</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF">         ├──</span><span style="color:#9ECBFF"> doc.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF">         ├──</span><span style="color:#9ECBFF"> register.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF">         ├──</span><span style="color:#9ECBFF"> types.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF">         └──</span><span style="color:#9ECBFF"> zz_generated.deepcopy.go</span></span>
+<span class="line"><span style="color:#B392F0">├──</span><span style="color:#9ECBFF"> client</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> ├──</span><span style="color:#9ECBFF"> clientset</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF"> └──</span><span style="color:#9ECBFF"> versioned</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">     ├──</span><span style="color:#9ECBFF"> clientset.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">     ├──</span><span style="color:#9ECBFF"> doc.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">     ├──</span><span style="color:#9ECBFF"> fake</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">     │  </span><span style="color:#9ECBFF"> ├──</span><span style="color:#9ECBFF"> clientset_generated.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">     │  </span><span style="color:#9ECBFF"> ├──</span><span style="color:#9ECBFF"> doc.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">     │  </span><span style="color:#9ECBFF"> └──</span><span style="color:#9ECBFF"> register.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">     ├──</span><span style="color:#9ECBFF"> scheme</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">     │  </span><span style="color:#9ECBFF"> ├──</span><span style="color:#9ECBFF"> doc.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">     │  </span><span style="color:#9ECBFF"> └──</span><span style="color:#9ECBFF"> register.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">     └──</span><span style="color:#9ECBFF"> typed</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">         └──</span><span style="color:#9ECBFF"> workflowoperator</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">             └──</span><span style="color:#9ECBFF"> v1</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">                 ├──</span><span style="color:#9ECBFF"> doc.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">                 ├──</span><span style="color:#9ECBFF"> fake</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">                 │  </span><span style="color:#9ECBFF"> ├──</span><span style="color:#9ECBFF"> doc.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">                 │  </span><span style="color:#9ECBFF"> ├──</span><span style="color:#9ECBFF"> fake_workflow.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">                 │  </span><span style="color:#9ECBFF"> └──</span><span style="color:#9ECBFF"> fake_workflowoperator_client.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">                 ├──</span><span style="color:#9ECBFF"> generated_expansion.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">                 ├──</span><span style="color:#9ECBFF"> workflow.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">                 └──</span><span style="color:#9ECBFF"> workflowoperator_client.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> ├──</span><span style="color:#9ECBFF"> informers</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF"> └──</span><span style="color:#9ECBFF"> externalversions</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">     ├──</span><span style="color:#9ECBFF"> factory.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">     ├──</span><span style="color:#9ECBFF"> generic.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">     ├──</span><span style="color:#9ECBFF"> internalinterfaces</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">     │  </span><span style="color:#9ECBFF"> └──</span><span style="color:#9ECBFF"> factory_interfaces.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">     └──</span><span style="color:#9ECBFF"> workflowoperator</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">         ├──</span><span style="color:#9ECBFF"> interface.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">         └──</span><span style="color:#9ECBFF"> v1</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">             ├──</span><span style="color:#9ECBFF"> interface.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> │  </span><span style="color:#9ECBFF">             └──</span><span style="color:#9ECBFF"> workflow.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> └──</span><span style="color:#9ECBFF"> listers</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF">     └──</span><span style="color:#9ECBFF"> workflowoperator</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF">         └──</span><span style="color:#9ECBFF"> v1</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF">             ├──</span><span style="color:#9ECBFF"> expansion_generated.go</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF">             └──</span><span style="color:#9ECBFF"> workflow.go</span></span>
+<span class="line"></span></code></pre>
+<p>以上<code>go get</code>以及执行脚步的过程中，一般会出现找不到依赖包或者网络不通的问题，这是国内网络导致，需要让终端能连上外网，具体的解决方案这里不详述。</p>
+<h3 id="编写controller">编写controller</h3>
+<p>在<code>$GOPATH/src/vicebery.cn/billing-system-workflow-operator/pkg/</code>目录下新建目录<code>signals</code>，在<code>signals</code>目录下新建文件<code>signal_posix.go</code> ，内容如下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#6A737D">// +build !windows</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> signals</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">os</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">syscall</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> shutdownSignals </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span><span style="color:#B392F0">os</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Signal</span><span style="color:#E1E4E8">{os.Interrupt, syscall.SIGTERM}</span></span></code></pre>
+<p>在 <code>signals</code> 目录下新建文件 <code>signal_windows.go</code>，内容如下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> signals</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">os</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> shutdownSignals </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span><span style="color:#B392F0">os</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Signal</span><span style="color:#E1E4E8">{os.Interrupt}</span></span></code></pre>
+<p>在 <code>signals</code> 目录下新建文件 <code>signal.go</code>，内容如下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> signals</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">        "</span><span style="color:#B392F0">os</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">        "</span><span style="color:#B392F0">os/signal</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> onlyOneSignalHandler </span><span style="color:#F97583">=</span><span style="color:#B392F0"> make</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">chan</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8">{})</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> SetupSignalHandler</span><span style="color:#E1E4E8">() (</span><span style="color:#FFAB70">stopCh</span><span style="color:#F97583"> &#x3C;-chan</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8">{}) {</span></span>
+<span class="line"><span style="color:#B392F0">        close</span><span style="color:#E1E4E8">(onlyOneSignalHandler) </span><span style="color:#6A737D">// panics when called twice</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">        stop </span><span style="color:#F97583">:=</span><span style="color:#B392F0"> make</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">chan</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8">{})</span></span>
+<span class="line"><span style="color:#E1E4E8">        c </span><span style="color:#F97583">:=</span><span style="color:#B392F0"> make</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">chan</span><span style="color:#B392F0"> os</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Signal</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        signal.</span><span style="color:#B392F0">Notify</span><span style="color:#E1E4E8">(c, shutdownSignals</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">        go</span><span style="color:#F97583"> func</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">                &#x3C;-</span><span style="color:#E1E4E8">c</span></span>
+<span class="line"><span style="color:#B392F0">                close</span><span style="color:#E1E4E8">(stop)</span></span>
+<span class="line"><span style="color:#F97583">                &#x3C;-</span><span style="color:#E1E4E8">c</span></span>
+<span class="line"><span style="color:#E1E4E8">                os.</span><span style="color:#B392F0">Exit</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D">// second signal. Exit directly.</span></span>
+<span class="line"><span style="color:#E1E4E8">        }()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> stop</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>在<code>$GOPATH/src/vicebery.cn/billing-system-workflow-operator/pkg/</code>目录下新建目录<code>controller</code>目录和<code>cmd</code>目录，在<code>cmd</code>目录下新建<code>main.go</code>文件，文件内容如下：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">flag</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">os</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">os/user</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">path/filepath</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">k8s.io/client-go/rest</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">github.com/golang/glog</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">k8s.io/client-go/kubernetes</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">k8s.io/client-go/tools/clientcmd</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#6A737D">	// Uncomment the following line to load the gcp plugin (only required to authenticate against GKE clusters).</span></span>
+<span class="line"><span style="color:#6A737D">	// _ "k8s.io/client-go/plugin/pkg/client/auth/gcp"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	clientset </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">vicebery.cn/billing-system-workflow-operator/pkg/client/clientset/versioned</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">	informers </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">vicebery.cn/billing-system-workflow-operator/pkg/client/informers/externalversions</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">	myController </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">vicebery.cn/billing-system-workflow-operator/pkg/controller</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#6A737D">	//"vicebery.cn/billing-system-workflow-operator/pkg/controller/oracle"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">vicebery.cn/billing-system-workflow-operator/pkg/signals</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">	masterURL  </span><span style="color:#F97583">string</span></span>
+<span class="line"><span style="color:#E1E4E8">	kubeconfig </span><span style="color:#F97583">string</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> ENV_OPERATOR_NAMESPACE</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "OPERATOR_NAMESPACE"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	flag.</span><span style="color:#B392F0">Parse</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">	// 处理信号量</span></span>
+<span class="line"><span style="color:#E1E4E8">	stopCh </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> signals.</span><span style="color:#B392F0">SetupSignalHandler</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">	// 获取配置信息</span></span>
+<span class="line"><span style="color:#E1E4E8">	cfg, err </span><span style="color:#F97583">:=</span><span style="color:#B392F0"> GetConfig</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">		glog.</span><span style="color:#B392F0">Fatalf</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Error building kubeconfig: </span><span style="color:#79B8FF">%s</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">, err.</span><span style="color:#B392F0">Error</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	kubeClient, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> kubernetes.</span><span style="color:#B392F0">NewForConfig</span><span style="color:#E1E4E8">(cfg)</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">		glog.</span><span style="color:#B392F0">Fatalf</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Error building kubernetes clientset: </span><span style="color:#79B8FF">%s</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">, err.</span><span style="color:#B392F0">Error</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">	//创建workflow的clientset</span></span>
+<span class="line"><span style="color:#E1E4E8">	workflowClient, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> clientset.</span><span style="color:#B392F0">NewForConfig</span><span style="color:#E1E4E8">(cfg)</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">		glog.</span><span style="color:#B392F0">Fatalf</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Error building example clientset: </span><span style="color:#79B8FF">%s</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">, err.</span><span style="color:#B392F0">Error</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">	//监听workflow资源变化的工厂</span></span>
+<span class="line"><span style="color:#6A737D">	//第二个入参为k8s将local cache数据回调给event handler的时间间隔</span></span>
+<span class="line"><span style="color:#E1E4E8">	workflowInformerFactory </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> informers.</span><span style="color:#B392F0">NewSharedInformerFactoryWithOptions</span><span style="color:#E1E4E8">(workflowClient, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, informers.</span><span style="color:#B392F0">WithNamespace</span><span style="color:#E1E4E8">(os.</span><span style="color:#B392F0">Getenv</span><span style="color:#E1E4E8">(ENV_OPERATOR_NAMESPACE)))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">	//得到controller</span></span>
+<span class="line"><span style="color:#6A737D">	//传入参数解释： kubeClient-->CRUDk8s资源，workflowClient-->CRUD 自定义资源，</span></span>
+<span class="line"><span style="color:#6A737D">	//workflowInformerFactory.Vicebery().V1().Workflows()-->Workflow资源的监听器</span></span>
+<span class="line"><span style="color:#E1E4E8">	controller </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> myController.</span><span style="color:#B392F0">NewController</span><span style="color:#E1E4E8">(kubeClient, workflowClient,</span></span>
+<span class="line"><span style="color:#E1E4E8">		workflowInformerFactory.</span><span style="color:#B392F0">Vicebery</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">V1</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Workflows</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">	//启动informer</span></span>
+<span class="line"><span style="color:#F97583">	go</span><span style="color:#E1E4E8"> workflowInformerFactory.</span><span style="color:#B392F0">Start</span><span style="color:#E1E4E8">(stopCh)</span></span>
+<span class="line"><span style="color:#E1E4E8">	controller.</span><span style="color:#B392F0">Run</span><span style="color:#E1E4E8">(stopCh)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 获取集群配置信息</span></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> GetConfig</span><span style="color:#E1E4E8">() (</span><span style="color:#F97583">*</span><span style="color:#B392F0">rest</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Config</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">error</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#B392F0"> len</span><span style="color:#E1E4E8">(kubeconfig) </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#E1E4E8"> clientcmd.</span><span style="color:#B392F0">BuildConfigFromFlags</span><span style="color:#E1E4E8">(masterURL, kubeconfig)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#B392F0"> len</span><span style="color:#E1E4E8">(os.</span><span style="color:#B392F0">Getenv</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"KUBECONFIG"</span><span style="color:#E1E4E8">)) </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#E1E4E8"> clientcmd.</span><span style="color:#B392F0">BuildConfigFromFlags</span><span style="color:#E1E4E8">(masterURL, os.</span><span style="color:#B392F0">Getenv</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"KUBECONFIG"</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> c, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> rest.</span><span style="color:#B392F0">InClusterConfig</span><span style="color:#E1E4E8">(); err </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#E1E4E8"> c, </span><span style="color:#79B8FF">nil</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> usr, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> user.</span><span style="color:#B392F0">Current</span><span style="color:#E1E4E8">(); err </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> c, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> clientcmd.</span><span style="color:#B392F0">BuildConfigFromFlags</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#9ECBFF">			""</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">			filepath.</span><span style="color:#B392F0">Join</span><span style="color:#E1E4E8">(usr.HomeDir, </span><span style="color:#9ECBFF">".kube"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"config"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">		); err </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">			return</span><span style="color:#E1E4E8"> c, </span><span style="color:#79B8FF">nil</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#F97583">	return</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8">, fmt.</span><span style="color:#B392F0">Errorf</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"could not locate a kubeconfig"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> init</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	flag.</span><span style="color:#B392F0">StringVar</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&#x26;</span><span style="color:#E1E4E8">kubeconfig, </span><span style="color:#9ECBFF">"kubeconfig"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Path to a kubeconfig. Only required if out-of-cluster."</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">	flag.</span><span style="color:#B392F0">StringVar</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&#x26;</span><span style="color:#E1E4E8">masterURL, </span><span style="color:#9ECBFF">"master"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"The address of the Kubernetes API server. Overrides any value in kubeconfig. Only required if out-of-cluster."</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p>在<code>$GOPATH/src/vicebery.cn/billing-system-workflow-operator/pkg/</code>目录下新建目录<code>controller</code>目录和<code>cmd</code>目录，在<code>controller</code>目录下新建<code>controller.go</code>文件，在controller文件中编写相应的业务逻辑：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> controller</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">os</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">reflect</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">strconv</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">strings</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">time</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">github.com/arduino/go-properties-map</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">github.com/golang/glog</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">	cronutil </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">github.com/robfig/cron</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">vicebery.cn/billing-system-workflow-operator/pkg/controller/workload</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">	corev1 </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">k8s.io/api/core/v1</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">k8s.io/apimachinery/pkg/api/errors</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">	metav1 </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">k8s.io/apimachinery/pkg/apis/meta/v1</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">k8s.io/apimachinery/pkg/util/runtime</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">	utilruntime </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">k8s.io/apimachinery/pkg/util/runtime</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">k8s.io/apimachinery/pkg/util/wait</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">k8s.io/client-go/kubernetes</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">k8s.io/client-go/kubernetes/scheme</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">	typedcorev1 </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">k8s.io/client-go/kubernetes/typed/core/v1</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">k8s.io/client-go/tools/cache</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">k8s.io/client-go/tools/record</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">k8s.io/client-go/util/workqueue</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	workflowoperatorv1 </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">vicebery.cn/billing-system-workflow-operator/pkg/apis/workflowoperator/v1</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">	clientset </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">vicebery.cn/billing-system-workflow-operator/pkg/client/clientset/versioned</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">	workflowscheme </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">vicebery.cn/billing-system-workflow-operator/pkg/client/clientset/versioned/scheme</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">	informers </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">vicebery.cn/billing-system-workflow-operator/pkg/client/informers/externalversions/workflowoperator/v1</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">	listers </span><span style="color:#9ECBFF">"</span><span style="color:#B392F0">vicebery.cn/billing-system-workflow-operator/pkg/client/listers/workflowoperator/v1</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">vicebery.cn/billing-system-workflow-operator/pkg/controller/oracle</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> RecorderCompName</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "workflow-controller"</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> EnvOperatorNamespace</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "OPERATOR_NAMESPACE"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Controller is the controller implementation for workflow resources</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Controller</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">	// kubeclientset is a standard kubernetes clientset</span></span>
+<span class="line"><span style="color:#E1E4E8">	kubeclientset </span><span style="color:#B392F0">kubernetes</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Interface</span></span>
+<span class="line"><span style="color:#6A737D">	// workflowclientset is a clientset for our own API group</span></span>
+<span class="line"><span style="color:#E1E4E8">	workflowclientset </span><span style="color:#B392F0">clientset</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Interface</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	workflowLister </span><span style="color:#B392F0">listers</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">WorkflowLister</span></span>
+<span class="line"><span style="color:#E1E4E8">	workflowSynced </span><span style="color:#B392F0">cache</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">InformerSynced</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	workqueue </span><span style="color:#B392F0">workqueue</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">RateLimitingInterface</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	recorder </span><span style="color:#B392F0">record</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">EventRecorder</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// NewController returns a new workflow controller</span></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> NewController</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#FFAB70">	kubeclientset</span><span style="color:#B392F0"> kubernetes</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Interface</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">	workflowclientset</span><span style="color:#B392F0"> clientset</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Interface</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">	workflowInformer</span><span style="color:#B392F0"> informers</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">WorkflowInformer</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">*</span><span style="color:#B392F0">Controller</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	utilruntime.</span><span style="color:#B392F0">Must</span><span style="color:#E1E4E8">(workflowscheme.</span><span style="color:#B392F0">AddToScheme</span><span style="color:#E1E4E8">(scheme.Scheme))</span></span>
+<span class="line"><span style="color:#E1E4E8">	eventBroadcaster </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> record.</span><span style="color:#B392F0">NewBroadcaster</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">	eventBroadcaster.</span><span style="color:#B392F0">StartLogging</span><span style="color:#E1E4E8">(glog.Infof)</span></span>
+<span class="line"><span style="color:#E1E4E8">	eventBroadcaster.</span><span style="color:#B392F0">StartRecordingToSink</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&#x26;</span><span style="color:#B392F0">typedcorev1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">EventSinkImpl</span><span style="color:#E1E4E8">{Interface: kubeclientset.</span><span style="color:#B392F0">CoreV1</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Events</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">)})</span></span>
+<span class="line"><span style="color:#E1E4E8">	recorder </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> eventBroadcaster.</span><span style="color:#B392F0">NewRecorder</span><span style="color:#E1E4E8">(scheme.Scheme, </span><span style="color:#B392F0">corev1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">EventSource</span><span style="color:#E1E4E8">{Component: RecorderCompName})</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	controller </span><span style="color:#F97583">:=</span><span style="color:#F97583"> &#x26;</span><span style="color:#B392F0">Controller</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">		kubeclientset:     kubeclientset,</span></span>
+<span class="line"><span style="color:#E1E4E8">		workflowclientset: workflowclientset,</span></span>
+<span class="line"><span style="color:#E1E4E8">		workflowLister:    workflowInformer.</span><span style="color:#B392F0">Lister</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">		workflowSynced:    workflowInformer.</span><span style="color:#B392F0">Informer</span><span style="color:#E1E4E8">().HasSynced,</span></span>
+<span class="line"><span style="color:#E1E4E8">		workqueue:         workqueue.</span><span style="color:#B392F0">NewNamedRateLimitingQueue</span><span style="color:#E1E4E8">(workqueue.</span><span style="color:#B392F0">DefaultControllerRateLimiter</span><span style="color:#E1E4E8">(), </span><span style="color:#9ECBFF">"Workflow"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">		recorder:          recorder,</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">	// Set up an event handler for when Workflow resources change</span></span>
+<span class="line"><span style="color:#E1E4E8">	workflowInformer.</span><span style="color:#B392F0">Informer</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">AddEventHandler</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">cache</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">ResourceEventHandlerFuncs</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">		AddFunc:    controller.enqueueWorkflow,</span></span>
+<span class="line"><span style="color:#E1E4E8">		UpdateFunc: controller.enqueueWorkflowForUpdate,</span></span>
+<span class="line"><span style="color:#E1E4E8">		DeleteFunc: controller.enqueueWorkflowForDelete,</span></span>
+<span class="line"><span style="color:#E1E4E8">	})</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">	return</span><span style="color:#E1E4E8"> controller</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">//在此处开始controller的业务</span></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">c </span><span style="color:#F97583">*</span><span style="color:#B392F0">Controller</span><span style="color:#E1E4E8">) </span><span style="color:#B392F0">Run</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">stopCh</span><span style="color:#F97583"> &#x3C;-chan</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8">{}) {</span></span>
+<span class="line"><span style="color:#F97583">	defer</span><span style="color:#E1E4E8"> runtime.</span><span style="color:#B392F0">HandleCrash</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">	defer</span><span style="color:#E1E4E8"> c.workqueue.</span><span style="color:#B392F0">ShutDown</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	glog.</span><span style="color:#B392F0">Infof</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"starting HA PBRC billing system workflow operator"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#F97583"> !</span><span style="color:#E1E4E8">cache.</span><span style="color:#B392F0">WaitForCacheSync</span><span style="color:#E1E4E8">(stopCh, c.workflowSynced) {</span></span>
+<span class="line"><span style="color:#E1E4E8">		_ </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> fmt.</span><span style="color:#B392F0">Errorf</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"failed to wait for caches to sync"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">	go</span><span style="color:#E1E4E8"> wait.</span><span style="color:#B392F0">Until</span><span style="color:#E1E4E8">(c.runWorker, time.Second, stopCh)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">	&#x3C;-</span><span style="color:#E1E4E8">stopCh</span></span>
+<span class="line"><span style="color:#E1E4E8">	glog.</span><span style="color:#B392F0">Infof</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"HA PBRC billing system workflow operator has stopped"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">c </span><span style="color:#F97583">*</span><span style="color:#B392F0">Controller</span><span style="color:#E1E4E8">) </span><span style="color:#B392F0">runWorker</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">	for</span><span style="color:#E1E4E8"> c.</span><span style="color:#B392F0">processNextWorkItem</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 取数据处理</span></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">c </span><span style="color:#F97583">*</span><span style="color:#B392F0">Controller</span><span style="color:#E1E4E8">) </span><span style="color:#B392F0">processNextWorkItem</span><span style="color:#E1E4E8">() </span><span style="color:#F97583">bool</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">	key, shutdown </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> c.workqueue.</span><span style="color:#B392F0">Get</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> shutdown {</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#79B8FF"> false</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#F97583">	defer</span><span style="color:#E1E4E8"> c.workqueue.</span><span style="color:#B392F0">Done</span><span style="color:#E1E4E8">(key)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	glog.</span><span style="color:#B392F0">V</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Infof</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"operator queue length is :</span><span style="color:#79B8FF">%v</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">, c.workqueue.</span><span style="color:#B392F0">Len</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> c.</span><span style="color:#B392F0">syncHandler</span><span style="color:#E1E4E8">(key.(</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#79B8FF"> true</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	runtime.</span><span style="color:#B392F0">HandleError</span><span style="color:#E1E4E8">(err)</span></span>
+<span class="line"><span style="color:#F97583">	return</span><span style="color:#79B8FF"> true</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 处理</span></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">c </span><span style="color:#F97583">*</span><span style="color:#B392F0">Controller</span><span style="color:#E1E4E8">) </span><span style="color:#B392F0">syncHandler</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">key</span><span style="color:#F97583"> string</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">error</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">	// Convert the namespace/name string into a distinct namespace and name</span></span>
+<span class="line"><span style="color:#E1E4E8">	namespace, name, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> cache.</span><span style="color:#B392F0">SplitMetaNamespaceKey</span><span style="color:#E1E4E8">(key)</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#E1E4E8"> err</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">	// 从local cache 中获取对应的workflow</span></span>
+<span class="line"><span style="color:#E1E4E8">	workflow, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> c.workflowLister.</span><span style="color:#B392F0">Workflows</span><span style="color:#E1E4E8">(namespace).</span><span style="color:#B392F0">Get</span><span style="color:#E1E4E8">(name)</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> errors.</span><span style="color:#B392F0">IsNotFound</span><span style="color:#E1E4E8">(err) {</span></span>
+<span class="line"><span style="color:#E1E4E8">		glog.</span><span style="color:#B392F0">Errorf</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Workflow resource named </span><span style="color:#79B8FF">%s</span><span style="color:#9ECBFF"> has been deleted in </span><span style="color:#79B8FF">%s</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">, name, namespace)</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#E1E4E8"> err</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">	// 获取默认配置</span></span>
+<span class="line"><span style="color:#E1E4E8">	defaultConsumerThreadSize, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> c.</span><span style="color:#B392F0">getDefaultConsumerThreadSize</span><span style="color:#E1E4E8">(workflow)</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">		glog.</span><span style="color:#B392F0">Errorf</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Failed get default consumer.thread.size from workflow.properties, error message is </span><span style="color:#79B8FF">%s</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">, err)</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#E1E4E8"> err</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">	// 新建workflow 相关业务逻辑</span></span>
+<span class="line"><span style="color:#6A737D">	// 省略……</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">	return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 数据先放入缓存，再入队列</span></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">c </span><span style="color:#F97583">*</span><span style="color:#B392F0">Controller</span><span style="color:#E1E4E8">) </span><span style="color:#B392F0">enqueueWorkflow</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">obj</span><span style="color:#F97583"> interface</span><span style="color:#E1E4E8">{}) {</span></span>
+<span class="line"><span style="color:#6A737D">	// 将对象放入缓存</span></span>
+<span class="line"><span style="color:#E1E4E8">	key, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> cache.</span><span style="color:#B392F0">MetaNamespaceKeyFunc</span><span style="color:#E1E4E8">(obj)</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">		runtime.</span><span style="color:#B392F0">HandleError</span><span style="color:#E1E4E8">(err)</span></span>
+<span class="line"><span style="color:#F97583">		return</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">	// 将key放入队列</span></span>
+<span class="line"><span style="color:#E1E4E8">	c.workqueue.</span><span style="color:#B392F0">AddRateLimited</span><span style="color:#E1E4E8">(key)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 删除操作</span></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">c </span><span style="color:#F97583">*</span><span style="color:#B392F0">Controller</span><span style="color:#E1E4E8">) </span><span style="color:#B392F0">enqueueWorkflowForDelete</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">obj</span><span style="color:#F97583"> interface</span><span style="color:#E1E4E8">{}) {</span></span>
+<span class="line"><span style="color:#6A737D">	// 从缓存中删除指定对象</span></span>
+<span class="line"><span style="color:#E1E4E8">	_, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> cache.</span><span style="color:#B392F0">DeletionHandlingMetaNamespaceKeyFunc</span><span style="color:#E1E4E8">(obj)</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">		runtime.</span><span style="color:#B392F0">HandleError</span><span style="color:#E1E4E8">(err)</span></span>
+<span class="line"><span style="color:#F97583">		return</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#E1E4E8">	workflow </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> obj.(</span><span style="color:#F97583">*</span><span style="color:#B392F0">workflowoperatorv1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Workflow</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">	// 删除StatefulSet</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> c.</span><span style="color:#B392F0">deleteStsAndPVC</span><span style="color:#E1E4E8">(workflow); err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">		glog.</span><span style="color:#B392F0">V</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Infof</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"delete statefulSet error : </span><span style="color:#79B8FF">%s</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">, err)</span></span>
+<span class="line"><span style="color:#F97583">		return</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 更新操作</span></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">c </span><span style="color:#F97583">*</span><span style="color:#B392F0">Controller</span><span style="color:#E1E4E8">) </span><span style="color:#B392F0">enqueueWorkflowForUpdate</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">oldObj</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">newObj</span><span style="color:#F97583"> interface</span><span style="color:#E1E4E8">{}) {</span></span>
+<span class="line"><span style="color:#E1E4E8">	oldWorkflow </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> oldObj.(</span><span style="color:#F97583">*</span><span style="color:#B392F0">workflowoperatorv1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Workflow</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">DeepCopy</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">	newWorkflow </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> newObj.(</span><span style="color:#F97583">*</span><span style="color:#B392F0">workflowoperatorv1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Workflow</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">DeepCopy</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">	glog.</span><span style="color:#B392F0">V</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Infof</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"updating Workflow </span><span style="color:#79B8FF">%s</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">, oldWorkflow)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">	// 全部相同</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> reflect.</span><span style="color:#B392F0">DeepEqual</span><span style="color:#E1E4E8">(oldWorkflow.Spec, newWorkflow.Spec) {</span></span>
+<span class="line"><span style="color:#E1E4E8">		glog.</span><span style="color:#B392F0">V</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Infof</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"old workflow equal new workflow, nothing will happen"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">		return</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">	// HPA不相同，其他地方相同</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#F97583"> !</span><span style="color:#E1E4E8">reflect.</span><span style="color:#B392F0">DeepEqual</span><span style="color:#E1E4E8">(oldWorkflow.Spec.Hpa, newWorkflow.Spec.Hpa) {</span></span>
+<span class="line"><span style="color:#E1E4E8">		oldWorkflow.Spec.Hpa </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">		newWorkflow.Spec.Hpa </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> reflect.</span><span style="color:#B392F0">DeepEqual</span><span style="color:#E1E4E8">(oldWorkflow.Spec, newWorkflow.Spec) {</span></span>
+<span class="line"><span style="color:#E1E4E8">			glog.</span><span style="color:#B392F0">Infof</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"update hpa policy of </span><span style="color:#79B8FF">%s</span><span style="color:#9ECBFF"> in </span><span style="color:#79B8FF">%s</span><span style="color:#9ECBFF">, from </span><span style="color:#79B8FF">%v</span><span style="color:#9ECBFF"> to </span><span style="color:#79B8FF">%v</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">, newWorkflow.Name, newWorkflow.Namespace, oldWorkflow.Spec.Hpa, newWorkflow.Spec.Hpa)</span></span>
+<span class="line"><span style="color:#F97583">			return</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	c.</span><span style="color:#B392F0">enqueueWorkflowForDelete</span><span style="color:#E1E4E8">(oldObj.(</span><span style="color:#F97583">*</span><span style="color:#B392F0">workflowoperatorv1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Workflow</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#E1E4E8">	c.</span><span style="color:#B392F0">enqueueWorkflow</span><span style="color:#E1E4E8">(newObj.(</span><span style="color:#F97583">*</span><span style="color:#B392F0">workflowoperatorv1</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Workflow</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<h3 id="核心代码分析">核心代码分析</h3>
+<p>自动生成的代码所提供的API：</p>
+<p><img src="/img/operator.jpg" alt="client-go框架"></p>
+<p><a href="https://github.com/kubernetes/code-generator">code-generator项目</a>实现了对CRD资源的监听和操作，但其只是实现了一些规范性的代码，具体的业务代码还需要我们去完善。</p>
+<p>对于自定义的controller,有几点概念需要明确：</p>
+<ul>
+<li>
+<p>1）informer：生成的代码，监听apiserver中特定资源变化，然后会存储到一个线程安全的local cache中，最后回调我们自己实现的event handler。</p>
+</li>
+<li>
+<p>2）local cache：生成的代码，informer实时同步apiserver（也就是etcd）中的数据到内存中存储，可以有效降低apiserver的查询压力，但缺点就是实时性不好，本地会比远程的数据落后一点点但会最终与etcd一致，所以需要根据情况具体分析是走Local cache还是apiserver实时获取数据。</p>
+</li>
+<li>
+<p>3）lister：生成的代码，提供了CURD操作访问local cache。</p>
+</li>
+<li>
+<p>4）controller：一个逻辑概念，就是指调度某种资源的实现而已，需要我们自己开发。Controller做的事情主要包括：</p>
+</li>
+<li>
+<p>a) 实现event handler处理资源的CURD操作</p>
+</li>
+<li>
+<p>b) 在event handler，可以使用workqueue类库实现相同资源对象的连续event的去重，以及event处理异常后的失败重试，通常是建议使用的。</p>
+</li>
+<li>
+<p>5）Workqueue：一个单独的类库，是可选使用的，但通常都会使用，原因上面说了。我们需要在实现event handler的时候把发生变化的资源标识放入workqueue，供下面的processor消费。</p>
+</li>
+<li>
+<p>6）Clientset：默认clientset只能CRUD k8s提供的资源类型，比如deployments，daemonset等；生成的代码为我们自定义的资源（CRD）生成了单独的clientset，从而让我们使用结构化的代码CURD自定义资源。也就是说，想操作内建资源就用k8s自带的clientset，想操作CRD就用生成代码里的clientset。</p>
+</li>
+<li>
+<p>7）Processor：我们实现的go协程，消费workqueue中的事件，workqueue提供了按资源标识的去重。</p>
+</li>
+</ul>
+<p>对于自定义的CRD的监听<code>informer</code>会在一定时间间隔内扫描反馈资源的变动，然后去调用<code>AddFunc</code>,<code>UpdateFunc</code>,<code>DeleteFunce</code>，因此对于资源的增删改的具体业务代码可以在上述三个函数内实现。</p>
+<h3 id="部署测试">部署测试</h3>
+<p>待补充</p></div> <footer class="article-footer"> <a href="/writing/">← 返回文章归档</a> </footer> </article>  </main> <footer class="site-footer"> <div class="shell footer-inner"> <p>© 2017–2026 vicebery</p> <a href="/archives/">旧站归档</a> </div> </footer> </body></html>

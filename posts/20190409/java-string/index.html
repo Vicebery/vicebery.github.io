@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Java中的String｜vicebery"><meta name="theme-color" content="#f6f3ed"><link rel="icon" href="/avatar.jpeg"><link rel="canonical" href="https://vicebery.github.io/posts/20190409/java-string/"><link rel="alternate" hreflang="zh-CN" href="https://vicebery.github.io/"><link rel="alternate" hreflang="en" href="https://vicebery.github.io/en/writing/"><link rel="alternate" hreflang="x-default" href="https://vicebery.github.io/"><title>Java中的String · vicebery</title><link rel="stylesheet" href="/_astro/_slug_.CzoBhStN.css"></head> <body> <header class="site-header"> <div class="shell nav-shell"> <a class="wordmark" href="/">vicebery<span>.</span></a> <nav class="main-nav" aria-label="主导航"> <a href="/">首页</a> <a href="/writing/">写作</a> <a href="/about/">关于</a> </nav> <div class="language-switcher" aria-label="Language selection"> <a href="/" class="language-link active" data-locale-switch="zh-cn" aria-current="page">中文</a> <span aria-hidden="true">/</span> <a href="/en/writing/" class="language-link" data-locale-switch="en">EN</a> </div> <script type="module">document.querySelectorAll("[data-locale-switch]").forEach(e=>{e.addEventListener("click",()=>{const t=e.getAttribute("data-locale-switch");t&&localStorage.setItem("vicebery.locale",t)})});</script> </div> </header> <main>  <article class="article shell narrow"> <header class="article-header"> <p class="eyebrow">学习记录</p> <h1>Java中的String</h1> <time datetime="2019-04-09T14:32:19.000Z">2019年4月9日</time> <ul class="tag-list article-tags" aria-label="Tags"> <li>java</li><li>String</li> </ul> </header> <div class="prose"><hr>
+<h2 id="string类">String类</h2>
+<p>Java中没有内置的字符串类型，而在标准Java类库中提供了一个预定义类String。每个用双引号括起来的字符串都是String类的一个实例。String类中没有提供用于修改字符串的方法。故String类对象称为不可变字符串。<br>
+空串""是长度为0的字符串，是一个Java对象，有自己的串长度（0）和内容（空）</p>
+<p>String、StringBuilder和StringBuffer<br>
+执行速度：<code>StringBuilder>StringBuffer>String</code>
+StringBuilder 和 StringBuffer均为字符串变量，两者的对象是变量，是可以更改的。<br>
+StringBuilder线程不安全，适用于单线程下在字符缓冲区进行大量操作的情况<br>
+StringBuffer线程安全，适用于多线程下在字符缓冲区进行大量操作的情况</p>
+<h3 id="string的特性">String的特性</h3>
+<p>1、String类是<code>final</code>的，不可被继承。</p>
+<p>2、String类是的本质是字符数组char[], 并且其值不可改变。</p>
+<p>3、String类对象有个特殊的创建的方式，就是直接指定比如<code>String x = "abc"</code>，“abc”就表示一个字符串对象。而x是”abc”对象的地址，也叫做”abc”对象的引用。</p>
+<p>4、String对象可以通过“+”串联。串联后会生成新的字符串。</p>
+<p>5、Java运行时会维护一个<code>String Pool</code>（String池），JavaDoc翻译很模糊“字符串缓冲区”。String池用来存放运行时中产生的各种字符串，并且池中的字符串的内容不重复。而一般对象不存在这个缓冲池，并且创建的对象仅仅存在于方法的堆栈区。</p>
+<p>6、创建字符串的方式很多，归纳起来有三类：</p>
+<p>其一，使用new关键字创建字符串，比如<code>String s1 = new String("abc")</code>;</p>
+<p>其二，直接指定。比如<code>String s2 = "abc"</code>;</p>
+<p>其三，使用串联生成新的字符串。比如<code>String s3 = "ab" + "c"</code>;</p>
+<h3 id="string对象创建">String对象创建</h3>
+<p>String对象创建的原理：</p>
+<ul>
+<li>
+<p><strong>原理1</strong>：当使用任何方式来创建一个字符串对象<code>s=X</code>时，Java运行时（运行中JVM）会拿着这个X在String池中找是否存在内容相同的字符串对象，如果不存在，则在池中创建一个字符串s，否则，不在池中添加。</p>
+</li>
+<li>
+<p><strong>原理2</strong>：Java中，只要使用new关键字来创建对象，则一定会（在堆区或栈区）创建一个新的对象。</p>
+</li>
+<li>
+<p><strong>原理3</strong>：使用直接指定或者使用纯字符串串联来创建String对象，则仅仅会检查维护String池中的字符串，池中没有就在池中创建一个，有则罢了，但绝不会在堆栈区再去创建该String对象。</p>
+</li>
+<li>
+<p><strong>原理4</strong>：使用包含变量的表达式来创建String对象，则不仅会检查维护String池，而且还会在堆栈区创建一个String对象。</p>
+</li>
+</ul>
+<h2 id="字符串常量池string-pool">字符串常量池（String Pool）</h2>
+<p>字符串的分配，和其他的对象分配一样，耗费高昂的时间与空间代价，作为最基础的数据类型，大量频繁的创建字符串，极大程度地影响程序的性能。</p>
+<p>JVM为了提高性能和减少内存开销，在实例化字符串常量的时候进行了一些优化</p>
+<ul>
+<li>为字符串开辟一个字符串常量池，类似于缓存区</li>
+<li>创建字符串常量时，首先检查字符串常量池是否存在该字符串</li>
+<li>存在该字符串，返回引用实例，不存在，实例化该字符串并放入池中</li>
+</ul>
+<p>实现的基础：</p>
+<ul>
+<li>实现该优化的基础是因为字符串是不可变的，可以不用担心数据冲突进行共享</li>
+<li>运行时实例创建的全局字符串常量池中有一个表，总是为池中每个唯一的字符串对象维护一个引用,这就意味着它们一直引用着字符串常量池中的对象，所以，在常量池中的这些字符串不会被垃圾收集器回收</li>
+</ul>
+<p>字符串常量池是方法区的一部分，方法区属于静态区，跟堆一样，被所有线程共享，方法区中保存的都是在整个程序中永远唯一的元素，比如class，static变量等</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>String str = new String("hello");//会创建多少个对象？</span></span></code></pre>
+<p>使用new来创建String对象，首先会在常量池中查找是否有“hello”对象，没有就新建一个，然后会在堆中new一个String（“hello”）对象。</p>
+<p><a href="https://segmentfault.com/a/1190000009888357">String的存储问题</a></p>
+<p><a href="https://www.kancloud.cn/digest/rainnnbow-javabase/136297">String放入运行时常量池的时机与String.intern()方法解惑</a></p>
+<h2 id="object类的两个方法">Object类的两个方法</h2>
+<h3 id="equals方法">equals方法</h3>
+<p>Object类中的equals方法用于检测一个对象是否等于另一个对象。这个方法将判断两个对象是否具有相同的引用。</p>
+<p>五种特性：</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> 自反性</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> 对称性</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> 传递性</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> 一致性</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> 对于任意非空引用x，x.equals(null)应该返回false</li>
+</ul>
+<h3 id="hashcode方法">hashcode方法</h3>
+<p>散列码是由对象导出的一个整数值，hashCode方法定义在Object类中，故每个对象都有一个默认的散列码，其值为对象的存储地址。</p>
+<p>字符串的散列码是由内容导出的，因此String new出两个相同字符串其对象拥有相同的散列码，StringBuffer new出两个相同字符串却拥有不同散列码，是因为在StringBuffer类中没有定义hashCode方法，它的散列码是由Object类的默认hashCode方法导出的对象存储地址。</p>
+<p>String类和八大包装类都是重写了equals和hashcode方法，因此equals比较的是两个对象的value值是否相等，如果没有重写equals方法，那么比较的将是对象的引用是否指向同一块内存地址。</p>
+<p>JDK中 <code>hashcode</code> 方法的规定：</p>
+<ul>
+<li>在 Java 应用程序执行期间，在对同一对象多次调用 hashCode 方法时，必须一致地返回相同的整数，前提是将对象进行 equals 比较时所用的信息没有被修改。从某一应用程序的一次执行到同一应用程序的另一次执行，该整数无需保持一致。</li>
+<li>如果根据 <code>equals(Object)</code> 方法，两个对象是相等的，那么对这两个对象中的每个对象调用 hashCode 方法都必须生成相同的整数结果。</li>
+<li>如果根据 <code>equals(java.lang.Object)</code> 方法，两个对象不相等，那么对这两个对象中的任一对象上调用 hashCode方法不 要求一定生成不同的整数结果。但是，程序员应该意识到，为不相等的对象生成不同整数结果可以提高哈希表的性能。</li>
+</ul>
+<h2 id="关于与equals">关于“==”与equals</h2>
+<p>对于基本数据类型的比较，只能用“==”，因为基本数据类型没有equals方法，equals方法是Object类下的一个方法，如果不重写这个方法的话，那么用equals判断两个对象是否相等与“==”没有区别，本质上都是在比较引用指向的内存地址。</p>
+<p>但，Java中重写了包装类和String类的equals方法和hashcode方法，使得equals方法的功能变成了比较对象的值而不是对象的地址，这更符合现实逻辑（现实中我们不会关心对象存储在哪个地址上）。</p>
+<p>前面提到JVM会使用String Pool来来优化存储字符串，事实上在Integer类中也有一些优化：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>public static void main(String[] args) {</span></span>
+<span class="line"><span>      Integer a = 2;</span></span>
+<span class="line"><span>      Integer b = 2;</span></span>
+<span class="line"><span>      System.out.println(a == b);   //输出true</span></span>
+<span class="line"><span>        </span></span>
+<span class="line"><span>      Integer a1 = 128;</span></span>
+<span class="line"><span>      Integer b1 = 128;</span></span>
+<span class="line"><span>      System.out.println(a1 == b1);    //输出false</span></span>
+<span class="line"><span>        </span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p>分析：以上程序，当两个2自动装箱后，比较相等，但是两个128自动装箱后就不相等。
+这是因为系统内部提供了一个缓存功能，把<code>-128~127</code>之间的整数自动装箱成一个<code>Integer</code>时，实际上直接指向对象的数值元素，而<code>-128~127</code>范围外的整数自动装箱成<code>Integer</code>时，总是新创建一个<code>Integer</code>实例。</p></div> <footer class="article-footer"> <a href="/writing/">← 返回文章归档</a> </footer> </article>  </main> <footer class="site-footer"> <div class="shell footer-inner"> <p>© 2017–2026 vicebery</p> <a href="/archives/">旧站归档</a> </div> </footer> </body></html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="关于如何用vscode调试cpp程序"><meta name="theme-color" content="#f6f3ed"><link rel="icon" href="/avatar.jpeg"><link rel="canonical" href="https://vicebery.github.io/posts/20180924/vscode-debug-cpp/"><link rel="alternate" hreflang="zh-CN" href="https://vicebery.github.io/"><link rel="alternate" hreflang="en" href="https://vicebery.github.io/en/writing/"><link rel="alternate" hreflang="x-default" href="https://vicebery.github.io/"><title>vscode配置调试cpp程序 · vicebery</title><link rel="stylesheet" href="/_astro/_slug_.CzoBhStN.css"></head> <body> <header class="site-header"> <div class="shell nav-shell"> <a class="wordmark" href="/">vicebery<span>.</span></a> <nav class="main-nav" aria-label="主导航"> <a href="/">首页</a> <a href="/writing/">写作</a> <a href="/about/">关于</a> </nav> <div class="language-switcher" aria-label="Language selection"> <a href="/" class="language-link active" data-locale-switch="zh-cn" aria-current="page">中文</a> <span aria-hidden="true">/</span> <a href="/en/writing/" class="language-link" data-locale-switch="en">EN</a> </div> <script type="module">document.querySelectorAll("[data-locale-switch]").forEach(e=>{e.addEventListener("click",()=>{const t=e.getAttribute("data-locale-switch");t&&localStorage.setItem("vicebery.locale",t)})});</script> </div> </header> <main>  <article class="article shell narrow"> <header class="article-header"> <p class="eyebrow">学习记录</p> <h1>vscode配置调试cpp程序</h1> <time datetime="2018-09-24T08:36:08.000Z">2018年9月24日</time> <ul class="tag-list article-tags" aria-label="Tags"> <li>vscode</li> </ul> </header> <div class="prose"><hr>
+<h1 id="前言">前言</h1>
+<p>笔者的系统是ubuntu 18.04，为了在Leetcode上更好地刷题，于是想搭建一个IDE提高工作效率，在ubuntu上命令行调试不人性化，于是想找一个有图形界面的调试工具，最开始想到的是codeblocks，但是其界面不美观，而且对其他语言的支持也不太友好，于是就想到vs code。</p>
+<h1 id="下载安装">下载安装</h1>
+<p><a href="https://code.visualstudio.com/">官网下载链接</a></p>
+<p>安装过程省略……</p>
+<p>安装好后添加扩展工具</p>
+<p><img src="/img/vscode-extend.jpg" alt="vscode-expend"></p>
+<h1 id="相关配置">相关配置</h1>
+<p>我们需要链接到系统的内置调试工具GDB，其实上一步中添加的拓展工具已经帮我们做好了这件事，但其仍然有不够完善的地方，还需要简单配置一下才能实现调试功能。</p>
+<h2 id="工作空间">工作空间</h2>
+<p>首先我们需要设定一个工作空间，用于存放我们的CPP文件(<em>路径中最好不要有中文</em>)，</p>
+<p>在你打开任意一个CPP文件后，尝试编译运行它时，vscode会产生四个json文件，相关配置都在这四个json文件中实现，如下图：<br>
+<img src="/img/vscode-2.jpg" alt="vscode-json"></p>
+<p>笔者创建了一个文件夹名为CPP，作为工作空间，在其下默认生成了一个名为.vscode的文件夹（在Windows平台下你可能看不到它，因为它默认是隐藏文件），在这个文件夹（/CPP/.vscode/，CPP文件夹前面的路径在此处省略）下面有四个json文件，分别是c_cpp_properties.json、launch.json、settings.json、tasks.json。</p>
+<p>你必须把你要调试的文件放置在你的工作空间根目录（笔者为/CPP/）下，有上图你也可看到，笔者的cpp文件的放置位置。</p>
+<h2 id="json文件配置信息">json文件配置信息</h2>
+<p>事实上我们只需要关注其中是三个文件。</p>
+<h3 id="修改launchjson">修改launch.json</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>{</span></span>
+<span class="line"><span>    // 使用 IntelliSense 了解相关属性。 </span></span>
+<span class="line"><span>    // 悬停以查看现有属性的描述。</span></span>
+<span class="line"><span>    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span></span>
+<span class="line"><span>    "version": "0.2.0",</span></span>
+<span class="line"><span>    "configurations": [</span></span>
+<span class="line"><span>        {</span></span>
+<span class="line"><span>            "name": "(gdb) Launch",</span></span>
+<span class="line"><span>            "type": "cppdbg",</span></span>
+<span class="line"><span>            "request": "launch",</span></span>
+<span class="line"><span>            "program": "${workspaceFolder}/a.out",</span></span>
+<span class="line"><span>            "args": [],</span></span>
+<span class="line"><span>            "stopAtEntry": false,</span></span>
+<span class="line"><span>            "cwd": "${workspaceFolder}",</span></span>
+<span class="line"><span>            "environment": [],</span></span>
+<span class="line"><span>            "externalConsole": true,</span></span>
+<span class="line"><span>            "MIMode": "gdb",</span></span>
+<span class="line"><span>            "preLaunchTask": "Compile",</span></span>
+<span class="line"><span>            "setupCommands": [</span></span>
+<span class="line"><span>                {</span></span>
+<span class="line"><span>                    "description": "Enable pretty-printing for gdb",</span></span>
+<span class="line"><span>                    "text": "-enable-pretty-printing",</span></span>
+<span class="line"><span>                    "ignoreFailures": true</span></span>
+<span class="line"><span>                }</span></span>
+<span class="line"><span>            ]</span></span>
+<span class="line"><span>            </span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span>    ]</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p>我们注意到‘program’参数，它指向要调试的文件，原因是每次.cpp文件编译后都会默认生成一个a.out文件。</p>
+<h3 id="修改tasksjson文件">修改tasks.json文件</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>{</span></span>
+<span class="line"><span>    // See https://go.microsoft.com/fwlink/?LinkId=733558</span></span>
+<span class="line"><span>    // for the documentation about the tasks.json format</span></span>
+<span class="line"><span>    "version": "2.0.0",</span></span>
+<span class="line"><span>    "tasks": [</span></span>
+<span class="line"><span>        {</span></span>
+<span class="line"><span>            "label": "Compile",</span></span>
+<span class="line"><span>            "type": "shell",</span></span>
+<span class="line"><span>            "command": "gcc",</span></span>
+<span class="line"><span>            "args": [</span></span>
+<span class="line"><span>                "-g","${file}","-o","${workspaceRoot}/a.out"</span></span>
+<span class="line"><span>            ],</span></span>
+<span class="line"><span>            "group": {</span></span>
+<span class="line"><span>                "kind": "build",</span></span>
+<span class="line"><span>                "isDefault": true</span></span>
+<span class="line"><span>            }</span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span>    ]</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p>像‘command’的参数为gcc，我们知道在用gdb调试时正是用到这条命令，‘args’参数规定入口信息，所调试的文件正是”<code>$</code>{workspaceRoot}/a.out”，“<code>$</code>{file}“表示当前文件，即你的当前主窗口显示的文件，这也是为什么我们每次调试时需要打开那个需调试的文件，并编译运行它，使其生成a.out文件（所以当调试不同的cpp文件时，需及时更新a.out文件），如此才能使配置文件正确输入文件信息。</p>
+<p>这个文件很容易理解，它主要将gdb中的一些调试指令写入到一个操作集合，简化我们在调试时的工作，将原本命令行实现的东西集成到可视化界面上。</p>
+<h3 id="修改c_cpp_propertiesjson文件">修改c_cpp_properties.json文件</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">    "configurations"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">        {</span></span>
+<span class="line"><span style="color:#79B8FF">            "name"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Linux"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">            "intelliSenseMode"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"clang-x64"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">            "compilerPath"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"/usr/bin/gcc"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">            "includePath"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#9ECBFF">                "/usr/include/x86_64-linux-gnu/c++/7.3.0"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                "/usr/include/c++/7.3.0"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                "/usr/local/include"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                "usr/include/x86_64-linux-gnu"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                "/usr/include"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                "${workspaceFolder}"</span></span>
+<span class="line"><span style="color:#E1E4E8">            ],</span></span>
+<span class="line"><span style="color:#79B8FF">            "defines"</span><span style="color:#E1E4E8">: [],</span></span>
+<span class="line"><span style="color:#79B8FF">            "browse"</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">                "path"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#9ECBFF">                    "/usr/include/x86_64-linux-gnu/c++/7.3.0"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                    "/usr/include/c++/7.3.0"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                    "/usr/local/include"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                    "usr/include/x86_64-linux-gnu"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                    "/usr/include"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                    "${workspaceFolder}"</span></span>
+<span class="line"><span style="color:#E1E4E8">                ],</span></span>
+<span class="line"><span style="color:#79B8FF">                "limitSymbolsToIncludedHeaders"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">                "databaseFilename"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">""</span></span>
+<span class="line"><span style="color:#E1E4E8">            }</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    ],</span></span>
+<span class="line"><span style="color:#79B8FF">    "version"</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">4</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>这个文件主要定位我们系统环境中的命令位置，不同的系统位置信息不同。</p>
+<h1 id="实例运行调试">实例运行调试</h1>
+<p>笔者创建了一个简单的cpp文件来演示调试过程。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="cpp"><code><span class="line"><span style="color:#F97583">#include</span><span style="color:#9ECBFF">&#x3C;stdio.h></span></span>
+<span class="line"><span style="color:#F97583">#include</span><span style="color:#9ECBFF">&#x3C;math.h></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">int</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#F97583">	int</span><span style="color:#E1E4E8"> a</span><span style="color:#F97583">=</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">	for</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">int</span><span style="color:#E1E4E8"> i</span><span style="color:#F97583">=</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">;i</span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">;i</span><span style="color:#F97583">++</span><span style="color:#E1E4E8">) </span></span>
+<span class="line"><span style="color:#E1E4E8">	{</span></span>
+<span class="line"><span style="color:#E1E4E8">		a</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">a</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i;</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#B392F0">	printf</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">%d\n</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">,a);</span></span>
+<span class="line"><span style="color:#F97583">	return</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>先Run Code，然后依次点击调试->启动调试，调试界面如下：<br>
+<img src="/img/vscode-debug.jpg" alt="debug"></p>
+<p>左边“变量栏”显示所有变量的实时变化，“监视”栏可以添加要监视表达式，当然还可以设置各种断点。具体过程不详叙，需各位自行实验。</p></div> <footer class="article-footer"> <a href="/writing/">← 返回文章归档</a> </footer> </article>  </main> <footer class="site-footer"> <div class="shell footer-inner"> <p>© 2017–2026 vicebery</p> <a href="/archives/">旧站归档</a> </div> </footer> </body></html>

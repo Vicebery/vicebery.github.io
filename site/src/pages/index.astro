@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { getPublishedPosts } from '../lib/posts';
+
+const posts = await getPublishedPosts();
+const recentPosts = posts.slice(0, 4);
+---
+
+<BaseLayout title="vicebery · 个人网站" description="vicebery 的个人网站：技术、思考与正在发生的事。">
+  <section class="hero">
+    <div class="shell hero-grid">
+      <div>
+        <p class="eyebrow">Personal website · since 2017</p>
+        <h1>把技术、思考与生活，留在这里。</h1>
+        <p>这是 vicebery 的个人网站。它收录过去的技术笔记，也为仍在发生的学习、工作与生活留出空间。</p>
+      </div>
+      <div class="avatar-frame">
+        <img src="/avatar.jpeg" alt="vicebery" width="240" height="240" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell">
+      <div class="section-heading">
+        <h2>最近整理</h2>
+        <a href="/writing/">查看全部文章 →</a>
+      </div>
+      <div class="post-grid">
+        {recentPosts.map((post) => <PostCard post={post} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell now-card">
+      <p class="eyebrow">Now</p>
+      <div>
+        <h2>重新开始写作。</h2>
+        <p>正在整理过去的内容，并把个人网站迁移为一个长期、安静且可持续维护的空间。</p>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    const storageKey = 'vicebery.locale';
+    const savedLocale = localStorage.getItem(storageKey);
+    const preferredLanguages = navigator.languages ?? [navigator.language];
+    const prefersEnglish = preferredLanguages.some((language) => language.toLowerCase().startsWith('en'));
+
+    if (location.pathname === '/' && (savedLocale === 'en' || (!savedLocale && prefersEnglish))) {
+      location.replace(`/en/${location.search}${location.hash}`);
+    }
+  </script>
+</BaseLayout>

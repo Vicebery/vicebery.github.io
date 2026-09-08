@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="简单的Linux命令记录"><meta name="theme-color" content="#f6f3ed"><link rel="icon" href="/avatar.jpeg"><link rel="canonical" href="https://vicebery.github.io/posts/20200604/linux-cmd/"><link rel="alternate" hreflang="zh-CN" href="https://vicebery.github.io/"><link rel="alternate" hreflang="en" href="https://vicebery.github.io/en/writing/"><link rel="alternate" hreflang="x-default" href="https://vicebery.github.io/"><title>Linux命令边学边记 · vicebery</title><link rel="stylesheet" href="/_astro/_slug_.CzoBhStN.css"></head> <body> <header class="site-header"> <div class="shell nav-shell"> <a class="wordmark" href="/">vicebery<span>.</span></a> <nav class="main-nav" aria-label="主导航"> <a href="/">首页</a> <a href="/writing/">写作</a> <a href="/about/">关于</a> </nav> <div class="language-switcher" aria-label="Language selection"> <a href="/" class="language-link active" data-locale-switch="zh-cn" aria-current="page">中文</a> <span aria-hidden="true">/</span> <a href="/en/writing/" class="language-link" data-locale-switch="en">EN</a> </div> <script type="module">document.querySelectorAll("[data-locale-switch]").forEach(e=>{e.addEventListener("click",()=>{const t=e.getAttribute("data-locale-switch");t&&localStorage.setItem("vicebery.locale",t)})});</script> </div> </header> <main>  <article class="article shell narrow"> <header class="article-header"> <p class="eyebrow">学习记录</p> <h1>Linux命令边学边记</h1> <time datetime="2020-06-04T03:50:14.000Z">2020年6月4日</time> <ul class="tag-list article-tags" aria-label="Tags"> <li>linux</li><li>shell</li> </ul> </header> <div class="prose"><hr>
+<p>记录一些日常使用的Linux命令</p>
+<h2 id="查看文件">查看文件</h2>
+<ul>
+<li><code>head</code>: 只看头几行</li>
+<li><code>tail</code>: 只看末尾几行</li>
+<li><code>less</code>: 一页一页显示，并可以向前翻页</li>
+<li><code>more</code>: 一页一页显示</li>
+<li><code>nl</code> :  带行号显示文本</li>
+<li><code>cat</code>: 从第一行开始显示</li>
+<li><code>vim</code>: 查看并编辑文件</li>
+</ul>
+<hr>
+<p>一般查看日志会用到</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">tail</span><span style="color:#79B8FF"> -n</span><span style="color:#79B8FF"> 100</span><span style="color:#79B8FF"> -f</span><span style="color:#9ECBFF"> logfileName.log</span></span></code></pre>
+<p>从日志末尾查看，<code>-n</code>表示查看的行数，<code>-f</code>表示监视文件增长，在这里即表示监控日志的实时变化，显示末尾100行。</p>
+<hr>
+<h2 id="查看信息">查看信息</h2>
+<ul>
+<li><code>top</code> 命令可以查看当前任务以及cpu、内存的使用情况，不断刷新</li>
+<li><code>ps</code> 查看当前进程，不能实时刷新</li>
+<li><code>env</code> 查看当前环境变量</li>
+</ul>
+<p>三种方法查看占用某端口的进程</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">lsof</span><span style="color:#79B8FF"> -i:1080</span></span>
+<span class="line"><span style="color:#B392F0">netstat</span><span style="color:#79B8FF"> -anp</span><span style="color:#F97583">|</span><span style="color:#B392F0">grep</span><span style="color:#79B8FF"> 1080</span></span>
+<span class="line"><span style="color:#B392F0">ps</span><span style="color:#79B8FF"> -an</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> grep</span><span style="color:#79B8FF"> 1080</span></span>
+<span class="line"><span style="color:#6A737D"># 杀死进程{PID}</span></span>
+<span class="line"><span style="color:#79B8FF">kill</span><span style="color:#79B8FF"> -9</span><span style="color:#9ECBFF"> {PID}</span></span></code></pre>
+<hr>
+<h2 id="文件处理">文件处理</h2>
+<h3 id="cp">cp</h3>
+<p>cp命令用于文件/目录拷贝</p>
+<p>现有需求如下：<code>/data</code>目录下有a,b,c,d四个目录，现在要把<code>data</code>目录下除过c目录之外的所有目录复制到<code>/tmp</code>目录中</p>
+<p>解决方法：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">cp</span><span style="color:#79B8FF"> -R</span><span style="color:#9ECBFF"> `</span><span style="color:#B392F0">find</span><span style="color:#9ECBFF"> /data </span><span style="color:#79B8FF">-maxdepth</span><span style="color:#79B8FF"> 1</span><span style="color:#79B8FF"> -path</span><span style="color:#9ECBFF"> /data/c </span><span style="color:#79B8FF">-prune</span><span style="color:#79B8FF"> -o</span><span style="color:#79B8FF"> -print</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> sed</span><span style="color:#9ECBFF"> 1d `</span><span style="color:#B392F0"> /tmp</span></span>
+<span class="line"><span style="color:#6A737D"># 上述方法需要确保 /tmp 已经存在</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> /data</span></span>
+<span class="line"><span style="color:#B392F0">rsync</span><span style="color:#79B8FF"> -av</span><span style="color:#79B8FF"> --exclude</span><span style="color:#9ECBFF"> c/</span><span style="color:#9ECBFF"> .</span><span style="color:#9ECBFF"> /tmp</span></span>
+<span class="line"><span style="color:#6A737D"># 这种方法速度更快，且不需保证/tmp已经存在，若不存在会自动创建</span></span></code></pre>
+<h2 id="查找信息">查找信息</h2>
+<p><code>locate</code>: 搜寻档案系统内是否有指定的档案</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#6A737D"># 查找和pwd相关的所有文件</span></span>
+<span class="line"><span style="color:#B392F0">locate</span><span style="color:#9ECBFF"> pwd</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 搜索etc目录下所有以sh开头的文件</span></span>
+<span class="line"><span style="color:#B392F0">locate</span><span style="color:#9ECBFF"> /etc/sh</span></span></code></pre>
+<hr>
+<p><code>find</code>:  在指定目录下查找文件</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#6A737D"># 将目前目录及其子目录下所有延伸档名是 md 的文件列出来。</span></span>
+<span class="line"><span style="color:#B392F0">find</span><span style="color:#9ECBFF"> .</span><span style="color:#79B8FF"> -name</span><span style="color:#9ECBFF"> "*.md"</span></span></code></pre>
+<p><a href="https://www.runoob.com/linux/linux-comm-find.html">更多关于find命令的信息</a></p>
+<hr>
+<p><code>grep</code>: 用于查找文件里符合条件的字符串</p>
+<p><a href="https://www.runoob.com/linux/linux-comm-grep.html">more info about grep</a></p>
+<hr>
+<h2 id="sed">sed</h2>
+<p>sed命令主要用来处理文本</p>
+<p>语法：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">sed</span><span style="color:#E1E4E8"> [-hnV][-e</span><span style="color:#F97583">&#x3C;</span><span style="color:#E1E4E8">script</span><span style="color:#F97583">></span><span style="color:#E1E4E8">][-f</span><span style="color:#F97583">&#x3C;</span><span style="color:#E1E4E8">script文件</span><span style="color:#F97583">></span><span style="color:#E1E4E8">][文本文件]</span></span></code></pre>
+<p>动作说明：</p>
+<ul>
+<li>a ：新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～</li>
+<li>c ：取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！</li>
+<li>d ：删除，因为是删除啊，所以 d 后面通常不接任何咚咚；</li>
+<li>i ：插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)；</li>
+<li>p ：打印，亦即将某个选择的数据印出。通常 p 会与参数 sed -n 一起运行～</li>
+<li>s ：取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配正规表示法！例如 1,20s/old/new/g 就是啦！</li>
+</ul>
+<p>示例</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">nl</span><span style="color:#9ECBFF"> /proc/cpuinfo</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> sed</span><span style="color:#9ECBFF"> 2d</span></span>
+<span class="line"><span style="color:#6A737D"># 列出cpuinfo行号和信息，并删除第二行</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">nl</span><span style="color:#9ECBFF"> /proc/cpuinfo</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> sed</span><span style="color:#9ECBFF"> 2,5d</span></span>
+<span class="line"><span style="color:#6A737D"># 列出cpuinfo行号和信息，并删除二至五行</span></span></code></pre>
+<p><a href="https://www.runoob.com/linux/linux-comm-sed.html">更多关于sed命令的信息</a></p>
+<h2 id="awk">awk</h2>
+<p><code>awk</code>命令的用法非常多，这里只结合实际场景简要介绍几种用法。</p>
+<p>根据匹配搜索的结果，批量删除镜像</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> rmi</span><span style="color:#E1E4E8"> $(</span><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> images</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> grep</span><span style="color:#9ECBFF"> "none"</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> awk</span><span style="color:#9ECBFF"> '{print $3}'</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>删除所有名字中带 “none” 关键字的镜像，<code>awk '{print $3}'</code>指定第三项信息（IMAGE ID）</p>
+<p><a href="http://www.ruanyifeng.com/blog/2018/11/awk.html">更多关于awk命令的信息</a></p></div> <footer class="article-footer"> <a href="/writing/">← 返回文章归档</a> </footer> </article>  </main> <footer class="site-footer"> <div class="shell footer-inner"> <p>© 2017–2026 vicebery</p> <a href="/archives/">旧站归档</a> </div> </footer> </body></html>

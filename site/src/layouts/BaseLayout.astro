@@ -1,0 +1,60 @@
+---
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  lang?: 'zh-CN' | 'en';
+  zhHref?: string;
+  enHref?: string;
+}
+
+const {
+  title,
+  description = 'vicebery 的个人网站：技术、思考与正在发生的事。',
+  lang = 'zh-CN',
+  zhHref,
+  enHref,
+} = Astro.props;
+const isEnglish = lang === 'en';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f6f3ed" />
+    <link rel="icon" href="/avatar.jpeg" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="zh-CN" href={new URL(zhHref ?? '/', Astro.site)} />
+    <link rel="alternate" hreflang="en" href={new URL(enHref ?? '/en/', Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site)} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="shell nav-shell">
+        <a class="wordmark" href={isEnglish ? '/en/' : '/'}>vicebery<span>.</span></a>
+        <nav class="main-nav" aria-label={isEnglish ? 'Primary navigation' : '主导航'}>
+          <a href={isEnglish ? '/en/' : '/'}>{isEnglish ? 'Home' : '首页'}</a>
+          <a href={isEnglish ? '/en/writing/' : '/writing/'}>{isEnglish ? 'Writing' : '写作'}</a>
+          <a href={isEnglish ? '/en/about/' : '/about/'}>{isEnglish ? 'About' : '关于'}</a>
+        </nav>
+        <LanguageSwitcher lang={lang} zhHref={zhHref} enHref={enHref} />
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <p>© 2017–2026 vicebery</p>
+        <a href="/archives/">{isEnglish ? 'Legacy archive' : '旧站归档'}</a>
+      </div>
+    </footer>
+  </body>
+</html>

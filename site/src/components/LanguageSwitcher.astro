@@ -1,0 +1,38 @@
+---
+interface Props {
+  lang: 'zh-CN' | 'en';
+  zhHref?: string;
+  enHref?: string;
+}
+
+const {
+  lang,
+  zhHref = '/',
+  enHref = '/en/',
+} = Astro.props;
+---
+
+<div class="language-switcher" aria-label="Language selection">
+  <a
+    href={zhHref}
+    class:list={['language-link', { active: lang === 'zh-CN' }]}
+    data-locale-switch="zh-cn"
+    aria-current={lang === 'zh-CN' ? 'page' : undefined}
+  >中文</a>
+  <span aria-hidden="true">/</span>
+  <a
+    href={enHref}
+    class:list={['language-link', { active: lang === 'en' }]}
+    data-locale-switch="en"
+    aria-current={lang === 'en' ? 'page' : undefined}
+  >EN</a>
+</div>
+
+<script>
+  document.querySelectorAll('[data-locale-switch]').forEach((element) => {
+    element.addEventListener('click', () => {
+      const locale = element.getAttribute('data-locale-switch');
+      if (locale) localStorage.setItem('vicebery.locale', locale);
+    });
+  });
+</script>
